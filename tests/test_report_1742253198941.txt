@@ -1,0 +1,23 @@
+FWENDLY SERVER API TEST REPORT
+==============================
+Generated: 2025-03-17T23:13:19.041Z
+Test Duration: 0.10 seconds
+
+SUMMARY
+-------
+Total Tests: 9
+Passed: 9
+Failed: 0
+Success Rate: 100.00%
+
+DETAILS
+-------
+[PASSED] Users
+[PASSED] Courses
+[PASSED] Units
+[PASSED] Tags
+[PASSED] StudentTypes
+[PASSED] Interests
+[PASSED] FreeSlots
+[PASSED] EventTypes
+[PASSED] Events

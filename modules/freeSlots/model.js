@@ -12,7 +12,7 @@ const freeSlotsSchema = new Schema({
 	},
 	people: {
 		type: [Schema.Types.ObjectId],
-		ref: "Person",
+		ref: "User",
 		default: [],
 	},
 });

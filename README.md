@@ -465,3 +465,55 @@ Test with curl:
 ```bash
 curl -X DELETE http://localhost:6969/api/free-slots/123456789012
 ```
+
+## Event Types
+
+### Create Event Type (POST /api/event-types)
+
+```json
+{
+	"name": "string"
+}
+```
+
+Test with curl:
+
+```bash
+curl -X POST http://localhost:6969/api/event-types \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Workshop"}'
+```
+
+### Get Event Type (GET /api/event-types/:id)
+
+Returns event type with populated events array
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/event-types/123456789012
+```
+
+### Update Event Type (PUT /api/event-types/:id)
+
+```json
+{
+	"name": "string"
+}
+```
+
+Test with curl:
+
+```bash
+curl -X PUT http://localhost:6969/api/event-types/123456789012 \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Seminar"}'
+```
+
+### Delete Event Type (DELETE /api/event-types/:id)
+
+Test with curl:
+
+```bash
+curl -X DELETE http://localhost:6969/api/event-types/123456789012
+```

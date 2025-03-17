@@ -8,6 +8,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import userRoutes from "./modules/user/routes.js";
+import courseRoutes from "./modules/course/routes.js";
+import eventRoutes from "./modules/events/routes.js";
+import eventTypesRoutes from "./modules/event-types/routes.js";
+import unitRoutes from "./modules/units/routes.js";
+import tagRoutes from "./modules/tags/routes.js";
+import studentTypeRoutes from "./modules/studentType/routes.js";
+import interestRoutes from "./modules/interests/routes.js";
+import freeSlotRoutes from "./modules/freeSlots/routes.js";
 
 const app = express();
 app.use(cors());
@@ -19,6 +27,14 @@ const PORT = process.env.PORT || 6969;
 const MONGO_URI = process.env.MONGO_URI;
 
 app.use("/api/users", userRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/event-types", eventTypesRoutes);
+app.use("/api/units", unitRoutes);
+app.use("/api/tags", tagRoutes);
+app.use("/api/student-types", studentTypeRoutes);
+app.use("/api/interests", interestRoutes);
+app.use("/api/free-slots", freeSlotRoutes);
 
 app.listen(PORT, () => {
 	console.log("[INFO] Trying MongoDb connection...");
