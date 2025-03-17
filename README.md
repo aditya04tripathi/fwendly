@@ -32,6 +32,16 @@ Test with curl:
 curl -X GET http://localhost:6969/api/users/123456789012
 ```
 
+### Get All Users (GET /api/users)
+
+Returns a list of all users.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/users
+```
+
 ### Update User (PUT /api/users/:id)
 
 Request body (all fields optional):
@@ -96,6 +106,16 @@ Test with curl:
 
 ```bash
 curl -X GET http://localhost:6969/api/events/123456789012
+```
+
+### Get All Events (GET /api/events)
+
+Returns a list of all events.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/events
 ```
 
 ### Update Event (PUT /api/events/:id)
@@ -177,6 +197,16 @@ Test with curl:
 curl -X GET http://localhost:6969/api/courses/123456789012
 ```
 
+### Get All Courses (GET /api/courses)
+
+Returns a list of all courses.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/courses
+```
+
 ### Update Course (PUT /api/courses/:id)
 
 ```json
@@ -229,6 +259,16 @@ Test with curl:
 
 ```bash
 curl -X GET http://localhost:6969/api/units/123456789012
+```
+
+### Get All Units (GET /api/units)
+
+Returns a list of all units.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/units
 ```
 
 ### Update Unit (PUT /api/units/:id)
@@ -284,6 +324,16 @@ Test with curl:
 curl -X GET http://localhost:6969/api/tags/123456789012
 ```
 
+### Get All Tags (GET /api/tags)
+
+Returns a list of all tags.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/tags
+```
+
 ### Update Tag (PUT /api/tags/:id)
 
 ```json
@@ -336,6 +386,16 @@ Test with curl:
 curl -X GET http://localhost:6969/api/student-types/123456789012
 ```
 
+### Get All Student Types (GET /api/student-types)
+
+Returns a list of all student types.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/student-types
+```
+
 ### Update Student Type (PUT /api/student-types/:id)
 
 ```json
@@ -386,6 +446,16 @@ Test with curl:
 
 ```bash
 curl -X GET http://localhost:6969/api/interests/123456789012
+```
+
+### Get All Interests (GET /api/interests)
+
+Returns a list of all interests.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/interests
 ```
 
 ### Update Interest (PUT /api/interests/:id)
@@ -441,6 +511,16 @@ Test with curl:
 curl -X GET http://localhost:6969/api/free-slots/123456789012
 ```
 
+### Get All Free Slots (GET /api/free-slots)
+
+Returns a list of all free slots.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/free-slots
+```
+
 ### Update Free Slot (PUT /api/free-slots/:id)
 
 ```json
@@ -492,6 +572,16 @@ Test with curl:
 
 ```bash
 curl -X GET http://localhost:6969/api/event-types/123456789012
+```
+
+### Get All Event Types (GET /api/event-types)
+
+Returns a list of all event types.
+
+Test with curl:
+
+```bash
+curl -X GET http://localhost:6969/api/event-types
 ```
 
 ### Update Event Type (PUT /api/event-types/:id)
