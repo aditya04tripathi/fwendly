@@ -1,15 +1,40 @@
 {
-  "expo": {
-    "scheme": "acme",
-    "userInterfaceStyle": "automatic",
-    "orientation": "default",
-    "web": {
-      "output": "static"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "name": "fwendly",
-    "slug": "fwendly"
-  }
+	"expo": {
+		"scheme": "acme",
+		"userInterfaceStyle": "automatic",
+		"orientation": "default",
+		"web": {
+			"output": "static"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"usesCleartextTraffic": true
+					},
+					"ios": {
+						"flipper": true
+					}
+				}
+			]
+		],
+		"name": "fwendly",
+		"slug": "fwendly",
+		"android": {
+			"package": "com.adityatripathi.fwendly"
+		},
+		"ios": {
+			"bundleIdentifier": "com.adityatripathi.fwendly",
+			"NSExcpetionDomains": {
+				"localhost": {
+					"NSIncludesSubdomains": true,
+					"NSExceptionAllowsInsecureHTTPLoads": true,
+					"NSThirdPartyExceptionRequiresForwardSecrecy": false
+				}
+			}
+		},
+		"newArchEnabled": true
+	}
 }

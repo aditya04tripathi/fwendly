@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from ".";
 import { ApiResponse, User, PopulatedUser } from "../types";
 
-export const getUsers = async () => {
+export const getUsers = () => {
 	return useQuery({
 		queryKey: ["users"],
 		queryFn: async () => {
@@ -15,7 +15,7 @@ export const getUserById = async (id: string) => {
 	return useQuery({
 		queryKey: ["user", id],
 		queryFn: async () => {
-			return axios.get<ApiResponse<PopulatedUser>>(`/api/users/${id}`);
+			return axios.get<ApiResponse<PopulatedUser[]>>(`/api/users/${id}`);
 		},
 	});
 };
