@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from ".";
+import axios from "../axios";
 import { ApiResponse, Course, PopulatedCourse } from "../types";
 
 export const getCourseById = async (id: string) => {
