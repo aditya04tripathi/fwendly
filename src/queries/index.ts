@@ -1,8 +1,17 @@
 import axios from "axios";
 
-export default axios.create({
+const instance = axios.create({
 	baseURL: "http://localhost:6969",
 });
 
-export * from "./user";
+export default instance;
+
 export * from "./course";
+export * from "./event";
+export * from "./eventType";
+export * from "./freeSlots";
+export * from "./interest";
+export * from "./studentType";
+export * from "./tag";
+export * from "./unit";
+export * from "./user";

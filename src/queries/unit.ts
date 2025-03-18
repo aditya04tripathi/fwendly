@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from ".";
+import { ApiResponse, Unit, PopulatedUnit } from "../types";
 
 export const getUnits = async () => {
 	return useQuery({
 		queryKey: ["units"],
 		queryFn: async () => {
-			return axios.get("/api/units");
+			return axios.get<ApiResponse<Unit[]>>("/api/units");
 		},
 	});
 };
@@ -14,7 +15,7 @@ export const getUnitById = async (id: string) => {
 	return useQuery({
 		queryKey: ["unit", id],
 		queryFn: async () => {
-			return axios.get(`/api/units/${id}`);
+			return axios.get<ApiResponse<PopulatedUnit>>(`/api/units/${id}`);
 		},
 	});
 };
