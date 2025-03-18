@@ -33,6 +33,16 @@ export const getUser = async (req, res) => {
 	}
 };
 
+export const getUsers = async (req, res) => {
+	try {
+		const user = await User.find();
+
+		return res.status(200).json({ msg: user });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateUser = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -83,6 +93,78 @@ export const deleteUser = async (req, res) => {
 		if (!user) throw new Error("User not found. Try to register.");
 
 		return res.status(200).json({ msg: "User deleted successfully." });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+export const followUser = async (req, res) => {
+	try {
+		const { id } = req.params; // user to follow
+		const { followerId } = req.body; // user who is following
+
+		if (!followerId) throw new Error("Follower ID is required.");
+
+		// Check if users exist
+		const userToFollow = await User.findById(id);
+		const follower = await User.findById(followerId);
+
+		if (!userToFollow || !follower) {
+			throw new Error("One or both users not found.");
+		}
+
+		// Check if already following
+		if (userToFollow.followers.includes(followerId)) {
+			throw new Error("Already following this user.");
+		}
+
+		// Add follower to user's followers array
+		await User.findByIdAndUpdate(id, {
+			$push: { followers: followerId },
+		});
+
+		// Add user to follower's following array
+		await User.findByIdAndUpdate(followerId, {
+			$push: { following: id },
+		});
+
+		return res.status(200).json({ msg: "Successfully followed user." });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+export const unfollowUser = async (req, res) => {
+	try {
+		const { id } = req.params; // user to unfollow
+		const { followerId } = req.body; // user who is unfollowing
+
+		if (!followerId) throw new Error("Follower ID is required.");
+
+		// Check if users exist
+		const userToUnfollow = await User.findById(id);
+		const follower = await User.findById(followerId);
+
+		if (!userToUnfollow || !follower) {
+			throw new Error("One or both users not found.");
+		}
+
+		// Check if actually following
+		if (!userToUnfollow.followers.includes(followerId)) {
+			throw new Error("Not following this user.");
+		}
+
+		// Remove follower from user's followers array
+		await User.findByIdAndUpdate(id, {
+			$pull: { followers: followerId },
+		});
+
+		// Remove user from follower's following array
+		await User.findByIdAndUpdate(followerId, {
+			$pull: { following: id },
+		});
+
+		return res.status(200).json({ msg: "Successfully unfollowed user." });
 	} catch (error) {
 		return res.status(500).json({ msg: error.message });
 	}

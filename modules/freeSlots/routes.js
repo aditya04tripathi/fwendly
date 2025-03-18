@@ -2,11 +2,13 @@ import { Router } from "express";
 import {
 	createFreeSlot,
 	getFreeSlot,
+	getFreeSlots,
 	updateFreeSlot,
 	deleteFreeSlot,
 } from "./controller.js";
 const router = Router();
 
+router.get("/", getFreeSlots);
 router.get("/:id", getFreeSlot);
 router.put("/:id", updateFreeSlot);
 router.delete("/:id", deleteFreeSlot);

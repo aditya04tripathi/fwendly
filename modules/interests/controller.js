@@ -29,6 +29,16 @@ export const getInterest = async (req, res) => {
 	}
 };
 
+export const getInterests = async (req, res) => {
+	try {
+		const interest = await Interest.find().populate("events");
+
+		return res.status(200).json({ msg: interest });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateInterest = async (req, res) => {
 	try {
 		const { id } = req.params;

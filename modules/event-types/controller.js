@@ -29,6 +29,16 @@ export const getEventType = async (req, res) => {
 	}
 };
 
+export const getEventTypes = async (req, res) => {
+	try {
+		const eventType = await EventType.find().populate("events");
+
+		return res.status(200).json({ msg: eventType });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateEventType = async (req, res) => {
 	try {
 		const { id } = req.params;

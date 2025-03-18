@@ -29,6 +29,16 @@ export const getTag = async (req, res) => {
 	}
 };
 
+export const getTags = async (req, res) => {
+	try {
+		const tag = await Tag.find().populate("events");
+
+		return res.status(200).json({ msg: tag });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateTag = async (req, res) => {
 	try {
 		const { id } = req.params;

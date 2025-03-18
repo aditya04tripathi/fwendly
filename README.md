@@ -55,7 +55,8 @@ Request body (all fields optional):
 	"endYear": "number",
 	"studentType": ["ObjectId"],
 	"interests": ["ObjectId"],
-	"units": ["ObjectId"]
+	"units": ["ObjectId"],
+	"freeSlots": ["ObjectId"]
 }
 ```
 
@@ -73,6 +74,42 @@ Test with curl:
 
 ```bash
 curl -X DELETE http://localhost:6969/api/users/123456789012
+```
+
+### Follow User (POST /api/users/:id/follow)
+
+Request body:
+
+```json
+{
+	"followerId": "ObjectId" // ID of the user who is following
+}
+```
+
+Test with curl:
+
+```bash
+curl -X POST http://localhost:6969/api/users/123456789012/follow \
+  -H "Content-Type: application/json" \
+  -d '{"followerId":"987654321098"}'
+```
+
+### Unfollow User (POST /api/users/:id/unfollow)
+
+Request body:
+
+```json
+{
+	"followerId": "ObjectId" // ID of the user who is unfollowing
+}
+```
+
+Test with curl:
+
+```bash
+curl -X POST http://localhost:6969/api/users/123456789012/unfollow \
+  -H "Content-Type: application/json" \
+  -d '{"followerId":"987654321098"}'
 ```
 
 ## Events
@@ -166,6 +203,42 @@ Test with curl:
 curl -X POST http://localhost:6969/api/events/123456789012/comments \
   -H "Content-Type: application/json" \
   -d '{"user":"123456789012","comment":"Great event, looking forward to the next one!"}'
+```
+
+### Join Event (POST /api/events/:id/join)
+
+Request body:
+
+```json
+{
+	"userId": "ObjectId" // ID of the user joining the event
+}
+```
+
+Test with curl:
+
+```bash
+curl -X POST http://localhost:6969/api/events/123456789012/join \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"987654321098"}'
+```
+
+### Leave Event (POST /api/events/:id/leave)
+
+Request body:
+
+```json
+{
+	"userId": "ObjectId" // ID of the user leaving the event
+}
+```
+
+Test with curl:
+
+```bash
+curl -X POST http://localhost:6969/api/events/123456789012/leave \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"987654321098"}'
 ```
 
 ## Courses
@@ -440,7 +513,7 @@ curl -X POST http://localhost:6969/api/interests \
 
 ### Get Interest (GET /api/interests/:id)
 
-Returns interest with populated events array
+Returns interest with populated people array
 
 Test with curl:
 

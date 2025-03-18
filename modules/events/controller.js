@@ -41,6 +41,20 @@ export const getEvent = async (req, res) => {
 	}
 };
 
+export const getEvents = async (req, res) => {
+	try {
+		const events = await Event.find()
+			.populate("host")
+			.populate("attendees")
+			.populate("type")
+			.populate("tags");
+
+		return res.status(200).json({ msg: events });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateEvent = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -113,6 +127,68 @@ export const addComment = async (req, res) => {
 		if (!event) throw new Error("Event not found.");
 
 		return res.status(200).json({ msg: event });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+export const joinEvent = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { userId } = req.body;
+
+		if (!userId) throw new Error("User ID is required.");
+
+		// Check if user is already in attendees
+		const event = await Event.findById(id);
+		if (!event) throw new Error("Event not found.");
+
+		if (event.attendees.includes(userId)) {
+			throw new Error("User already attending this event.");
+		}
+
+		// Add user to event attendees
+		await Event.findByIdAndUpdate(id, {
+			$push: { attendees: userId },
+		});
+
+		// Add event to user's eventsAttended array
+		await User.findByIdAndUpdate(userId, {
+			$push: { eventsAttended: id },
+		});
+
+		return res.status(200).json({ msg: "Successfully joined event." });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+export const leaveEvent = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { userId } = req.body;
+
+		if (!userId) throw new Error("User ID is required.");
+
+		// Check if user is in attendees
+		const event = await Event.findById(id);
+		if (!event) throw new Error("Event not found.");
+
+		if (!event.attendees.includes(userId)) {
+			throw new Error("User is not attending this event.");
+		}
+
+		// Remove user from event attendees
+		await Event.findByIdAndUpdate(id, {
+			$pull: { attendees: userId },
+		});
+
+		// Remove event from user's eventsAttended array
+		await User.findByIdAndUpdate(userId, {
+			$pull: { eventsAttended: id },
+		});
+
+		return res.status(200).json({ msg: "Successfully left event." });
 	} catch (error) {
 		return res.status(500).json({ msg: error.message });
 	}

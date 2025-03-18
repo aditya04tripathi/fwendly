@@ -32,6 +32,16 @@ export const getUnit = async (req, res) => {
 	}
 };
 
+export const getUnits = async (req, res) => {
+	try {
+		const unit = await Unit.find().populate("people");
+
+		return res.status(200).json({ msg: unit });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateUnit = async (req, res) => {
 	try {
 		const { id } = req.params;

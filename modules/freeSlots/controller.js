@@ -32,6 +32,16 @@ export const getFreeSlot = async (req, res) => {
 	}
 };
 
+export const getFreeSlots = async (req, res) => {
+	try {
+		const freeSlot = await FreeSlot.find().populate("people");
+
+		return res.status(200).json({ msg: freeSlot });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateFreeSlot = async (req, res) => {
 	try {
 		const { id } = req.params;

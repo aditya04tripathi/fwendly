@@ -1,7 +1,14 @@
 import { Router } from "express";
-import { createUnit, getUnit, updateUnit, deleteUnit } from "./controller.js";
+import {
+	createUnit,
+	getUnit,
+	updateUnit,
+	deleteUnit,
+	getUnits,
+} from "./controller.js";
 const router = Router();
 
+router.get("/", getUnits);
 router.get("/:id", getUnit);
 router.put("/:id", updateUnit);
 router.delete("/:id", deleteUnit);

@@ -26,6 +26,12 @@ app.use(morgan("dev"));
 const PORT = process.env.PORT || 6969;
 const MONGO_URI = process.env.MONGO_URI;
 
+app.get("/", (req, res) => {
+	res.json({
+		message: "API is working",
+	});
+});
+
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/events", eventRoutes);

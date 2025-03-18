@@ -35,6 +35,16 @@ export const getStudentType = async (req, res) => {
 	}
 };
 
+export const getStudentTypes = async (req, res) => {
+	try {
+		const studentType = await StudentType.find().populate("people");
+
+		return res.status(200).json({ msg: studentType });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const updateStudentType = async (req, res) => {
 	try {
 		const { id } = req.params;

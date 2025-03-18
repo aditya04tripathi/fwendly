@@ -19,6 +19,16 @@ export const createCourse = async (req, res) => {
 	}
 };
 
+export const getCourses = async (req, res) => {
+	try {
+		const course = await Course.find().populate("people");
+
+		return res.status(200).json({ msg: course });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
 export const getCourse = async (req, res) => {
 	try {
 		const { id } = req.params;
