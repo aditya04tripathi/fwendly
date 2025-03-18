@@ -1,4 +1,7 @@
 import User from "./model.js";
+import { genSalt, hash, compare } from "bcryptjs";
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export const createUser = async (req, res) => {
 	try {
@@ -16,6 +19,7 @@ export const createUser = async (req, res) => {
 
 		return res.status(201).json({ msg: user });
 	} catch (error) {
+		console.error(error);
 		return res.status(500).json({ msg: error.message });
 	}
 };
@@ -141,7 +145,6 @@ export const unfollowUser = async (req, res) => {
 
 		if (!followerId) throw new Error("Follower ID is required.");
 
-		// Check if users exist
 		const userToUnfollow = await User.findById(id);
 		const follower = await User.findById(followerId);
 
@@ -154,12 +157,10 @@ export const unfollowUser = async (req, res) => {
 			throw new Error("Not following this user.");
 		}
 
-		// Remove follower from user's followers array
 		await User.findByIdAndUpdate(id, {
 			$pull: { followers: followerId },
 		});
 
-		// Remove user from follower's following array
 		await User.findByIdAndUpdate(followerId, {
 			$pull: { following: id },
 		});
@@ -167,5 +168,82 @@ export const unfollowUser = async (req, res) => {
 		return res.status(200).json({ msg: "Successfully unfollowed user." });
 	} catch (error) {
 		return res.status(500).json({ msg: error.message });
+	}
+};
+
+export const signup = async (req, res) => {
+	try {
+		const { name, email, password, course, startYear, endYear } = req.body;
+
+		const existingUser = await User.findOne({ email });
+		if (existingUser) {
+			return res.status(400).json({ message: "User already exists" });
+		}
+
+		const salt = await genSalt(10);
+		const hashedPassword = await hash(password, salt);
+
+		const newUser = new User({
+			name,
+			email,
+			hashedPassword,
+			course,
+			startYear,
+			endYear,
+		});
+
+		await newUser.save();
+
+		res.status(201).json({
+			user: newUser,
+			message: "User created successfully",
+		});
+	} catch (error) {
+		console.error("Signup error:", error);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+export const login = async (req, res) => {
+	try {
+		const { email, password } = req.body;
+
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(400).json({ message: "Invalid credentials" });
+		}
+
+		const isMatch = await compare(password, user.hashedPassword);
+		if (!isMatch) {
+			return res.status(400).json({ message: "Invalid credentials" });
+		}
+
+		res.status(200).json({
+			user,
+			message: "Login successful",
+		});
+	} catch (error) {
+		console.error("Login error:", error);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
+
+export const getCurrentUser = async (req, res) => {
+	try {
+		const userId = req.query.userId;
+
+		if (!userId) {
+			return res.status(400).json({ message: "User ID is required" });
+		}
+
+		const user = await User.findById(userId);
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		res.status(200).json(user);
+	} catch (error) {
+		console.error("Get current user error:", error);
+		res.status(500).json({ message: "Server error", error: error.message });
 	}
 };

@@ -70,4 +70,11 @@ const userSchema = new Schema({
 	},
 });
 
+// Add method to hide password when converting to JSON
+userSchema.methods.toJSON = function () {
+	const user = this.toObject();
+	delete user.hashedPassword;
+	return user;
+};
+
 export default model("User", userSchema);

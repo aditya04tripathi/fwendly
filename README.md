@@ -19,7 +19,7 @@ Test with curl:
 ```bash
 curl -X POST http://localhost:6969/api/users \
   -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
+  -d '{"name":"Aditya Tripathi","email":"adityatripathi.at04@gmail.com","password":"AdityaTripathi@04"}'
 ```
 
 ### Get User (GET /api/users/:id)

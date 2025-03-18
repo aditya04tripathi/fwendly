@@ -1,5 +1,8 @@
-import { Router } from "express";
+import express from "express";
 import {
+	signup,
+	login,
+	getCurrentUser,
 	deleteUser,
 	getUser,
 	updateUser,
@@ -8,7 +11,12 @@ import {
 	followUser,
 	unfollowUser,
 } from "./controller.js";
-const router = Router();
+
+const router = express.Router();
+
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/me", getCurrentUser);
 
 router.get("/:id", getUser);
 router.get("/", getUsers);
