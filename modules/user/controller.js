@@ -177,7 +177,7 @@ export const signup = async (req, res) => {
 
 		const existingUser = await User.findOne({ email });
 		if (existingUser) {
-			return res.status(400).json({ message: "User already exists" });
+			return res.status(400).json({ msg: "User already exists" });
 		}
 
 		const salt = await genSalt(10);
@@ -195,12 +195,11 @@ export const signup = async (req, res) => {
 		await newUser.save();
 
 		res.status(201).json({
-			user: newUser,
-			message: "User created successfully",
+			msg: newUser,
 		});
 	} catch (error) {
 		console.error("Signup error:", error);
-		res.status(500).json({ message: "Server error", error: error.message });
+		res.status(500).json({ msg: error.message });
 	}
 };
 
@@ -210,21 +209,20 @@ export const login = async (req, res) => {
 
 		const user = await User.findOne({ email });
 		if (!user) {
-			return res.status(400).json({ message: "Invalid credentials" });
+			return res.status(400).json({ msg: "Invalid credentials" });
 		}
 
 		const isMatch = await compare(password, user.hashedPassword);
 		if (!isMatch) {
-			return res.status(400).json({ message: "Invalid credentials" });
+			return res.status(400).json({ msg: "Invalid credentials" });
 		}
 
 		res.status(200).json({
-			user,
-			message: "Login successful",
+			msg: user,
 		});
 	} catch (error) {
 		console.error("Login error:", error);
-		res.status(500).json({ message: "Server error", error: error.message });
+		res.status(500).json({ msg: "Server error", error: error.message });
 	}
 };
 
@@ -233,17 +231,17 @@ export const getCurrentUser = async (req, res) => {
 		const userId = req.query.userId;
 
 		if (!userId) {
-			return res.status(400).json({ message: "User ID is required" });
+			return res.status(400).json({ msg: "User ID is required" });
 		}
 
 		const user = await User.findById(userId);
 		if (!user) {
-			return res.status(404).json({ message: "User not found" });
+			return res.status(404).json({ msg: "User not found" });
 		}
 
-		res.status(200).json(user);
+		res.status(200).json({ user });
 	} catch (error) {
 		console.error("Get current user error:", error);
-		res.status(500).json({ message: "Server error", error: error.message });
+		res.status(500).json({ msg: "Server error", error: error.message });
 	}
 };

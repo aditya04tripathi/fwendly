@@ -1,1015 +1,696 @@
-import axios from "axios";
-import dotenv from "dotenv";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
-dotenv.config();
+// MongoDB connection details
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/fwendly";
 
-// Configuration
-const API_URL = "http://localhost:6969/api";
-const api = axios.create({ baseURL: API_URL });
+// Import models
+import Course from "./modules/course/model.js";
+import Event from "./modules/event/model.js";
+import EventType from "./modules/event-type/model.js"; // Corrected path
+import FreeSlot from "./modules/free-slot/model.js"; // Corrected path
+import Interest from "./modules/interest/model.js"; // Corrected path
+import StudentType from "./modules/student-type/model.js"; // Corrected path
+import Tag from "./modules/tag/model.js"; // Corrected path
+import Unit from "./modules/unit/model.js"; // Corrected path
+import User from "./modules/user/model.js";
 
-// Global test data repository
-const testData = {
-	users: [],
-	courses: [],
-	units: [],
-	tags: [],
-	studentTypes: [],
-	interests: [],
-	freeSlots: [],
-	events: [],
-	eventTypes: [], // Add event types array
+// Hashing password function
+const hashPassword = async (password) => {
+	const salt = await bcrypt.genSalt(10);
+	return await bcrypt.hash(password, salt);
 };
 
-// Utility functions
-const generateUniqueString = () =>
-	`test_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-
-// Log section headers for better readability
-const logSectionHeader = (section) => {
-	console.log("\n" + "=".repeat(80));
-	console.log(`${section}`);
-	console.log("=".repeat(80) + "\n");
-};
-
-// Log test steps
-const logStep = (step) => {
-	console.log("\n" + "-".repeat(40));
-	console.log(`STEP: ${step}`);
-	console.log("-".repeat(40) + "\n");
-};
-
-// Test Users Module
-const testUsersModule = async () => {
-	logSectionHeader("TESTING USERS MODULE");
-
-	// Create user
-	logStep("Creating a test user");
+async function generateDummyData() {
 	try {
-		const testUser = {
-			name: `Test User ${generateUniqueString()}`,
-			email: `user_${generateUniqueString()}@example.com`,
-			password: "password123",
-		};
+		await mongoose.connect(uri);
+		console.log("Connected to MongoDB using Mongoose");
 
-		console.log("Sending user creation request with data:", testUser);
-		const createResponse = await api.post("/users", testUser);
-		console.log("User creation response:", createResponse.data);
+		// Clear existing collections to avoid duplicates
+		await User.deleteMany({});
+		await Event.deleteMany({});
+		await Course.deleteMany({});
+		await Unit.deleteMany({});
+		await Interest.deleteMany({});
+		await StudentType.deleteMany({});
+		await EventType.deleteMany({});
+		await Tag.deleteMany({});
+		await FreeSlot.deleteMany({});
 
-		const userId = createResponse.data.msg._id;
-		console.log("Created user with ID:", userId);
-		testData.users.push(userId);
+		console.log("Existing data cleared");
 
-		// Get user
-		logStep("Getting the created user");
-		console.log("Fetching user with ID:", userId);
-		const getResponse = await api.get(`/users/${userId}`);
-		console.log("User details:", getResponse.data);
+		// Generate data for each collection
+		const courses = await generateCourses();
+		const studentTypes = await generateStudentTypes();
+		const interests = await generateInterests();
+		const units = await generateUnits();
+		const freeSlots = await generateFreeSlots();
+		const tags = await generateTags();
+		const eventTypes = await generateEventTypes();
+		const users = await generateUsers(courses);
+		const events = await generateEvents(users, eventTypes, tags);
+
+		// Connect users with data
+		await connectUsersWithData(
+			users,
+			courses,
+			units,
+			interests,
+			studentTypes,
+			freeSlots
+		);
+
+		// Create followers/following relationships
+		await createFollowRelationships(users);
+
+		// Create event participants
+		await createEventParticipants(events, users);
+
+		console.log("All dummy data created successfully!");
+	} catch (error) {
+		console.error("Error generating dummy data:", error);
+	} finally {
+		await mongoose.disconnect();
+		console.log("MongoDB connection closed");
+	}
+}
+
+// Generate Courses
+async function generateCourses() {
+	const coursesData = [
+		{ name: "Bachelor of Computer Science", code: "BCS" },
+		{ name: "Bachelor of Business", code: "BBUS" },
+		{ name: "Bachelor of Engineering", code: "BENG" },
+		{ name: "Bachelor of Science", code: "BSC" },
+		{ name: "Master of Data Science", code: "MDS" },
+	];
+
+	const courses = await Course.create(coursesData);
+	console.log(`${courses.length} courses inserted`);
+
+	return courses;
+}
+
+// Generate Units
+async function generateUnits() {
+	const unitsData = [
+		{ name: "Introduction to Programming", code: "FIT1045" },
+		{ name: "Computer Systems", code: "FIT1047" },
+		{ name: "Algorithms and Data Structures", code: "FIT2004" },
+		{ name: "Software Engineering Practice", code: "FIT2101" },
+		{ name: "Introduction to Databases", code: "FIT1008" },
+		{ name: "Operating Systems", code: "FIT2100" },
+		{ name: "Networks", code: "FIT2081" },
+		{ name: "IT Project Management", code: "FIT3047" },
+		{ name: "Advanced Algorithms", code: "FIT3155" },
+		{ name: "Software Testing", code: "FIT3077" },
+	];
+
+	const units = await Unit.create(unitsData);
+	console.log(`${units.length} units inserted`);
+
+	return units;
+}
+
+// Generate Interests
+async function generateInterests() {
+	const interestsData = [
+		{ name: "Programming" },
+		{ name: "Data Science" },
+		{ name: "Artificial Intelligence" },
+		{ name: "Web Development" },
+		{ name: "Mobile Development" },
+		{ name: "Cybersecurity" },
+		{ name: "Game Development" },
+		{ name: "UI/UX Design" },
+		{ name: "Blockchain" },
+		{ name: "Cloud Computing" },
+		{ name: "Sports" },
+		{ name: "Music" },
+		{ name: "Art" },
+		{ name: "Travel" },
+		{ name: "Photography" },
+	];
+
+	const interests = await Interest.create(interestsData);
+	console.log(`${interests.length} interests inserted`);
+
+	return interests;
+}
+
+// Generate Student Types
+async function generateStudentTypes() {
+	const studentTypesData = [
+		{ name: "Domestic" },
+		{ name: "International" },
+		{ name: "Transfer" },
+		{ name: "Exchange" },
+	];
+
+	const studentTypes = await StudentType.create(studentTypesData);
+	console.log(`${studentTypes.length} student types inserted`);
+
+	return studentTypes;
+}
+
+// Generate Event Types
+async function generateEventTypes() {
+	const eventTypesData = [
+		{ name: "Social Gathering" },
+		{ name: "Study Group" },
+		{ name: "Workshop" },
+		{ name: "Seminar" },
+		{ name: "Sports Event" },
+		{ name: "Cultural Event" },
+		{ name: "Career Fair" },
+	];
+
+	const eventTypes = await EventType.create(eventTypesData);
+	console.log(`${eventTypes.length} event types inserted`);
+
+	return eventTypes;
+}
+
+// Generate Tags
+async function generateTags() {
+	const tagsData = [
+		{ name: "Technology" },
+		{ name: "Business" },
+		{ name: "Science" },
+		{ name: "Arts" },
+		{ name: "Health" },
+		{ name: "Education" },
+		{ name: "Environment" },
+		{ name: "Engineering" },
+		{ name: "Social" },
+		{ name: "Networking" },
+	];
+
+	const tags = await Tag.create(tagsData);
+	console.log(`${tags.length} tags inserted`);
+
+	return tags;
+}
+
+// Generate Free Slots
+async function generateFreeSlots() {
+	const freeSlotsData = [
+		{ name: "Monday Morning", code: "MON_AM" },
+		{ name: "Monday Afternoon", code: "MON_PM" },
+		{ name: "Tuesday Morning", code: "TUE_AM" },
+		{ name: "Tuesday Afternoon", code: "TUE_PM" },
+		{ name: "Wednesday Morning", code: "WED_AM" },
+		{ name: "Wednesday Afternoon", code: "WED_PM" },
+		{ name: "Thursday Morning", code: "THU_AM" },
+		{ name: "Thursday Afternoon", code: "THU_PM" },
+		{ name: "Friday Morning", code: "FRI_AM" },
+		{ name: "Friday Afternoon", code: "FRI_PM" },
+	];
+
+	const freeSlots = await FreeSlot.create(freeSlotsData);
+	console.log(`${freeSlots.length} free slots inserted`);
+
+	return freeSlots;
+}
+
+// Generate Users
+async function generateUsers(courses) {
+	// Find course IDs
+	const courseMap = {};
+	for (const course of courses) {
+		courseMap[course.name] = course._id;
+	}
+
+	const usersData = [
+		{
+			name: "John Smith",
+			email: "john.smith@student.monash.edu",
+			hashedPassword: await hashPassword("password123"),
+			course: courseMap["Bachelor of Computer Science"],
+			startYear: 2021,
+			endYear: 2024,
+			studentType: [],
+			interests: [],
+			units: [],
+			freeSlots: [],
+			followers: [],
+			following: [],
+			eventsHosted: [],
+			eventsAttended: [],
+		},
+		{
+			name: "Emma Johnson",
+			email: "emma.johnson@student.monash.edu",
+			hashedPassword: await hashPassword("password123"),
+			course: courseMap["Bachelor of Business"],
+			startYear: 2022,
+			endYear: 2025,
+			studentType: [],
+			interests: [],
+			units: [],
+			freeSlots: [],
+			followers: [],
+			following: [],
+			eventsHosted: [],
+			eventsAttended: [],
+		},
+		{
+			name: "Wei Chen",
+			email: "wei.chen@student.monash.edu",
+			hashedPassword: await hashPassword("password123"),
+			course: courseMap["Bachelor of Engineering"],
+			startYear: 2020,
+			endYear: 2024,
+			studentType: [],
+			interests: [],
+			units: [],
+			freeSlots: [],
+			followers: [],
+			following: [],
+			eventsHosted: [],
+			eventsAttended: [],
+		},
+		{
+			name: "Sarah Lee",
+			email: "sarah.lee@student.monash.edu",
+			hashedPassword: await hashPassword("password123"),
+			course: courseMap["Bachelor of Science"],
+			startYear: 2022,
+			endYear: 2025,
+			studentType: [],
+			interests: [],
+			units: [],
+			freeSlots: [],
+			followers: [],
+			following: [],
+			eventsHosted: [],
+			eventsAttended: [],
+		},
+		{
+			name: "Ahmed Khan",
+			email: "ahmed.khan@student.monash.edu",
+			hashedPassword: await hashPassword("password123"),
+			course: courseMap["Master of Data Science"],
+			startYear: 2023,
+			endYear: 2025,
+			studentType: [],
+			interests: [],
+			units: [],
+			freeSlots: [],
+			followers: [],
+			following: [],
+			eventsHosted: [],
+			eventsAttended: [],
+		},
+	];
+
+	const users = await User.create(usersData);
+	console.log(`${users.length} users inserted`);
+
+	return users;
+}
+
+// Generate Events
+async function generateEvents(users, eventTypes, tags) {
+	// Future dates for events
+	const today = new Date();
+	const nextWeek = new Date(today);
+	nextWeek.setDate(today.getDate() + 7);
+
+	const nextMonth = new Date(today);
+	nextMonth.setDate(today.getDate() + 30);
+
+	// Past date for completed event
+	const lastWeek = new Date(today);
+	lastWeek.setDate(today.getDate() - 7);
+
+	// Map event types to their IDs
+	const eventTypeMap = {};
+	eventTypes.forEach((type) => {
+		eventTypeMap[type.name] = type._id;
+	});
+
+	// Map tags to their IDs
+	const tagMap = {};
+	tags.forEach((tag) => {
+		tagMap[tag.name] = tag._id;
+	});
+
+	const eventsData = [
+		{
+			name: "Programming Workshop",
+			venue: "Learning and Teaching Building, Monash Clayton",
+			time: nextWeek,
+			host: users[0]._id,
+			type: eventTypeMap["Workshop"],
+			durationMinutes: 120,
+			tags: [tagMap["Technology"], tagMap["Education"]],
+			participants: [],
+			comments: [],
+			isEnded: false,
+			rating: 0,
+		},
+		{
+			name: "Business Networking Night",
+			venue: "Monash Business School",
+			time: nextMonth,
+			host: users[1]._id,
+			type: eventTypeMap["Social Gathering"],
+			durationMinutes: 180,
+			tags: [tagMap["Business"], tagMap["Networking"]],
+			participants: [],
+			comments: [],
+			isEnded: false,
+			rating: 0,
+		},
+		{
+			name: "Data Science Seminar",
+			venue: "Science Building, Room S101",
+			time: new Date(nextWeek.getTime() + 86400000 * 2), // 2 days after next week
+			host: users[4]._id,
+			type: eventTypeMap["Seminar"],
+			durationMinutes: 90,
+			tags: [tagMap["Technology"], tagMap["Science"], tagMap["Education"]],
+			participants: [],
+			comments: [],
+			isEnded: false,
+			rating: 0,
+		},
+		{
+			name: "International Students Meetup",
+			venue: "Campus Center",
+			time: new Date(nextWeek.getTime() + 86400000 * 4), // 4 days after next week
+			host: users[2]._id,
+			type: eventTypeMap["Social Gathering"],
+			durationMinutes: 120,
+			tags: [tagMap["Social"], tagMap["Networking"]],
+			participants: [],
+			comments: [],
+			isEnded: false,
+			rating: 0,
+		},
+		{
+			name: "Science Study Group",
+			venue: "Library, Study Room 3",
+			time: lastWeek,
+			host: users[3]._id,
+			type: eventTypeMap["Study Group"],
+			durationMinutes: 120,
+			tags: [tagMap["Science"], tagMap["Education"]],
+			participants: [],
+			comments: [],
+			isEnded: true,
+			rating: 4.5,
+		},
+	];
+
+	const events = await Event.create(eventsData);
+	console.log(`${events.length} events inserted`);
+
+	// Update event types with their events and add events to user's hosted events
+	for (let i = 0; i < events.length; i++) {
+		const event = events[i];
+		const eventData = eventsData[i];
+
+		// Add event to eventType's events array
+		await EventType.findByIdAndUpdate(eventData.type, {
+			$push: { events: event._id },
+		});
+
+		// Add to user's hosted events
+		await User.findByIdAndUpdate(eventData.host, {
+			$push: { eventsHosted: event._id },
+		});
+	}
+
+	return events;
+}
+
+// Connect users with related data
+async function connectUsersWithData(
+	users,
+	courses,
+	units,
+	interests,
+	studentTypes,
+	freeSlots
+) {
+	// Create mappings for easier lookup
+	const interestMap = {};
+	interests.forEach((interest) => {
+		interestMap[interest.name] = interest._id;
+	});
+
+	const unitMap = {};
+	units.forEach((unit) => {
+		unitMap[unit.code] = unit._id;
+	});
+
+	const freeSlotMap = {};
+	freeSlots.forEach((slot) => {
+		freeSlotMap[slot.code] = slot._id;
+	});
+
+	const studentTypeMap = {};
+	studentTypes.forEach((type) => {
+		studentTypeMap[type.name] = type._id;
+	});
+
+	const userInterests = [
+		{
+			user: users[0],
+			interestNames: [
+				"Programming",
+				"Web Development",
+				"Artificial Intelligence",
+			],
+			unitCodes: ["FIT1045", "FIT2004", "FIT1008"],
+			freeSlotCodes: ["MON_AM", "WED_PM", "FRI_AM"],
+			studentTypes: ["Domestic"],
+		},
+		{
+			user: users[1],
+			interestNames: ["Business", "Social", "Travel"],
+			unitCodes: ["FIT2081", "FIT3047"],
+			freeSlotCodes: ["TUE_AM", "THU_PM"],
+			studentTypes: ["Domestic"],
+		},
+		{
+			user: users[2],
+			interestNames: ["Engineering", "Technology", "Photography"],
+			unitCodes: ["FIT1047", "FIT2100"],
+			freeSlotCodes: ["MON_PM", "WED_AM", "FRI_PM"],
+			studentTypes: ["International"],
+		},
+		{
+			user: users[3],
+			interestNames: ["Science", "Environment", "Sports"],
+			unitCodes: ["FIT2004", "FIT3077"],
+			freeSlotCodes: ["TUE_PM", "THU_AM"],
+			studentTypes: ["Domestic"],
+		},
+		{
+			user: users[4],
+			interestNames: [
+				"Data Science",
+				"Artificial Intelligence",
+				"Cloud Computing",
+			],
+			unitCodes: ["FIT1008", "FIT3155"],
+			freeSlotCodes: ["MON_AM", "WED_AM", "FRI_PM"],
+			studentTypes: ["International"],
+		},
+	];
+
+	for (const userInfo of userInterests) {
+		// Get interest IDs
+		const userInterestIds = userInfo.interestNames
+			.map((name) => interestMap[name])
+			.filter((id) => id);
+
+		// Get unit IDs
+		const userUnitIds = userInfo.unitCodes
+			.map((code) => unitMap[code])
+			.filter((id) => id);
+
+		// Get free slot IDs
+		const userFreeSlotIds = userInfo.freeSlotCodes
+			.map((code) => freeSlotMap[code])
+			.filter((id) => id);
+
+		// Get student type IDs
+		const userStudentTypeIds = userInfo.studentTypes
+			.map((name) => studentTypeMap[name])
+			.filter((id) => id);
 
 		// Update user
-		logStep("Updating the user");
-		const updateData = {
-			name: `Updated User ${generateUniqueString()}`,
-			startYear: 2023,
-			endYear: 2027,
-		};
-
-		console.log("Updating user with data:", updateData);
-		const updateResponse = await api.put(`/users/${userId}`, updateData);
-		console.log("User update response:", updateResponse.data);
-
-		// Create another user for delete test
-		logStep("Creating a user to test deletion");
-		const deleteTestUser = {
-			name: `Delete Test User ${generateUniqueString()}`,
-			email: `delete_${generateUniqueString()}@example.com`,
-			password: "password123",
-		};
-
-		console.log("Creating user for deletion with data:", deleteTestUser);
-		const deleteTestResponse = await api.post("/users", deleteTestUser);
-		const deleteUserId = deleteTestResponse.data.msg._id;
-		console.log("Created user for deletion with ID:", deleteUserId);
-
-		// Delete user
-		logStep("Deleting the user");
-		console.log("Deleting user with ID:", deleteUserId);
-		const deleteResponse = await api.delete(`/users/${deleteUserId}`);
-		console.log("User deletion response:", deleteResponse.data);
-
-		console.log("Users module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in users module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Courses Module
-const testCoursesModule = async () => {
-	logSectionHeader("TESTING COURSES MODULE");
-
-	// Create course
-	logStep("Creating a test course");
-	try {
-		const testCourse = {
-			name: `Test Course ${generateUniqueString()}`,
-			code: `CRSE${generateUniqueString()}`,
-		};
-
-		console.log("Sending course creation request with data:", testCourse);
-		const createResponse = await api.post("/courses", testCourse);
-		console.log("Course creation response:", createResponse.data);
-
-		const courseId = createResponse.data.msg._id;
-		console.log("Created course with ID:", courseId);
-		testData.courses.push(courseId);
-
-		// Get course
-		logStep("Getting the created course");
-		console.log("Fetching course with ID:", courseId);
-		const getResponse = await api.get(`/courses/${courseId}`);
-		console.log("Course details:", getResponse.data);
-
-		// Update course
-		logStep("Updating the course");
-		const updateData = {
-			name: `Updated Course ${generateUniqueString()}`,
-		};
-
-		console.log("Updating course with data:", updateData);
-		const updateResponse = await api.put(`/courses/${courseId}`, updateData);
-		console.log("Course update response:", updateResponse.data);
-
-		// Create another course for delete test
-		logStep("Creating a course to test deletion");
-		const deleteTestCourse = {
-			name: `Delete Test Course ${generateUniqueString()}`,
-			code: `DEL${generateUniqueString()}`,
-		};
-
-		console.log("Creating course for deletion with data:", deleteTestCourse);
-		const deleteTestResponse = await api.post("/courses", deleteTestCourse);
-		const deleteCourseId = deleteTestResponse.data.msg._id;
-		console.log("Created course for deletion with ID:", deleteCourseId);
-
-		// Delete course
-		logStep("Deleting the course");
-		console.log("Deleting course with ID:", deleteCourseId);
-		const deleteResponse = await api.delete(`/courses/${deleteCourseId}`);
-		console.log("Course deletion response:", deleteResponse.data);
-
-		console.log("Courses module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in courses module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Units Module
-const testUnitsModule = async () => {
-	logSectionHeader("TESTING UNITS MODULE");
-
-	// Create unit
-	logStep("Creating a test unit");
-	try {
-		const testUnit = {
-			name: `Test Unit ${generateUniqueString()}`,
-			code: `UNIT${generateUniqueString()}`,
-		};
-
-		console.log("Sending unit creation request with data:", testUnit);
-		const createResponse = await api.post("/units", testUnit);
-		console.log("Unit creation response:", createResponse.data);
-
-		const unitId = createResponse.data.msg._id;
-		console.log("Created unit with ID:", unitId);
-		testData.units.push(unitId);
-
-		// Get unit
-		logStep("Getting the created unit");
-		console.log("Fetching unit with ID:", unitId);
-		const getResponse = await api.get(`/units/${unitId}`);
-		console.log("Unit details:", getResponse.data);
-
-		// Update unit
-		logStep("Updating the unit");
-		const updateData = {
-			name: `Updated Unit ${generateUniqueString()}`,
-		};
-
-		console.log("Updating unit with data:", updateData);
-		const updateResponse = await api.put(`/units/${unitId}`, updateData);
-		console.log("Unit update response:", updateResponse.data);
-
-		// Create another unit for delete test
-		logStep("Creating a unit to test deletion");
-		const deleteTestUnit = {
-			name: `Delete Test Unit ${generateUniqueString()}`,
-			code: `DEL${generateUniqueString()}`,
-		};
-
-		console.log("Creating unit for deletion with data:", deleteTestUnit);
-		const deleteTestResponse = await api.post("/units", deleteTestUnit);
-		const deleteUnitId = deleteTestResponse.data.msg._id;
-		console.log("Created unit for deletion with ID:", deleteUnitId);
-
-		// Delete unit
-		logStep("Deleting the unit");
-		console.log("Deleting unit with ID:", deleteUnitId);
-		const deleteResponse = await api.delete(`/units/${deleteUnitId}`);
-		console.log("Unit deletion response:", deleteResponse.data);
-
-		console.log("Units module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in units module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Tags Module
-const testTagsModule = async () => {
-	logSectionHeader("TESTING TAGS MODULE");
-
-	// Create tag
-	logStep("Creating a test tag");
-	try {
-		const testTag = {
-			name: `Test Tag ${generateUniqueString()}`,
-		};
-
-		console.log("Sending tag creation request with data:", testTag);
-		const createResponse = await api.post("/tags", testTag);
-		console.log("Tag creation response:", createResponse.data);
-
-		const tagId = createResponse.data.msg._id;
-		console.log("Created tag with ID:", tagId);
-		testData.tags.push(tagId);
-
-		// Get tag
-		logStep("Getting the created tag");
-		console.log("Fetching tag with ID:", tagId);
-		const getResponse = await api.get(`/tags/${tagId}`);
-		console.log("Tag details:", getResponse.data);
-
-		// Update tag
-		logStep("Updating the tag");
-		const updateData = {
-			name: `Updated Tag ${generateUniqueString()}`,
-		};
-
-		console.log("Updating tag with data:", updateData);
-		const updateResponse = await api.put(`/tags/${tagId}`, updateData);
-		console.log("Tag update response:", updateResponse.data);
-
-		// Create another tag for delete test
-		logStep("Creating a tag to test deletion");
-		const deleteTestTag = {
-			name: `Delete Test Tag ${generateUniqueString()}`,
-		};
-
-		console.log("Creating tag for deletion with data:", deleteTestTag);
-		const deleteTestResponse = await api.post("/tags", deleteTestTag);
-		const deleteTagId = deleteTestResponse.data.msg._id;
-		console.log("Created tag for deletion with ID:", deleteTagId);
-
-		// Delete tag
-		logStep("Deleting the tag");
-		console.log("Deleting tag with ID:", deleteTagId);
-		const deleteResponse = await api.delete(`/tags/${deleteTagId}`);
-		console.log("Tag deletion response:", deleteResponse.data);
-
-		console.log("Tags module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in tags module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Student Types Module
-const testStudentTypesModule = async () => {
-	logSectionHeader("TESTING STUDENT TYPES MODULE");
-
-	// Create student type
-	logStep("Creating a test student type");
-	try {
-		const studentTypeOptions = [
-			"Domestic",
-			"International",
-			"Transfer",
-			"Exchange",
-		];
-		const randomType =
-			studentTypeOptions[Math.floor(Math.random() * studentTypeOptions.length)];
-
-		const testStudentType = {
-			name: randomType,
-		};
-
-		console.log(
-			"Sending student type creation request with data:",
-			testStudentType
-		);
-		const createResponse = await api.post("/student-types", testStudentType);
-		console.log("Student type creation response:", createResponse.data);
-
-		const studentTypeId = createResponse.data.msg._id;
-		console.log("Created student type with ID:", studentTypeId);
-		testData.studentTypes.push(studentTypeId);
-
-		// Get student type
-		logStep("Getting the created student type");
-		console.log("Fetching student type with ID:", studentTypeId);
-		const getResponse = await api.get(`/student-types/${studentTypeId}`);
-		console.log("Student type details:", getResponse.data);
-
-		// Update student type
-		logStep("Updating the student type");
-		const nextType =
-			studentTypeOptions.find((type) => type !== randomType) || "Domestic";
-		const updateData = {
-			name: nextType,
-		};
-
-		console.log("Updating student type with data:", updateData);
-		const updateResponse = await api.put(
-			`/student-types/${studentTypeId}`,
-			updateData
-		);
-		console.log("Student type update response:", updateResponse.data);
-
-		// Create another student type for delete test
-		logStep("Creating a student type to test deletion");
-		const deleteTestStudentType = {
-			name:
-				studentTypeOptions.find(
-					(type) => type !== nextType && type !== randomType
-				) || "Exchange",
-		};
-
-		console.log(
-			"Creating student type for deletion with data:",
-			deleteTestStudentType
-		);
-		const deleteTestResponse = await api.post(
-			"/student-types",
-			deleteTestStudentType
-		);
-		const deleteStudentTypeId = deleteTestResponse.data.msg._id;
-		console.log(
-			"Created student type for deletion with ID:",
-			deleteStudentTypeId
-		);
-
-		// Delete student type
-		logStep("Deleting the student type");
-		console.log("Deleting student type with ID:", deleteStudentTypeId);
-		const deleteResponse = await api.delete(
-			`/student-types/${deleteStudentTypeId}`
-		);
-		console.log("Student type deletion response:", deleteResponse.data);
-
-		console.log("Student types module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in student types module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Interests Module
-const testInterestsModule = async () => {
-	logSectionHeader("TESTING INTERESTS MODULE");
-
-	// Create interest
-	logStep("Creating a test interest");
-	try {
-		const testInterest = {
-			name: `Test Interest ${generateUniqueString()}`,
-		};
-
-		console.log("Sending interest creation request with data:", testInterest);
-		const createResponse = await api.post("/interests", testInterest);
-		console.log("Interest creation response:", createResponse.data);
-
-		const interestId = createResponse.data.msg._id;
-		console.log("Created interest with ID:", interestId);
-		testData.interests.push(interestId);
-
-		// Get interest
-		logStep("Getting the created interest");
-		console.log("Fetching interest with ID:", interestId);
-		const getResponse = await api.get(`/interests/${interestId}`);
-		console.log("Interest details:", getResponse.data);
-
-		// Update interest
-		logStep("Updating the interest");
-		const updateData = {
-			name: `Updated Interest ${generateUniqueString()}`,
-		};
-
-		console.log("Updating interest with data:", updateData);
-		const updateResponse = await api.put(
-			`/interests/${interestId}`,
-			updateData
-		);
-		console.log("Interest update response:", updateResponse.data);
-
-		// Create another interest for delete test
-		logStep("Creating an interest to test deletion");
-		const deleteTestInterest = {
-			name: `Delete Test Interest ${generateUniqueString()}`,
-		};
-
-		console.log(
-			"Creating interest for deletion with data:",
-			deleteTestInterest
-		);
-		const deleteTestResponse = await api.post("/interests", deleteTestInterest);
-		const deleteInterestId = deleteTestResponse.data.msg._id;
-		console.log("Created interest for deletion with ID:", deleteInterestId);
-
-		// Delete interest
-		logStep("Deleting the interest");
-		console.log("Deleting interest with ID:", deleteInterestId);
-		const deleteResponse = await api.delete(`/interests/${deleteInterestId}`);
-		console.log("Interest deletion response:", deleteResponse.data);
-
-		console.log("Interests module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in interests module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Free Slots Module
-const testFreeSlotsModule = async () => {
-	logSectionHeader("TESTING FREE SLOTS MODULE");
-
-	// Create free slot
-	logStep("Creating a test free slot");
-	try {
-		const testFreeSlot = {
-			name: `Test Free Slot ${generateUniqueString()}`,
-			code: `SLOT${generateUniqueString()}`,
-		};
-
-		console.log("Sending free slot creation request with data:", testFreeSlot);
-		const createResponse = await api.post("/free-slots", testFreeSlot);
-		console.log("Free slot creation response:", createResponse.data);
-
-		const freeSlotId = createResponse.data.msg._id;
-		console.log("Created free slot with ID:", freeSlotId);
-		testData.freeSlots.push(freeSlotId);
-
-		// Get free slot
-		logStep("Getting the created free slot");
-		console.log("Fetching free slot with ID:", freeSlotId);
-		const getResponse = await api.get(`/free-slots/${freeSlotId}`);
-		console.log("Free slot details:", getResponse.data);
-
-		// Update free slot
-		logStep("Updating the free slot");
-		const updateData = {
-			name: `Updated Free Slot ${generateUniqueString()}`,
-		};
-
-		console.log("Updating free slot with data:", updateData);
-		const updateResponse = await api.put(
-			`/free-slots/${freeSlotId}`,
-			updateData
-		);
-		console.log("Free slot update response:", updateResponse.data);
-
-		// Create another free slot for delete test
-		logStep("Creating a free slot to test deletion");
-		const deleteTestFreeSlot = {
-			name: `Delete Test Free Slot ${generateUniqueString()}`,
-			code: `DEL${generateUniqueString()}`,
-		};
-
-		console.log(
-			"Creating free slot for deletion with data:",
-			deleteTestFreeSlot
-		);
-		const deleteTestResponse = await api.post(
-			"/free-slots",
-			deleteTestFreeSlot
-		);
-		const deleteFreeSlotId = deleteTestResponse.data.msg._id;
-		console.log("Created free slot for deletion with ID:", deleteFreeSlotId);
-
-		// Delete free slot
-		logStep("Deleting the free slot");
-		console.log("Deleting free slot with ID:", deleteFreeSlotId);
-		const deleteResponse = await api.delete(`/free-slots/${deleteFreeSlotId}`);
-		console.log("Free slot deletion response:", deleteResponse.data);
-
-		console.log("Free slots module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in free slots module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Events Module
-const testEventsModule = async () => {
-	logSectionHeader("TESTING EVENTS MODULE");
-
-	// This test depends on having a user
-	if (testData.users.length === 0) {
-		console.error(
-			"No test users available for events test. Creating one now..."
-		);
-		const testUser = {
-			name: `Event Test User ${generateUniqueString()}`,
-			email: `event_user_${generateUniqueString()}@example.com`,
-			password: "password123",
-		};
-
-		const userResponse = await api.post("/users", testUser);
-		testData.users.push(userResponse.data.msg._id);
-	}
-
-	// Create event
-	logStep("Creating a test event");
-	try {
-		const testEvent = {
-			name: `Test Event ${generateUniqueString()}`,
-			venue: "Test Venue",
-			time: new Date().toISOString(),
-			host: testData.users[0], // Use the first test user as the host
-		};
-
-		console.log("Sending event creation request with data:", testEvent);
-		const createResponse = await api.post("/events", testEvent);
-		console.log("Event creation response:", createResponse.data);
-
-		const eventId = createResponse.data.msg._id;
-		console.log("Created event with ID:", eventId);
-		testData.events.push(eventId);
-
-		// Get event
-		logStep("Getting the created event");
-		console.log("Fetching event with ID:", eventId);
-		const getResponse = await api.get(`/events/${eventId}`);
-		console.log("Event details:", getResponse.data);
-
-		// Update event
-		logStep("Updating the event");
-		const updateData = {
-			name: `Updated Event ${generateUniqueString()}`,
-			durationMinutes: 120,
-			isEnded: false,
-		};
-
-		console.log("Updating event with data:", updateData);
-		const updateResponse = await api.put(`/events/${eventId}`, updateData);
-		console.log("Event update response:", updateResponse.data);
-
-		// Add a comment to the event
-		logStep("Adding a comment to the event");
-		const commentData = {
-			user: testData.users[0], // Use the first test user
-			comment: `Test comment ${generateUniqueString()}`,
-		};
-
-		console.log("Adding comment with data:", commentData);
-		const commentResponse = await api.post(
-			`/events/${eventId}/comments`,
-			commentData
-		);
-		console.log("Comment response:", commentResponse.data);
-
-		// Create another event for delete test
-		logStep("Creating an event to test deletion");
-		const deleteTestEvent = {
-			name: `Delete Test Event ${generateUniqueString()}`,
-			venue: "Delete Venue",
-			time: new Date().toISOString(),
-			host: testData.users[0],
-		};
-
-		console.log("Creating event for deletion with data:", deleteTestEvent);
-		const deleteTestResponse = await api.post("/events", deleteTestEvent);
-		const deleteEventId = deleteTestResponse.data.msg._id;
-		console.log("Created event for deletion with ID:", deleteEventId);
-
-		// Delete event
-		logStep("Deleting the event");
-		console.log("Deleting event with ID:", deleteEventId);
-		const deleteResponse = await api.delete(`/events/${deleteEventId}`);
-		console.log("Event deletion response:", deleteResponse.data);
-
-		console.log("Events module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in events module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Test Event Types Module
-const testEventTypesModule = async () => {
-	logSectionHeader("TESTING EVENT TYPES MODULE");
-
-	// Create event type
-	logStep("Creating a test event type");
-	try {
-		const testEventType = {
-			name: `Test Event Type ${generateUniqueString()}`,
-			description: `Description for test event type ${generateUniqueString()}`,
-		};
-
-		console.log(
-			"Sending event type creation request with data:",
-			testEventType
-		);
-		const createResponse = await api.post("/event-types", testEventType);
-		console.log("Event type creation response:", createResponse.data);
-
-		const eventTypeId = createResponse.data.msg._id;
-		console.log("Created event type with ID:", eventTypeId);
-		testData.eventTypes.push(eventTypeId);
-
-		// Get event type
-		logStep("Getting the created event type");
-		console.log("Fetching event type with ID:", eventTypeId);
-		const getResponse = await api.get(`/event-types/${eventTypeId}`);
-		console.log("Event type details:", getResponse.data);
-
-		// Update event type
-		logStep("Updating the event type");
-		const updateData = {
-			name: `Updated Event Type ${generateUniqueString()}`,
-			description: `Updated description for event type ${generateUniqueString()}`,
-		};
-
-		console.log("Updating event type with data:", updateData);
-		const updateResponse = await api.put(
-			`/event-types/${eventTypeId}`,
-			updateData
-		);
-		console.log("Event type update response:", updateResponse.data);
-
-		// Create another event type for delete test
-		logStep("Creating an event type to test deletion");
-		const deleteTestEventType = {
-			name: `Delete Test Event Type ${generateUniqueString()}`,
-			description: `Description for delete test event type ${generateUniqueString()}`,
-		};
-
-		console.log(
-			"Creating event type for deletion with data:",
-			deleteTestEventType
-		);
-		const deleteTestResponse = await api.post(
-			"/event-types",
-			deleteTestEventType
-		);
-		const deleteEventTypeId = deleteTestResponse.data.msg._id;
-		console.log("Created event type for deletion with ID:", deleteEventTypeId);
-
-		// Delete event type
-		logStep("Deleting the event type");
-		console.log("Deleting event type with ID:", deleteEventTypeId);
-		const deleteResponse = await api.delete(
-			`/event-types/${deleteEventTypeId}`
-		);
-		console.log("Event type deletion response:", deleteResponse.data);
-
-		console.log("Event types module tests completed successfully!");
-	} catch (error) {
-		console.error("Error in event types module tests:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		throw error;
-	}
-};
-
-// Clean up test data
-const cleanupTestData = async () => {
-	logSectionHeader("CLEANING UP TEST DATA");
-
-	try {
-		// Clean up events first (since they depend on users)
-		for (const eventId of testData.events) {
-			console.log(`Deleting test event: ${eventId}`);
-			try {
-				await api.delete(`/events/${eventId}`);
-			} catch (error) {
-				console.log(`Event ${eventId} may already be deleted or not found.`);
-			}
-		}
-
-		// Clean up other resources
-		for (const userId of testData.users) {
-			console.log(`Deleting test user: ${userId}`);
-			try {
-				await api.delete(`/users/${userId}`);
-			} catch (error) {
-				console.log(`User ${userId} may already be deleted or not found.`);
-			}
-		}
-
-		for (const courseId of testData.courses) {
-			console.log(`Deleting test course: ${courseId}`);
-			try {
-				await api.delete(`/courses/${courseId}`);
-			} catch (error) {
-				console.log(`Course ${courseId} may already be deleted or not found.`);
-			}
-		}
-
-		for (const unitId of testData.units) {
-			console.log(`Deleting test unit: ${unitId}`);
-			try {
-				await api.delete(`/units/${unitId}`);
-			} catch (error) {
-				console.log(`Unit ${unitId} may already be deleted or not found.`);
-			}
-		}
-
-		for (const tagId of testData.tags) {
-			console.log(`Deleting test tag: ${tagId}`);
-			try {
-				await api.delete(`/tags/${tagId}`);
-			} catch (error) {
-				console.log(`Tag ${tagId} may already be deleted or not found.`);
-			}
-		}
-
-		for (const studentTypeId of testData.studentTypes) {
-			console.log(`Deleting test student type: ${studentTypeId}`);
-			try {
-				await api.delete(`/student-types/${studentTypeId}`);
-			} catch (error) {
-				console.log(
-					`Student type ${studentTypeId} may already be deleted or not found.`
-				);
-			}
-		}
-
-		for (const interestId of testData.interests) {
-			console.log(`Deleting test interest: ${interestId}`);
-			try {
-				await api.delete(`/interests/${interestId}`);
-			} catch (error) {
-				console.log(
-					`Interest ${interestId} may already be deleted or not found.`
-				);
-			}
-		}
-
-		for (const freeSlotId of testData.freeSlots) {
-			console.log(`Deleting test free slot: ${freeSlotId}`);
-			try {
-				await api.delete(`/free-slots/${freeSlotId}`);
-			} catch (error) {
-				console.log(
-					`Free slot ${freeSlotId} may already be deleted or not found.`
-				);
-			}
-		}
-
-		for (const eventTypeId of testData.eventTypes) {
-			console.log(`Deleting test event type: ${eventTypeId}`);
-			try {
-				await api.delete(`/event-types/${eventTypeId}`);
-			} catch (error) {
-				console.log(
-					`Event type ${eventTypeId} may already be deleted or not found.`
-				);
-			}
-		}
-
-		console.log("Cleanup completed successfully!");
-	} catch (error) {
-		console.error("Error cleaning up test data:", error.message);
-	}
-};
-
-// Main test function
-const runTests = async () => {
-	const timestamp = Date.now();
-	const startTime = new Date();
-	console.log(`Test suite started at: ${startTime.toISOString()}`);
-
-	// Test tracking statistics
-	const testStats = {
-		total: 0,
-		passed: 0,
-		failed: 0,
-		results: [],
-	};
-
-	// Wrap each test function to track results
-	const wrapTestFunction = (fnName, fn) => async () => {
-		console.log(`\nStarting test module: ${fnName}`);
-		testStats.total++;
-		try {
-			await fn();
-			testStats.passed++;
-			console.log(`✅ ${fnName} module test PASSED`);
-			testStats.results.push({ module: fnName, status: "PASSED" });
-			return true;
-		} catch (error) {
-			testStats.failed++;
-			console.error(`❌ ${fnName} module test FAILED: ${error.message}`);
-			testStats.results.push({
-				module: fnName,
-				status: "FAILED",
-				error: error.message,
-				details: error.response?.data || "No response data",
+		await User.findByIdAndUpdate(userInfo.user._id, {
+			interests: userInterestIds,
+			units: userUnitIds,
+			freeSlots: userFreeSlotIds,
+			studentType: userStudentTypeIds,
+		});
+
+		// Update units with this user
+		for (const unitId of userUnitIds) {
+			await Unit.findByIdAndUpdate(unitId, {
+				$addToSet: { people: userInfo.user._id },
 			});
-			throw error;
 		}
-	};
-
-	// Store original functions
-	const originalFunctions = {
-		testUsersModule,
-		testCoursesModule,
-		testUnitsModule,
-		testTagsModule,
-		testStudentTypesModule,
-		testInterestsModule,
-		testFreeSlotsModule,
-		testEventsModule,
-		testEventTypesModule, // Add event types test function
-	};
-
-	// Replace with wrapped versions
-	const wrappedTestUsersModule = wrapTestFunction("Users", testUsersModule);
-	const wrappedTestCoursesModule = wrapTestFunction(
-		"Courses",
-		testCoursesModule
-	);
-	const wrappedTestUnitsModule = wrapTestFunction("Units", testUnitsModule);
-	const wrappedTestTagsModule = wrapTestFunction("Tags", testTagsModule);
-	const wrappedTestStudentTypesModule = wrapTestFunction(
-		"StudentTypes",
-		testStudentTypesModule
-	);
-	const wrappedTestInterestsModule = wrapTestFunction(
-		"Interests",
-		testInterestsModule
-	);
-	const wrappedTestFreeSlotsModule = wrapTestFunction(
-		"FreeSlots",
-		testFreeSlotsModule
-	);
-	const wrappedTestEventsModule = wrapTestFunction("Events", testEventsModule);
-	const wrappedTestEventTypesModule = wrapTestFunction(
-		"EventTypes",
-		testEventTypesModule
-	);
-
-	logSectionHeader("STARTING FWENDLY SERVER API TEST SUITE");
-
-	try {
-		// Test users module
-		await wrappedTestUsersModule();
-
-		// Test courses module
-		await wrappedTestCoursesModule();
-
-		// Test units module
-		await wrappedTestUnitsModule();
-
-		// Test tags module
-		await wrappedTestTagsModule();
-
-		// Test student types module
-		await wrappedTestStudentTypesModule();
-
-		// Test interests module
-		await wrappedTestInterestsModule();
-
-		// Test free slots module
-		await wrappedTestFreeSlotsModule();
-
-		// Test event types module
-		await wrappedTestEventTypesModule();
-
-		// Test events module (depends on users)
-		await wrappedTestEventsModule();
-
-		// Clean up all test data
-		await cleanupTestData();
-
-		logSectionHeader("ALL TESTS COMPLETED SUCCESSFULLY!");
-	} catch (error) {
-		console.error("ERROR DURING TEST EXECUTION:", error.message);
-		if (error.response) {
-			console.error("Response status:", error.response.status);
-			console.error("Response data:", error.response.data);
-		}
-		console.error("Stack trace:", error.stack);
-
-		// Try to clean up even if tests fail
-		try {
-			await cleanupTestData();
-		} catch (cleanupError) {
-			console.error("Failed to clean up test data:", cleanupError.message);
-		}
-	} finally {
-		// Generate test report
-		const endTime = new Date();
-		const testDuration = (endTime - startTime) / 1000; // in seconds
-
-		console.log(`\nTest suite completed at: ${endTime.toISOString()}`);
-		console.log(`Total duration: ${testDuration.toFixed(2)} seconds`);
-
-		const reportContent = `
-FWENDLY SERVER API TEST REPORT
-==============================
-Generated: ${endTime.toISOString()}
-Test Duration: ${testDuration.toFixed(2)} seconds
-
-SUMMARY
--------
-Total Tests: ${testStats.total}
-Passed: ${testStats.passed}
-Failed: ${testStats.failed}
-Success Rate: ${
-			testStats.total > 0
-				? ((testStats.passed / testStats.total) * 100).toFixed(2)
-				: 0
-		}%
-
-DETAILS
--------
-${testStats.results
-	.map(
-		(result) =>
-			`[${result.status}] ${result.module}${
-				result.error ? `\n    Error: ${result.error}` : ""
-			}`
-	)
-	.join("\n")}
-`;
-
-		// Write report to file
-		try {
-			const fs = await import("fs");
-			const dir = "./tests";
-
-			if (!fs.existsSync(dir)) {
-				fs.mkdirSync(dir, { recursive: true });
-			}
-
-			const filename = `${dir}/test_report_${timestamp}.txt`;
-			fs.writeFileSync(filename, reportContent);
-			console.log(`\nTest report written to ${filename}`);
-		} catch (fsError) {
-			console.error("Failed to write test report to file:", fsError.message);
-			console.log("Test report content:", reportContent);
-		}
-
-		// Log summary to console
-		console.log("\n==== TEST SUMMARY ====");
-		console.log(`Tests run: ${testStats.total}`);
-		console.log(`Tests passed: ${testStats.passed}`);
-		console.log(`Tests failed: ${testStats.failed}`);
-		console.log(
-			`Success rate: ${
-				testStats.total > 0
-					? ((testStats.passed / testStats.total) * 100).toFixed(2)
-					: 0
-			}%`
-		);
 	}
-};
 
-runTests();
+	console.log("Users have been updated with related data");
+}
+
+// Create follow relationships between users
+async function createFollowRelationships(users) {
+	const relationships = [
+		{ follower: users[0], following: users[1] },
+		{ follower: users[0], following: users[2] },
+		{ follower: users[1], following: users[0] },
+		{ follower: users[1], following: users[3] },
+		{ follower: users[2], following: users[4] },
+		{ follower: users[3], following: users[0] },
+		{ follower: users[3], following: users[4] },
+		{ follower: users[4], following: users[2] },
+	];
+
+	for (const rel of relationships) {
+		// Add to follower's following list
+		await User.findByIdAndUpdate(rel.follower._id, {
+			$addToSet: { following: rel.following._id },
+		});
+
+		// Add to following's followers list
+		await User.findByIdAndUpdate(rel.following._id, {
+			$addToSet: { followers: rel.follower._id },
+		});
+	}
+
+	console.log("Follow relationships created");
+}
+
+// Add participants to events
+async function createEventParticipants(events, users) {
+	const participations = [
+		{ event: events[0], participants: [users[1], users[2], users[3]] },
+		{ event: events[1], participants: [users[0], users[3], users[4]] },
+		{ event: events[2], participants: [users[0], users[1], users[2]] },
+		{
+			event: events[3],
+			participants: [users[0], users[1], users[3], users[4]],
+		},
+		{
+			event: events[4],
+			participants: [users[0], users[1], users[2], users[4]],
+		},
+	];
+
+	for (const participation of participations) {
+		const participantIds = participation.participants.map((user) => user._id);
+
+		// Add participants to event
+		await Event.findByIdAndUpdate(participation.event._id, {
+			$addToSet: { participants: { $each: participantIds } },
+		});
+
+		// Add event to each user's attended events
+		for (const user of participation.participants) {
+			await User.findByIdAndUpdate(user._id, {
+				$addToSet: { eventsAttended: participation.event._id },
+			});
+		}
+	}
+
+	console.log("Event participants added");
+}
+
+// Function to remove all generated data
+async function cleanupDummyData() {
+	try {
+		await mongoose.connect(uri);
+		console.log("Connected to MongoDB for cleanup");
+
+		// Clear collections
+		await User.deleteMany({});
+		await Event.deleteMany({});
+		await Course.deleteMany({});
+		await Unit.deleteMany({});
+		await Interest.deleteMany({});
+		await StudentType.deleteMany({});
+		await EventType.deleteMany({});
+		await Tag.deleteMany({});
+		await FreeSlot.deleteMany({});
+
+		console.log("All dummy data cleaned up!");
+	} catch (error) {
+		console.error("Error cleaning up dummy data:", error);
+	} finally {
+		await mongoose.disconnect();
+		console.log("MongoDB connection closed");
+	}
+}
+
+// Execute the function to generate data
+generateDummyData();
+
+// Uncomment this line to clean up all data instead of generating it
+// cleanupDummyData();
+
+/*
+DUMMY DATA SUMMARY:
+
+Users (5):
+- John Smith (Domestic, Computer Science)
+- Emma Johnson (Domestic, Business)
+- Wei Chen (International, Engineering)
+- Sarah Lee (Domestic, Science)
+- Ahmed Khan (International, Data Science)
+
+Courses (5):
+- Bachelor of Computer Science (BCS)
+- Bachelor of Business (BBUS)
+- Bachelor of Engineering (BENG)
+- Bachelor of Science (BSC)
+- Master of Data Science (MDS)
+
+Units (10):
+- FIT1045: Introduction to Programming
+- FIT1047: Computer Systems
+- FIT2004: Algorithms and Data Structures
+- FIT2101: Software Engineering Practice
+- FIT1008: Introduction to Databases
+- FIT2100: Operating Systems
+- FIT2081: Networks
+- FIT3047: IT Project Management
+- FIT3155: Advanced Algorithms
+- FIT3077: Software Testing
+
+Interests (15):
+- Programming, Data Science, Artificial Intelligence, Web Development, Mobile Development
+- Cybersecurity, Game Development, UI/UX Design, Blockchain, Cloud Computing
+- Sports, Music, Art, Travel, Photography
+
+Student Types (4):
+- Domestic, International, Transfer, Exchange
+
+Event Types (7):
+- Social Gathering, Study Group, Workshop, Seminar, Sports Event, Cultural Event, Career Fair
+
+Tags (10):
+- Technology, Business, Science, Arts, Health, Education, Environment, Engineering, Social, Networking
+
+Free Slots (10):
+- Monday to Friday, Morning and Afternoon slots
+
+Events (5):
+- Programming Workshop (Upcoming, hosted by John)
+- Business Networking Night (Upcoming, hosted by Emma)
+- Data Science Seminar (Upcoming, hosted by Ahmed)
+- International Students Meetup (Upcoming, hosted by Wei)
+- Science Study Group (Completed, hosted by Sarah)
+
+Relationships:
+- Follow relationships between multiple users
+- Each event has multiple participants
+*/
