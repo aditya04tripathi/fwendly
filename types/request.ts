@@ -5,6 +5,31 @@ export interface CreateUserRequest {
 	password: string;
 }
 
+export interface ApiResponse {
+	msg:
+		| UpdateUserRequest
+		| FollowUserRequest
+		| UnfollowUserRequest
+		| SignupRequest
+		| LoginRequest
+		| CourseRequest
+		| UnitRequest
+		| FreeSlotRequest
+		| InterestRequest
+		| StudentTypeRequest
+		| CreateEventRequest
+		| UpdateEventRequest
+		| AddCommentRequest
+		| JoinEventRequest
+		| LeaveEventRequest
+		| EventTypeRequest
+		| TagRequest
+		| PaginationRequest
+		| SearchRequest
+		| FilterUsersRequest
+		| FilterEventsRequest;
+}
+
 export interface UpdateUserRequest {
 	name?: string;
 	email?: string;
