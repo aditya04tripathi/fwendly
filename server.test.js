@@ -195,16 +195,41 @@ async function generateTags() {
 // Generate Free Slots
 async function generateFreeSlots() {
 	const freeSlotsData = [
-		{ name: "Monday Morning", code: "MON_AM" },
-		{ name: "Monday Afternoon", code: "MON_PM" },
-		{ name: "Tuesday Morning", code: "TUE_AM" },
-		{ name: "Tuesday Afternoon", code: "TUE_PM" },
-		{ name: "Wednesday Morning", code: "WED_AM" },
-		{ name: "Wednesday Afternoon", code: "WED_PM" },
-		{ name: "Thursday Morning", code: "THU_AM" },
-		{ name: "Thursday Afternoon", code: "THU_PM" },
-		{ name: "Friday Morning", code: "FRI_AM" },
-		{ name: "Friday Afternoon", code: "FRI_PM" },
+		// Monday slots
+		{ name: "Monday 8:00 - 10:00", code: "MON_0800_1000" },
+		{ name: "Monday 10:00 - 12:00", code: "MON_1000_1200" },
+		{ name: "Monday 12:00 - 14:00", code: "MON_1200_1400" },
+		{ name: "Monday 14:00 - 16:00", code: "MON_1400_1600" },
+		{ name: "Monday 16:00 - 18:00", code: "MON_1600_1800" },
+		{ name: "Monday 18:00 - 20:00", code: "MON_1800_2000" },
+		// Tuesday slots
+		{ name: "Tuesday 8:00 - 10:00", code: "TUE_0800_1000" },
+		{ name: "Tuesday 10:00 - 12:00", code: "TUE_1000_1200" },
+		{ name: "Tuesday 12:00 - 14:00", code: "TUE_1200_1400" },
+		{ name: "Tuesday 14:00 - 16:00", code: "TUE_1400_1600" },
+		{ name: "Tuesday 16:00 - 18:00", code: "TUE_1600_1800" },
+		{ name: "Tuesday 18:00 - 20:00", code: "TUE_1800_2000" },
+		// Wednesday slots
+		{ name: "Wednesday 8:00 - 10:00", code: "WED_0800_1000" },
+		{ name: "Wednesday 10:00 - 12:00", code: "WED_1000_1200" },
+		{ name: "Wednesday 12:00 - 14:00", code: "WED_1200_1400" },
+		{ name: "Wednesday 14:00 - 16:00", code: "WED_1400_1600" },
+		{ name: "Wednesday 16:00 - 18:00", code: "WED_1600_1800" },
+		{ name: "Wednesday 18:00 - 20:00", code: "WED_1800_2000" },
+		// Thursday slots
+		{ name: "Thursday 8:00 - 10:00", code: "THU_0800_1000" },
+		{ name: "Thursday 10:00 - 12:00", code: "THU_1000_1200" },
+		{ name: "Thursday 12:00 - 14:00", code: "THU_1200_1400" },
+		{ name: "Thursday 14:00 - 16:00", code: "THU_1400_1600" },
+		{ name: "Thursday 16:00 - 18:00", code: "THU_1600_1800" },
+		{ name: "Thursday 18:00 - 20:00", code: "THU_1800_2000" },
+		// Friday slots
+		{ name: "Friday 8:00 - 10:00", code: "FRI_0800_1000" },
+		{ name: "Friday 10:00 - 12:00", code: "FRI_1000_1200" },
+		{ name: "Friday 12:00 - 14:00", code: "FRI_1200_1400" },
+		{ name: "Friday 14:00 - 16:00", code: "FRI_1400_1600" },
+		{ name: "Friday 16:00 - 18:00", code: "FRI_1600_1800" },
+		{ name: "Friday 18:00 - 20:00", code: "FRI_1800_2000" },
 	];
 
 	const freeSlots = await FreeSlot.create(freeSlotsData);

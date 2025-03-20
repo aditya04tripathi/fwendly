@@ -17,10 +17,16 @@ export const createUser = async (req, res) => {
 			hashedPassword: password,
 		});
 
-		return res.status(201).json({ msg: user });
+		return res.status(201).json({
+			success: true,
+			data: user,
+		});
 	} catch (error) {
 		console.error(error);
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -31,19 +37,31 @@ export const getUser = async (req, res) => {
 		const user = await User.findOne({ _id: id });
 		if (!user) throw new Error("User not found. Try to register.");
 
-		return res.status(200).json({ msg: user });
+		return res.status(200).json({
+			success: true,
+			data: user,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getUsers = async (req, res) => {
 	try {
-		const user = await User.find();
+		const users = await User.find();
 
-		return res.status(200).json({ msg: user });
+		return res.status(200).json({
+			success: true,
+			data: users,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -83,9 +101,15 @@ export const updateUser = async (req, res) => {
 		});
 		if (!user) throw new Error("User not found. Try to register.");
 
-		return res.status(200).json({ msg: user });
+		return res.status(200).json({
+			success: true,
+			data: user,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -96,9 +120,15 @@ export const deleteUser = async (req, res) => {
 		const user = await User.findOneAndDelete({ _id: id });
 		if (!user) throw new Error("User not found. Try to register.");
 
-		return res.status(200).json({ msg: "User deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "User deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -132,9 +162,15 @@ export const followUser = async (req, res) => {
 			$push: { following: id },
 		});
 
-		return res.status(200).json({ msg: "Successfully followed user." });
+		return res.status(200).json({
+			success: true,
+			data: "Successfully followed user.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -165,9 +201,15 @@ export const unfollowUser = async (req, res) => {
 			$pull: { following: id },
 		});
 
-		return res.status(200).json({ msg: "Successfully unfollowed user." });
+		return res.status(200).json({
+			success: true,
+			data: "Successfully unfollowed user.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -177,7 +219,10 @@ export const signup = async (req, res) => {
 
 		const existingUser = await User.findOne({ email });
 		if (existingUser) {
-			return res.status(400).json({ msg: "User already exists" });
+			return res.status(400).json({
+				success: false,
+				error: "User already exists",
+			});
 		}
 
 		const salt = await genSalt(10);
@@ -195,11 +240,15 @@ export const signup = async (req, res) => {
 		await newUser.save();
 
 		res.status(201).json({
-			msg: newUser,
+			success: true,
+			data: newUser,
 		});
 	} catch (error) {
 		console.error("Signup error:", error);
-		res.status(500).json({ msg: error.message });
+		res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -209,20 +258,30 @@ export const login = async (req, res) => {
 
 		const user = await User.findOne({ email });
 		if (!user) {
-			return res.status(400).json({ msg: "Invalid credentials" });
+			return res.status(400).json({
+				success: false,
+				error: "Invalid credentials",
+			});
 		}
 
 		const isMatch = await compare(password, user.hashedPassword);
 		if (!isMatch) {
-			return res.status(400).json({ msg: "Invalid credentials" });
+			return res.status(400).json({
+				success: false,
+				error: "Invalid credentials",
+			});
 		}
 
 		res.status(200).json({
-			msg: user,
+			success: true,
+			data: user,
 		});
 	} catch (error) {
 		console.error("Login error:", error);
-		res.status(500).json({ msg: "Server error", error: error.message });
+		res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -231,17 +290,29 @@ export const getCurrentUser = async (req, res) => {
 		const userId = req.query.userId;
 
 		if (!userId) {
-			return res.status(400).json({ msg: "User ID is required" });
+			return res.status(400).json({
+				success: false,
+				error: "User ID is required",
+			});
 		}
 
 		const user = await User.findById(userId);
 		if (!user) {
-			return res.status(404).json({ msg: "User not found" });
+			return res.status(404).json({
+				success: false,
+				error: "User not found",
+			});
 		}
 
-		res.status(200).json({ user });
+		res.status(200).json({
+			success: true,
+			data: user,
+		});
 	} catch (error) {
 		console.error("Get current user error:", error);
-		res.status(500).json({ msg: "Server error", error: error.message });
+		res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

@@ -10,9 +10,15 @@ export const createTag = async (req, res) => {
 
 		const tag = await Tag.create({ name });
 
-		return res.status(201).json({ msg: tag });
+		return res.status(201).json({
+			success: true,
+			data: tag,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -23,19 +29,31 @@ export const getTag = async (req, res) => {
 		const tag = await Tag.findById(id).populate("events");
 		if (!tag) throw new Error("Tag not found.");
 
-		return res.status(200).json({ msg: tag });
+		return res.status(200).json({
+			success: true,
+			data: tag,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getTags = async (req, res) => {
 	try {
-		const tag = await Tag.find().populate("events");
+		const tags = await Tag.find().populate("events");
 
-		return res.status(200).json({ msg: tag });
+		return res.status(200).json({
+			success: true,
+			data: tags,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -53,9 +71,15 @@ export const updateTag = async (req, res) => {
 
 		if (!tag) throw new Error("Tag not found.");
 
-		return res.status(200).json({ msg: tag });
+		return res.status(200).json({
+			success: true,
+			data: tag,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -66,8 +90,14 @@ export const deleteTag = async (req, res) => {
 		const tag = await Tag.findByIdAndDelete(id);
 		if (!tag) throw new Error("Tag not found.");
 
-		return res.status(200).json({ msg: "Tag deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Tag deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

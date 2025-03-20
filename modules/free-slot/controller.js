@@ -13,9 +13,15 @@ export const createFreeSlot = async (req, res) => {
 			code,
 		});
 
-		return res.status(201).json({ msg: freeSlot });
+		return res.status(201).json({
+			success: true,
+			data: freeSlot,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -26,19 +32,31 @@ export const getFreeSlot = async (req, res) => {
 		const freeSlot = await FreeSlot.findById(id).populate("people");
 		if (!freeSlot) throw new Error("Free slot not found.");
 
-		return res.status(200).json({ msg: freeSlot });
+		return res.status(200).json({
+			success: true,
+			data: freeSlot,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getFreeSlots = async (req, res) => {
 	try {
-		const freeSlot = await FreeSlot.find().populate("people");
+		const freeSlots = await FreeSlot.find().populate("people");
 
-		return res.status(200).json({ msg: freeSlot });
+		return res.status(200).json({
+			success: true,
+			data: freeSlots,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -57,9 +75,15 @@ export const updateFreeSlot = async (req, res) => {
 
 		if (!freeSlot) throw new Error("Free slot not found.");
 
-		return res.status(200).json({ msg: freeSlot });
+		return res.status(200).json({
+			success: true,
+			data: freeSlot,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -70,8 +94,14 @@ export const deleteFreeSlot = async (req, res) => {
 		const freeSlot = await FreeSlot.findByIdAndDelete(id);
 		if (!freeSlot) throw new Error("Free slot not found.");
 
-		return res.status(200).json({ msg: "Free slot deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Free slot deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

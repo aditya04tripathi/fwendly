@@ -16,9 +16,15 @@ export const createStudentType = async (req, res) => {
 
 		const studentType = await StudentType.create({ name });
 
-		return res.status(201).json({ msg: studentType });
+		return res.status(201).json({
+			success: true,
+			data: studentType,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -29,19 +35,31 @@ export const getStudentType = async (req, res) => {
 		const studentType = await StudentType.findById(id).populate("people");
 		if (!studentType) throw new Error("Student type not found.");
 
-		return res.status(200).json({ msg: studentType });
+		return res.status(200).json({
+			success: true,
+			data: studentType,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getStudentTypes = async (req, res) => {
 	try {
-		const studentType = await StudentType.find().populate("people");
+		const studentTypes = await StudentType.find().populate("people");
 
-		return res.status(200).json({ msg: studentType });
+		return res.status(200).json({
+			success: true,
+			data: studentTypes,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -68,9 +86,15 @@ export const updateStudentType = async (req, res) => {
 
 		if (!studentType) throw new Error("Student type not found.");
 
-		return res.status(200).json({ msg: studentType });
+		return res.status(200).json({
+			success: true,
+			data: studentType,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -81,8 +105,14 @@ export const deleteStudentType = async (req, res) => {
 		const studentType = await StudentType.findByIdAndDelete(id);
 		if (!studentType) throw new Error("Student type not found.");
 
-		return res.status(200).json({ msg: "Student type deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Student type deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

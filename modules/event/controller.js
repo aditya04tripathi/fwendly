@@ -17,9 +17,15 @@ export const createEvent = async (req, res) => {
 			$push: { eventsHosted: event._id },
 		});
 
-		return res.status(201).json({ msg: event });
+		return res.status(201).json({
+			success: true,
+			data: event,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -35,9 +41,15 @@ export const getEvent = async (req, res) => {
 
 		if (!event) throw new Error("Event not found.");
 
-		return res.status(200).json({ msg: event });
+		return res.status(200).json({
+			success: true,
+			data: event,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -49,9 +61,15 @@ export const getEvents = async (req, res) => {
 			.populate("type")
 			.populate("tags");
 
-		return res.status(200).json({ msg: events });
+		return res.status(200).json({
+			success: true,
+			data: events,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -79,9 +97,15 @@ export const updateEvent = async (req, res) => {
 
 		if (!event) throw new Error("Event not found.");
 
-		return res.status(200).json({ msg: event });
+		return res.status(200).json({
+			success: true,
+			data: event,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -105,9 +129,15 @@ export const deleteEvent = async (req, res) => {
 			);
 		}
 
-		return res.status(200).json({ msg: "Event deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Event deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -126,9 +156,15 @@ export const addComment = async (req, res) => {
 
 		if (!event) throw new Error("Event not found.");
 
-		return res.status(200).json({ msg: event });
+		return res.status(200).json({
+			success: true,
+			data: event,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -157,9 +193,15 @@ export const joinEvent = async (req, res) => {
 			$push: { eventsAttended: id },
 		});
 
-		return res.status(200).json({ msg: "Successfully joined event." });
+		return res.status(200).json({
+			success: true,
+			data: "Successfully joined event.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -188,8 +230,14 @@ export const leaveEvent = async (req, res) => {
 			$pull: { eventsAttended: id },
 		});
 
-		return res.status(200).json({ msg: "Successfully left event." });
+		return res.status(200).json({
+			success: true,
+			data: "Successfully left event.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

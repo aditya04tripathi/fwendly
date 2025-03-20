@@ -10,9 +10,15 @@ export const createInterest = async (req, res) => {
 
 		const interest = await Interest.create({ name });
 
-		return res.status(201).json({ msg: interest });
+		return res.status(201).json({
+			success: true,
+			data: interest,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -23,19 +29,31 @@ export const getInterest = async (req, res) => {
 		const interest = await Interest.findById(id).populate("events");
 		if (!interest) throw new Error("Interest not found.");
 
-		return res.status(200).json({ msg: interest });
+		return res.status(200).json({
+			success: true,
+			data: interest,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getInterests = async (req, res) => {
 	try {
-		const interest = await Interest.find().populate("events");
+		const interests = await Interest.find().populate("events");
 
-		return res.status(200).json({ msg: interest });
+		return res.status(200).json({
+			success: true,
+			data: interests,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -53,9 +71,15 @@ export const updateInterest = async (req, res) => {
 
 		if (!interest) throw new Error("Interest not found.");
 
-		return res.status(200).json({ msg: interest });
+		return res.status(200).json({
+			success: true,
+			data: interest,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -66,8 +90,14 @@ export const deleteInterest = async (req, res) => {
 		const interest = await Interest.findByIdAndDelete(id);
 		if (!interest) throw new Error("Interest not found.");
 
-		return res.status(200).json({ msg: "Interest deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Interest deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

@@ -13,19 +13,31 @@ export const createCourse = async (req, res) => {
 			code,
 		});
 
-		return res.status(201).json({ msg: course });
+		return res.status(201).json({
+			success: true,
+			data: course,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getCourses = async (req, res) => {
 	try {
-		const course = await Course.find().populate("people");
+		const courses = await Course.find().populate("people");
 
-		return res.status(200).json({ msg: course });
+		return res.status(200).json({
+			success: true,
+			data: courses,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -36,9 +48,15 @@ export const getCourse = async (req, res) => {
 		const course = await Course.findOne({ _id: id }).populate("people");
 		if (!course) throw new Error("Course not found.");
 
-		return res.status(200).json({ msg: course });
+		return res.status(200).json({
+			success: true,
+			data: course,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -56,9 +74,15 @@ export const updateCourse = async (req, res) => {
 		});
 		if (!course) throw new Error("Course not found.");
 
-		return res.status(200).json({ msg: course });
+		return res.status(200).json({
+			success: true,
+			data: course,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -69,8 +93,14 @@ export const deleteCourse = async (req, res) => {
 		const course = await Course.findOneAndDelete({ _id: id });
 		if (!course) throw new Error("Course not found.");
 
-		return res.status(200).json({ msg: "Course deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Course deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };

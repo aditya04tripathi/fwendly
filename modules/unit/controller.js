@@ -13,9 +13,15 @@ export const createUnit = async (req, res) => {
 			code,
 		});
 
-		return res.status(201).json({ msg: unit });
+		return res.status(201).json({
+			success: true,
+			data: unit,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -26,19 +32,31 @@ export const getUnit = async (req, res) => {
 		const unit = await Unit.findById(id).populate("people");
 		if (!unit) throw new Error("Unit not found.");
 
-		return res.status(200).json({ msg: unit });
+		return res.status(200).json({
+			success: true,
+			data: unit,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
 export const getUnits = async (req, res) => {
 	try {
-		const unit = await Unit.find().populate("people");
+		const units = await Unit.find().populate("people");
 
-		return res.status(200).json({ msg: unit });
+		return res.status(200).json({
+			success: true,
+			data: units,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -57,9 +75,15 @@ export const updateUnit = async (req, res) => {
 
 		if (!unit) throw new Error("Unit not found.");
 
-		return res.status(200).json({ msg: unit });
+		return res.status(200).json({
+			success: true,
+			data: unit,
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
 
@@ -70,8 +94,14 @@ export const deleteUnit = async (req, res) => {
 		const unit = await Unit.findByIdAndDelete(id);
 		if (!unit) throw new Error("Unit not found.");
 
-		return res.status(200).json({ msg: "Unit deleted successfully." });
+		return res.status(200).json({
+			success: true,
+			data: "Unit deleted successfully.",
+		});
 	} catch (error) {
-		return res.status(500).json({ msg: error.message });
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
 	}
 };
