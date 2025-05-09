@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { SignInDto, SignUpDto } from './dto';
+import { ForgotPasswordDto, SignInDto, SignUpDto } from './dto';
 import * as argon from 'argon2';
-import * as jwt from 'jsonwebtoken';
+import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwt: JwtService,
+  ) {}
 
   async signin(dto: SignInDto) {
     const { email, password } = dto;
@@ -18,25 +21,25 @@ export class AuthService {
     });
 
     if (!user) {
-      return {
-        okay: false,
-        msg: 'User not found',
-      };
+      throw new HttpException(
+        `The user with ${dto.email} was not found. Please sign up.`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     const passwordMatches = await argon.verify(user.password_hash, password);
     if (!passwordMatches) {
-      return {
-        okay: false,
-        msg: 'Invalid password',
-      };
+      throw new HttpException(
+        'The password entered seems to be invalid. Please try again.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
-    const token = jwt.sign(user, 'supersecretkey', {
+    const token = this.jwt.sign(user, {
       expiresIn: '1h',
     });
 
-    return { ...user, password_hash: undefined, token };
+    return { message: { ...user, token } };
   }
 
   async signup(dto: SignUpDto) {
@@ -54,78 +57,70 @@ export class AuthService {
         year_of_study: dto.yearOfStudy,
       },
     });
-    return user;
+
+    return {
+      message:
+        'A new user has been created successfully. Enjoy your time on Fwendly!',
+    };
   }
 
-  async forgotPassword(token: string, email: string, newPassword: string) {
-    console.log(`Token: ${token}`);
-
+  async forgotPassword(dto: ForgotPasswordDto) {
     const user = await this.prisma.user.findUnique({
       where: {
-        monash_email: email,
+        monash_email: dto.email,
       },
     });
 
     if (!user) {
-      return {
-        okay: false,
-        msg: 'User not found',
-      };
+      throw new HttpException(
+        `The user with ${dto.email} was not found. Please sign up.`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    const isValidToken = jwt.verify(token, 'supersecretkey');
-    if (!isValidToken) {
-      return {
-        okay: false,
-        msg: 'Invalid token',
-      };
-    }
-
-    const hash = await argon.hash(newPassword);
+    const hash = await argon.hash(dto.newPassword);
     await this.prisma.user.update({
       where: {
-        monash_email: email,
+        monash_email: dto.email,
       },
       data: {
         password_hash: hash,
       },
     });
 
-    return { okay: true, msg: 'Password updated successfully' };
+    return {
+      message: 'Password updated successfully',
+    };
   }
 
   async deleteUser(token: string) {
-    const isValidToken = jwt.verify(token, 'supersecretkey');
+    const isValidToken = this.jwt.verifyAndDecode(token);
     if (!isValidToken) {
-      return {
-        okay: false,
-        msg: 'Invalid token',
-      };
+      throw new HttpException(
+        'You are not authorized to perform this action.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const user = await this.prisma.user.findUnique({
       where: {
-        // @ts-expect-error monash_email is not a property of the token
-        // but it is a property of the user
         monash_email: isValidToken.monash_email,
       },
     });
 
     if (!user) {
-      return {
-        okay: false,
-        msg: 'User not found',
-      };
+      throw new HttpException(
+        `The user with ${isValidToken.monash_email} was not found. Please sign up.`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     await this.prisma.user.delete({
       where: {
-        // @ts-expect-error monash_email is not a property of the token
-        // but it is a property of the user
         monash_email: isValidToken.monash_email,
       },
     });
 
-    return { okay: true, msg: 'User deleted successfully' };
+    return { message: 'User deleted successfully' };
   }
 }

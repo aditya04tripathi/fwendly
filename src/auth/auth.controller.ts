@@ -1,6 +1,16 @@
-import { Body, Controller, Post, Headers, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Headers,
+  Delete,
+  Patch,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto, SignInDto, ForgotPasswordDto } from './dto';
+import * as jwt from 'jsonwebtoken';
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +26,7 @@ export class AuthController {
     return this.authService.signup(dto);
   }
 
-  @Post('forgot-password')
+  @Patch('forgot-password')
   forgotPassword(
     @Headers() headers: Record<string, string>,
     @Body() dto: ForgotPasswordDto,
@@ -24,11 +34,23 @@ export class AuthController {
     const authHeader = headers['authorization'];
     const token = authHeader ? authHeader.split(' ')[1] : null;
 
-    if (!token) {
-      throw new Error('Authorization token is missing');
+    try {
+      if (!token) {
+        throw new HttpException(
+          'Authorization token is missing',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      jwt.verify(token, 'supersecretkey');
+    } catch (error) {
+      throw new HttpException(
+        'The token provided is invalid or expired.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
-    return this.authService.forgotPassword(token, dto.email, dto.newPassword);
+    return this.authService.forgotPassword(dto);
   }
 
   @Delete('delete-account')
@@ -36,11 +58,20 @@ export class AuthController {
     const authHeader = headers['authorization'];
     const token = authHeader ? authHeader.split(' ')[1] : null;
 
-    if (!token) {
-      return {
-        okay: false,
-        msg: 'Authorization token is missing',
-      };
+    try {
+      if (!token) {
+        throw new HttpException(
+          'Authorization token is missing',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      jwt.verify(token, 'supersecretkey');
+    } catch (error) {
+      throw new HttpException(
+        'The token provided is invalid or expired.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     return this.authService.deleteUser(token);
