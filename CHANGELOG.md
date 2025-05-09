@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Established relationships between entities using foreign keys.
   - Mapped Prisma models to PostgreSQL table names (e.g., `User` to `users`).
   - Added database indexes on foreign keys, frequently filtered fields, and timestamps to optimize query performance.
+- **Authentication**: Implemented JWT (JSON Web Token) authentication.
+- **Authentication**: Added forgot password functionality.
+- **JWT**: Created a dedicated JWT module and service for token generation and validation.
+- **API**: Integrated Swagger for API documentation.
 
 ### Changed
 
@@ -25,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Standardized primary keys for most entities to use `String @id @default(cuid())` (e.g., `Campus.campus_id`, `Post.post_id`).
   - **Exception for User**: Modified the `User.user_id` primary key to be `Int @id @default(0)`. Consequently, all foreign keys referencing `User.user_id` in other models (e.g., `Post.user_id`, `Community.creator_id`) were updated to `Int`. This change was made after an initial CUID string setup for `User.user_id`.
 - **User Model**: Clarified/updated that `first_name`, `last_name`, and `year_of_study` fields are non-nullable.
+- **Authentication**: Improved error handling and response messages in the authentication module.
 
 ### Docs
 
