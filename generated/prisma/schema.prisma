@@ -1,0 +1,403 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CommunityType {
+  General
+  Campus
+  Faculty
+  Course
+  Unit
+  Interest_Group
+  Club_Society
+}
+
+enum PostContentType {
+  Text
+  Image
+  Link
+  Video
+}
+
+enum VoteType {
+  Upvote
+  Downvote
+}
+
+enum MembershipRole {
+  Member
+  Moderator
+  Admin
+}
+
+enum EnrollmentStatus {
+  Enrolled
+  Completed
+  Withdrawn
+}
+
+enum NotificationType {
+  New_Comment_Reply
+  Post_Reply
+  Mention_In_Post
+  Mention_In_Comment
+  New_Post_In_Community
+  Upvote_Post
+  Upvote_Comment
+  Community_Invite
+  Moderator_Action
+}
+
+model User {
+  user_id             String   @id @default(cuid())
+  monash_email        String   @unique
+  username            String   @unique
+  password_hash       String
+  first_name          String?
+  last_name           String?
+  profile_picture_url String?
+  bio                 String?
+  karma_points        Int      @default(0)
+  year_of_study       Int?
+  is_verified_student Boolean  @default(false)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  campus_id  String?
+  campus     Campus?  @relation(fields: [campus_id], references: [campus_id])
+  faculty_id String?
+  faculty    Faculty? @relation(fields: [faculty_id], references: [faculty_id])
+  course_id  String?
+  course     Course?  @relation(fields: [course_id], references: [course_id])
+
+  created_communities    Community[]           @relation("CommunityCreator")
+  posts                  Post[]
+  comments               Comment[]
+  votes                  Vote[]
+  memberships            CommunityMembership[]
+  moderated_communities  Moderator[]
+  unit_enrollments       UserUnitEnrollment[]
+  saved_content          SavedContent[]
+  notifications_received Notification[]        @relation("RecipientNotifications")
+  notifications_sent     Notification[]        @relation("SenderNotifications")
+
+  @@index([campus_id])
+  @@index([faculty_id])
+  @@index([course_id])
+  @@index([created_at])
+  @@map("users")
+}
+
+model Campus {
+  campus_id        String   @id @default(cuid())
+  campus_name      String   @unique
+  location_details String?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  users       User[]
+  communities Community[] @relation("CampusCommunities")
+
+  @@index([created_at])
+  @@map("campuses")
+}
+
+model Faculty {
+  faculty_id           String   @id @default(cuid())
+  faculty_name         String   @unique
+  faculty_abbreviation String?
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+
+  users       User[]
+  courses     Course[]
+  units       Unit[]
+  communities Community[] @relation("FacultyCommunities")
+
+  @@index([created_at])
+  @@map("faculties")
+}
+
+model Course {
+  course_id          String   @id @default(cuid())
+  course_code        String   @unique
+  course_name        String
+  course_description String?
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  faculty_id  String
+  faculty     Faculty     @relation(fields: [faculty_id], references: [faculty_id])
+  users       User[]
+  communities Community[] @relation("CourseCommunities")
+
+  @@index([faculty_id])
+  @@index([created_at])
+  @@map("courses")
+}
+
+model Unit {
+  unit_id          String   @id @default(cuid())
+  unit_code        String   @unique
+  unit_name        String
+  unit_description String?
+  semester_offered String?
+  year_level       Int?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  faculty_id String?
+  faculty    Faculty? @relation(fields: [faculty_id], references: [faculty_id])
+
+  communities      Community[]          @relation("UnitCommunities")
+  user_enrollments UserUnitEnrollment[]
+
+  @@index([faculty_id])
+  @@index([created_at])
+  @@map("units")
+}
+
+model Community {
+  community_id      String        @id @default(cuid())
+  name              String        @unique
+  display_name      String
+  description       String?
+  community_type    CommunityType @default(General)
+  profile_image_url String?
+  banner_image_url  String?
+  is_private        Boolean       @default(false)
+  rules             String?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  creator_id String
+  creator    User   @relation("CommunityCreator", fields: [creator_id], references: [user_id])
+
+  related_campus_id String?
+  related_campus    Campus? @relation("CampusCommunities", fields: [related_campus_id], references: [campus_id])
+
+  related_faculty_id String?
+  related_faculty    Faculty? @relation("FacultyCommunities", fields: [related_faculty_id], references: [faculty_id])
+
+  related_course_id String?
+  related_course    Course? @relation("CourseCommunities", fields: [related_course_id], references: [course_id])
+
+  related_unit_id String?
+  related_unit    Unit?   @relation("UnitCommunities", fields: [related_unit_id], references: [unit_id])
+
+  posts         Post[]
+  members       CommunityMembership[]
+  moderators    Moderator[]
+  notifications Notification[]        @relation("CommunityNotifications")
+
+  @@index([creator_id])
+  @@index([related_campus_id])
+  @@index([related_faculty_id])
+  @@index([related_course_id])
+  @@index([related_unit_id])
+  @@index([community_type])
+  @@index([created_at])
+  @@map("communities")
+}
+
+model Post {
+  post_id      String          @id @default(cuid())
+  title        String
+  content_type PostContentType
+  text_content String?
+  media_url    String?
+  upvotes      Int             @default(0)
+  downvotes    Int             @default(0)
+  score        Int             @default(0)
+  flair_text   String?
+  is_stickied  Boolean         @default(false)
+  is_locked    Boolean         @default(false)
+  is_deleted   Boolean         @default(false)
+  created_at   DateTime        @default(now())
+  updated_at   DateTime        @updatedAt
+
+  user_id String
+  author  User   @relation(fields: [user_id], references: [user_id])
+
+  community_id String
+  community    Community @relation(fields: [community_id], references: [community_id])
+
+  comments       Comment[]
+  votes          Vote[]
+  saved_by_users SavedContent[]
+  notifications  Notification[] @relation("PostNotifications")
+
+  @@index([user_id])
+  @@index([community_id])
+  @@index([created_at])
+  @@index([score])
+  @@index([is_deleted])
+  @@map("posts")
+}
+
+model Comment {
+  comment_id String   @id @default(cuid())
+  content    String
+  upvotes    Int      @default(0)
+  downvotes  Int      @default(0)
+  score      Int      @default(0)
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  post_id String
+  post    Post   @relation(fields: [post_id], references: [post_id])
+
+  user_id String
+  author  User   @relation(fields: [user_id], references: [user_id])
+
+  parent_comment_id String?
+  parent_comment    Comment?  @relation("CommentReplies", fields: [parent_comment_id], references: [comment_id], onDelete: NoAction, onUpdate: NoAction)
+  replies           Comment[] @relation("CommentReplies")
+
+  votes          Vote[]
+  saved_by_users SavedContent[]
+  notifications  Notification[] @relation("CommentNotifications")
+
+  @@index([post_id])
+  @@index([user_id])
+  @@index([parent_comment_id])
+  @@index([created_at])
+  @@index([score])
+  @@index([is_deleted])
+  @@map("comments")
+}
+
+model Vote {
+  vote_id    String   @id @default(cuid())
+  vote_type  VoteType
+  created_at DateTime @default(now())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [user_id])
+
+  post_id String?
+  post    Post?   @relation(fields: [post_id], references: [post_id])
+
+  comment_id String?
+  comment    Comment? @relation(fields: [comment_id], references: [comment_id])
+
+  @@unique([user_id, post_id], name: "UserPostVote")
+  @@unique([user_id, comment_id], name: "UserCommentVote")
+  @@index([post_id])
+  @@index([comment_id])
+  @@map("votes")
+}
+
+model CommunityMembership {
+  membership_id String         @id @default(cuid())
+  role          MembershipRole @default(Member)
+  joined_at     DateTime       @default(now())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [user_id])
+
+  community_id String
+  community    Community @relation(fields: [community_id], references: [community_id])
+
+  @@unique([user_id, community_id])
+  @@index([user_id])
+  @@index([community_id])
+  @@map("community_memberships")
+}
+
+model Moderator {
+  moderator_id String   @id @default(cuid())
+  permissions  Json?
+  appointed_at DateTime @default(now())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [user_id])
+
+  community_id String
+  community    Community @relation(fields: [community_id], references: [community_id])
+
+  @@unique([user_id, community_id])
+  @@index([user_id])
+  @@index([community_id])
+  @@map("moderators")
+}
+
+model UserUnitEnrollment {
+  enrollment_id       String           @id @default(cuid())
+  enrollment_year     Int
+  enrollment_semester String
+  status              EnrollmentStatus @default(Enrolled)
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [user_id])
+
+  unit_id String
+  unit    Unit   @relation(fields: [unit_id], references: [unit_id])
+
+  @@unique([user_id, unit_id, enrollment_year, enrollment_semester])
+  @@index([user_id])
+  @@index([unit_id])
+  @@map("user_unit_enrollments")
+}
+
+model SavedContent {
+  saved_id String   @id @default(cuid())
+  saved_at DateTime @default(now())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [user_id])
+
+  post_id String?
+  post    Post?   @relation(fields: [post_id], references: [post_id])
+
+  comment_id String?
+  comment    Comment? @relation(fields: [comment_id], references: [comment_id])
+
+  @@unique([user_id, post_id], name: "UserSavedPost")
+  @@unique([user_id, comment_id], name: "UserSavedComment")
+  @@index([user_id])
+  @@index([post_id])
+  @@index([comment_id])
+  @@map("saved_content")
+}
+
+model Notification {
+  notification_id String           @id @default(cuid())
+  type            NotificationType
+  content_preview String?
+  is_read         Boolean          @default(false)
+  created_at      DateTime         @default(now())
+
+  recipient_user_id String
+  recipient         User   @relation("RecipientNotifications", fields: [recipient_user_id], references: [user_id])
+
+  sender_user_id String?
+  sender         User?   @relation("SenderNotifications", fields: [sender_user_id], references: [user_id])
+
+  related_post_id String?
+  related_post    Post?   @relation("PostNotifications", fields: [related_post_id], references: [post_id])
+
+  related_comment_id String?
+  related_comment    Comment? @relation("CommentNotifications", fields: [related_comment_id], references: [comment_id])
+
+  related_community_id String?
+  related_community    Community? @relation("CommunityNotifications", fields: [related_community_id], references: [community_id])
+
+  @@index([recipient_user_id])
+  @@index([sender_user_id])
+  @@index([related_post_id])
+  @@index([related_comment_id])
+  @@index([related_community_id])
+  @@index([type])
+  @@index([is_read])
+  @@index([created_at])
+  @@index([recipient_user_id, is_read, created_at(sort: Desc)])
+  @@map("notifications")
+}

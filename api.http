@@ -1,0 +1,15 @@
+POST http://localhost:3000/auth/signin
+
+### Signup Request
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "adityatripathi.at04@gmail.com",
+  "password": "1234567890",
+  "firstName": "Aditya",
+  "lastName": "Tripathi"
+}
+
+
+###
