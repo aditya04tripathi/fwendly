@@ -7,9 +7,9 @@ export class PrismaService extends PrismaClient {
     super({
       datasources: {
         db: {
-          url: "postgresql://aditya:toor@localhost:5432/dev_db?schema=public",
-        }
-      }
+          url: 'postgresql://aditya:toor@localhost:5432/dev_db?schema=public',
+        },
+      },
     });
   }
 }

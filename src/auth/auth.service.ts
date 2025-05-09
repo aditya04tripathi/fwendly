@@ -1,4 +1,4 @@
-import { Header, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto, SignUpDto } from './dto';
 import * as argon from 'argon2';
@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async signin(dto: SignInDto) {
     const { email, password } = dto;
@@ -14,14 +14,14 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: {
         monash_email: email,
-      }
+      },
     });
 
     if (!user) {
       return {
         okay: false,
         msg: 'User not found',
-      }
+      };
     }
 
     const passwordMatches = await argon.verify(user.password_hash, password);
@@ -29,10 +29,10 @@ export class AuthService {
       return {
         okay: false,
         msg: 'Invalid password',
-      }
+      };
     }
 
-    const token = jwt.sign(user, "supersecretkey", {
+    const token = jwt.sign(user, 'supersecretkey', {
       expiresIn: '1h',
     });
 
@@ -63,22 +63,22 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: {
         monash_email: email,
-      }
+      },
     });
 
     if (!user) {
       return {
         okay: false,
         msg: 'User not found',
-      }
+      };
     }
 
-    const isValidToken = await jwt.verify(token, "supersecretkey");
+    const isValidToken = jwt.verify(token, 'supersecretkey');
     if (!isValidToken) {
       return {
         okay: false,
         msg: 'Invalid token',
-      }
+      };
     }
 
     const hash = await argon.hash(newPassword);
@@ -95,12 +95,12 @@ export class AuthService {
   }
 
   async deleteUser(token: string) {
-    const isValidToken = jwt.verify(token, "supersecretkey");
+    const isValidToken = jwt.verify(token, 'supersecretkey');
     if (!isValidToken) {
       return {
         okay: false,
         msg: 'Invalid token',
-      }
+      };
     }
 
     const user = await this.prisma.user.findUnique({
@@ -108,14 +108,14 @@ export class AuthService {
         // @ts-expect-error monash_email is not a property of the token
         // but it is a property of the user
         monash_email: isValidToken.monash_email,
-      }
+      },
     });
 
     if (!user) {
       return {
         okay: false,
         msg: 'User not found',
-      }
+      };
     }
 
     await this.prisma.user.delete({
@@ -123,7 +123,7 @@ export class AuthService {
         // @ts-expect-error monash_email is not a property of the token
         // but it is a property of the user
         monash_email: isValidToken.monash_email,
-      }
+      },
     });
 
     return { okay: true, msg: 'User deleted successfully' };

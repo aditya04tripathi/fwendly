@@ -4,22 +4,23 @@ import { SignUpDto, SignInDto, ForgotPasswordDto } from './dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {}
 
-  @Post("signin")
+  @Post('signin')
   signin(@Body() dto: SignInDto) {
     return this.authService.signin(dto);
   }
 
-  @Post("signup")
+  @Post('signup')
   signup(@Body() dto: SignUpDto) {
     return this.authService.signup(dto);
   }
 
-  @Post("forgot-password")
-  forgotPassword(@Headers() headers: Record<string, string>, @Body() dto: ForgotPasswordDto) {
+  @Post('forgot-password')
+  forgotPassword(
+    @Headers() headers: Record<string, string>,
+    @Body() dto: ForgotPasswordDto,
+  ) {
     const authHeader = headers['authorization'];
     const token = authHeader ? authHeader.split(' ')[1] : null;
 
@@ -30,7 +31,7 @@ export class AuthController {
     return this.authService.forgotPassword(token, dto.email, dto.newPassword);
   }
 
-  @Delete("delete-account")
+  @Delete('delete-account')
   deleteAccount(@Headers() headers: Record<string, string>) {
     const authHeader = headers['authorization'];
     const token = authHeader ? authHeader.split(' ')[1] : null;
@@ -39,7 +40,7 @@ export class AuthController {
       return {
         okay: false,
         msg: 'Authorization token is missing',
-      }
+      };
     }
 
     return this.authService.deleteUser(token);

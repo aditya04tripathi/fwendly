@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Primary Key Strategy**:
   - Standardized primary keys for most entities to use `String @id @default(cuid())` (e.g., `Campus.campus_id`, `Post.post_id`).
   - **Exception for User**: Modified the `User.user_id` primary key to be `Int @id @default(0)`. Consequently, all foreign keys referencing `User.user_id` in other models (e.g., `Post.user_id`, `Community.creator_id`) were updated to `Int`. This change was made after an initial CUID string setup for `User.user_id`.
+- **User Model**: Clarified/updated that `first_name`, `last_name`, and `year_of_study` fields are non-nullable.
 
 ### Docs
 
