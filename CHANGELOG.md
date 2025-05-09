@@ -12,11 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial commit with basic NestJS setup.
-- Prisma schema definition for core entities: User, Campus, Faculty, Course, Unit, Community, Post, Comment, Vote, CommunityMembership, Moderator, UserUnitEnrollment, SavedContent, Notification.
-- Enums for various types: CommunityType, PostContentType, VoteType, MembershipRole, EnrollmentStatus, NotificationType.
+- **Database Schema (Prisma)**:
+  - Defined core entities: `User`, `Campus`, `Faculty`, `Course`, `Unit`, `Community`, `Post`, `Comment`, `Vote`, `CommunityMembership`, `Moderator`, `UserUnitEnrollment`, `SavedContent`, `Notification`.
+  - Implemented various enums (`CommunityType`, `PostContentType`, `VoteType`, `MembershipRole`, `EnrollmentStatus`, `NotificationType`) to govern specific field values.
+  - Established relationships between entities using foreign keys.
+  - Mapped Prisma models to PostgreSQL table names (e.g., `User` to `users`).
+  - Added database indexes on foreign keys, frequently filtered fields, and timestamps to optimize query performance.
 
 ### Changed
 
-- Updated all ID fields in Prisma schema to use `String @id @default(cuid())` instead of `Int @id @default(autoincrement())`.
-- Mapped Prisma models to database tables using `@@map`.
-- Added database indexes to foreign keys, frequently filtered fields, and timestamps in Prisma schema for improved query performance.
+- **Primary Key Strategy**:
+  - Standardized primary keys for most entities to use `String @id @default(cuid())` (e.g., `Campus.campus_id`, `Post.post_id`).
+  - **Exception for User**: Modified the `User.user_id` primary key to be `Int @id @default(0)`. Consequently, all foreign keys referencing `User.user_id` in other models (e.g., `Post.user_id`, `Community.creator_id`) were updated to `Int`. This change was made after an initial CUID string setup for `User.user_id`.
+
+### Docs
+
+- Updated `README.md` to include detailed nullability (nullable/not nullable) and default value information for all key fields in the database schema entities.
