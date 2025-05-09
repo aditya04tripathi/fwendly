@@ -1,15 +1,38 @@
+### Signin Request
 POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "atri0048@student.monash.edu",
+  "password": "1234567890"
+}
 
 ### Signup Request
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "adityatripathi.at04@gmail.com",
+  "studentId": 35096985,
+  "monashEmail": "atri0048@student.monash.edu",
   "password": "1234567890",
   "firstName": "Aditya",
-  "lastName": "Tripathi"
+  "lastName": "Tripathi",
+  "yearOfStudy": 3
 }
 
+### Signup Request
+POST http://localhost:3000/auth/forgot-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNTA5Njk4NSwibW9uYXNoX2VtYWlsIjoiYXRyaTAwNDhAc3R1ZGVudC5tb25hc2guZWR1IiwidXNlcm5hbWUiOiJhdHJpMDA0OCIsInBhc3N3b3JkX2hhc2giOiIkYXJnb24yaWQkdj0xOSRtPTY1NTM2LHQ9MyxwPTQkOGRlSVRxTmpOMUJkNVpqZlQ1dFVSdyRncmwvN0Y5TVhaL0FBMXZSbWVQOFVOc2ovMFVabFhmNjlmQUZiNXpnWkZRIiwiZmlyc3RfbmFtZSI6IkFkaXR5YSIsImxhc3RfbmFtZSI6IlRyaXBhdGhpIiwicHJvZmlsZV9waWN0dXJlX3VybCI6bnVsbCwiYmlvIjpudWxsLCJrYXJtYV9wb2ludHMiOjAsInllYXJfb2Zfc3R1ZHkiOjMsImlzX3ZlcmlmaWVkX3N0dWRlbnQiOmZhbHNlLCJjcmVhdGVkX2F0IjoiMjAyNS0wNS0wOVQwODo1OToyNi41NjFaIiwidXBkYXRlZF9hdCI6IjIwMjUtMDUtMDlUMDg6NTk6MjYuNTYxWiIsImNhbXB1c19pZCI6bnVsbCwiZmFjdWx0eV9pZCI6bnVsbCwiY291cnNlX2lkIjpudWxsLCJpYXQiOjE3NDY3ODE0NzEsImV4cCI6MTc0Njc4NTA3MX0.FVa2mmci8_AVhFt_EoGUPBNOu3gAuuNE1wkQml8O7UU
 
-###
+{
+  "email": "atri0048@student.monash.edu",
+  "newPassword": "1234567890"
+}
+
+### Delete Request
+DELETE http://localhost:3000/auth/delete-account
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNTA5Njk4NSwibW9uYXNoX2VtYWlsIjoiYXRyaTAwNDhAc3R1ZGVudC5tb25hc2guZWR1IiwidXNlcm5hbWUiOiJhdHJpMDA0OCIsInBhc3N3b3JkX2hhc2giOiIkYXJnb24yaWQkdj0xOSRtPTY1NTM2LHQ9MyxwPTQkOGRlSVRxTmpOMUJkNVpqZlQ1dFVSdyRncmwvN0Y5TVhaL0FBMXZSbWVQOFVOc2ovMFVabFhmNjlmQUZiNXpnWkZRIiwiZmlyc3RfbmFtZSI6IkFkaXR5YSIsImxhc3RfbmFtZSI6IlRyaXBhdGhpIiwicHJvZmlsZV9waWN0dXJlX3VybCI6bnVsbCwiYmlvIjpudWxsLCJrYXJtYV9wb2ludHMiOjAsInllYXJfb2Zfc3R1ZHkiOjMsImlzX3ZlcmlmaWVkX3N0dWRlbnQiOmZhbHNlLCJjcmVhdGVkX2F0IjoiMjAyNS0wNS0wOVQwODo1OToyNi41NjFaIiwidXBkYXRlZF9hdCI6IjIwMjUtMDUtMDlUMDg6NTk6MjYuNTYxWiIsImNhbXB1c19pZCI6bnVsbCwiZmFjdWx0eV9pZCI6bnVsbCwiY291cnNlX2lkIjpudWxsLCJpYXQiOjE3NDY3ODE0NzEsImV4cCI6MTc0Njc4NTA3MX0.FVa2mmci8_AVhFt_EoGUPBNOu3gAuuNE1wkQml8O7UU
+
+{}

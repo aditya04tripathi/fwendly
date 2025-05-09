@@ -55,7 +55,7 @@ enum NotificationType {
 }
 
 model User {
-  user_id             String   @id @default(cuid())
+  user_id             Int      @id @default(0)
   monash_email        String   @unique
   username            String   @unique
   password_hash       String
@@ -176,8 +176,8 @@ model Community {
   created_at        DateTime      @default(now())
   updated_at        DateTime      @updatedAt
 
-  creator_id String
-  creator    User   @relation("CommunityCreator", fields: [creator_id], references: [user_id])
+  creator_id Int
+  creator    User @relation("CommunityCreator", fields: [creator_id], references: [user_id])
 
   related_campus_id String?
   related_campus    Campus? @relation("CampusCommunities", fields: [related_campus_id], references: [campus_id])
@@ -222,8 +222,8 @@ model Post {
   created_at   DateTime        @default(now())
   updated_at   DateTime        @updatedAt
 
-  user_id String
-  author  User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  author  User @relation(fields: [user_id], references: [user_id])
 
   community_id String
   community    Community @relation(fields: [community_id], references: [community_id])
@@ -254,8 +254,8 @@ model Comment {
   post_id String
   post    Post   @relation(fields: [post_id], references: [post_id])
 
-  user_id String
-  author  User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  author  User @relation(fields: [user_id], references: [user_id])
 
   parent_comment_id String?
   parent_comment    Comment?  @relation("CommentReplies", fields: [parent_comment_id], references: [comment_id], onDelete: NoAction, onUpdate: NoAction)
@@ -279,8 +279,8 @@ model Vote {
   vote_type  VoteType
   created_at DateTime @default(now())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   post_id String?
   post    Post?   @relation(fields: [post_id], references: [post_id])
@@ -300,8 +300,8 @@ model CommunityMembership {
   role          MembershipRole @default(Member)
   joined_at     DateTime       @default(now())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   community_id String
   community    Community @relation(fields: [community_id], references: [community_id])
@@ -317,8 +317,8 @@ model Moderator {
   permissions  Json?
   appointed_at DateTime @default(now())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   community_id String
   community    Community @relation(fields: [community_id], references: [community_id])
@@ -335,8 +335,8 @@ model UserUnitEnrollment {
   enrollment_semester String
   status              EnrollmentStatus @default(Enrolled)
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   unit_id String
   unit    Unit   @relation(fields: [unit_id], references: [unit_id])
@@ -351,8 +351,8 @@ model SavedContent {
   saved_id String   @id @default(cuid())
   saved_at DateTime @default(now())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   post_id String?
   post    Post?   @relation(fields: [post_id], references: [post_id])
@@ -375,11 +375,11 @@ model Notification {
   is_read         Boolean          @default(false)
   created_at      DateTime         @default(now())
 
-  recipient_user_id String
-  recipient         User   @relation("RecipientNotifications", fields: [recipient_user_id], references: [user_id])
+  recipient_user_id Int
+  recipient         User @relation("RecipientNotifications", fields: [recipient_user_id], references: [user_id])
 
-  sender_user_id String?
-  sender         User?   @relation("SenderNotifications", fields: [sender_user_id], references: [user_id])
+  sender_user_id Int?
+  sender         User? @relation("SenderNotifications", fields: [sender_user_id], references: [user_id])
 
   related_post_id String?
   related_post    Post?   @relation("PostNotifications", fields: [related_post_id], references: [post_id])

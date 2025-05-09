@@ -55,16 +55,16 @@ enum NotificationType {
 }
 
 model User {
-  user_id             String   @id @default(cuid())
+user_id             Int   @id @default(0)
   monash_email        String   @unique
   username            String   @unique
   password_hash       String
-  first_name          String?
-  last_name           String?
+  first_name          String
+  last_name           String
   profile_picture_url String?
   bio                 String?
   karma_points        Int      @default(0)
-  year_of_study       Int?
+  year_of_study       Int
   is_verified_student Boolean  @default(false)
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
@@ -176,7 +176,7 @@ model Community {
   created_at        DateTime      @default(now())
   updated_at        DateTime      @updatedAt
 
-  creator_id String
+  creator_id Int
   creator    User   @relation("CommunityCreator", fields: [creator_id], references: [user_id])
 
   related_campus_id String?
@@ -222,7 +222,7 @@ model Post {
   created_at   DateTime        @default(now())
   updated_at   DateTime        @updatedAt
 
-  user_id String
+  user_id Int
   author  User   @relation(fields: [user_id], references: [user_id])
 
   community_id String
@@ -254,7 +254,7 @@ model Comment {
   post_id String
   post    Post   @relation(fields: [post_id], references: [post_id])
 
-  user_id String
+  user_id Int
   author  User   @relation(fields: [user_id], references: [user_id])
 
   parent_comment_id String?
@@ -279,7 +279,7 @@ model Vote {
   vote_type  VoteType
   created_at DateTime @default(now())
 
-  user_id String
+  user_id Int
   user    User   @relation(fields: [user_id], references: [user_id])
 
   post_id String?
@@ -300,7 +300,7 @@ model CommunityMembership {
   role          MembershipRole @default(Member)
   joined_at     DateTime       @default(now())
 
-  user_id String
+  user_id Int
   user    User   @relation(fields: [user_id], references: [user_id])
 
   community_id String
@@ -317,7 +317,7 @@ model Moderator {
   permissions  Json?
   appointed_at DateTime @default(now())
 
-  user_id String
+  user_id Int
   user    User   @relation(fields: [user_id], references: [user_id])
 
   community_id String
@@ -335,7 +335,7 @@ model UserUnitEnrollment {
   enrollment_semester String
   status              EnrollmentStatus @default(Enrolled)
 
-  user_id String
+  user_id Int
   user    User   @relation(fields: [user_id], references: [user_id])
 
   unit_id String
@@ -351,7 +351,7 @@ model SavedContent {
   saved_id String   @id @default(cuid())
   saved_at DateTime @default(now())
 
-  user_id String
+  user_id Int
   user    User   @relation(fields: [user_id], references: [user_id])
 
   post_id String?
@@ -375,10 +375,10 @@ model Notification {
   is_read         Boolean          @default(false)
   created_at      DateTime         @default(now())
 
-  recipient_user_id String
+  recipient_user_id Int
   recipient         User   @relation("RecipientNotifications", fields: [recipient_user_id], references: [user_id])
 
-  sender_user_id String?
+  sender_user_id Int?
   sender         User?   @relation("SenderNotifications", fields: [sender_user_id], references: [user_id])
 
   related_post_id String?

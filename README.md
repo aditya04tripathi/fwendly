@@ -29,22 +29,162 @@
 
 The database schema is defined using Prisma and includes the following entities:
 
-*   **User**: Represents users of the application. Stores profile information, authentication details, and associations with other entities like posts, comments, communities, etc.
-*   **Campus**: Represents physical university campuses.
-*   **Faculty**: Represents academic faculties within the university.
-*   **Course**: Represents academic courses offered by faculties.
-*   **Unit**: Represents individual units of study within courses or faculties.
-*   **Community**: Represents user-created communities. These can be general or linked to specific campuses, faculties, courses, or units.
-*   **Post**: Represents posts made by users within communities. Posts can be text, images, links, or videos.
-*   **Comment**: Represents comments made by users on posts. Comments can be nested.
-*   **Vote**: Represents upvotes or downvotes on posts or comments by users.
-*   **CommunityMembership**: Manages users' membership status and roles (member, moderator, admin) within communities.
-*   **Moderator**: Defines users who have moderation privileges within specific communities.
-*   **UserUnitEnrollment**: Tracks user enrollment in specific units, including year, semester, and status.
-*   **SavedContent**: Allows users to save posts or comments for later viewing.
-*   **Notification**: Stores notifications for users related to various events like new comments, post replies, mentions, upvotes, community invites, etc.
+- **User**: Represents users of the application. Stores profile information, authentication details, and associations with other entities like posts, comments, communities, etc.
+- **Campus**: Represents physical university campuses.
+- **Faculty**: Represents academic faculties within the university.
+- **Course**: Represents academic courses offered by faculties.
+- **Unit**: Represents individual units of study within courses or faculties.
+- **Community**: Represents user-created communities. These can be general or linked to specific campuses, faculties, courses, or units.
+- **Post**: Represents posts made by users within communities. Posts can be text, images, links, or videos.
+- **Comment**: Represents comments made by users on posts. Comments can be nested.
+- **Vote**: Represents upvotes or downvotes on posts or comments by users.
+- **CommunityMembership**: Manages users' membership status and roles (member, moderator, admin) within communities.
+- **Moderator**: Defines users who have moderation privileges within specific communities.
+- **UserUnitEnrollment**: Tracks user enrollment in specific units, including year, semester, and status.
+- **SavedContent**: Allows users to save posts or comments for later viewing.
+- **Notification**: Stores notifications for users related to various events like new comments, post replies, mentions, upvotes, community invites, etc.
 
 The schema utilizes CUIDs for primary keys and includes various enums to define types for entities like `CommunityType`, `PostContentType`, `VoteType`, etc. Indexes are defined on frequently queried fields and foreign keys to optimize database performance.
+
+### Detailed Entity Descriptions
+
+Below is a more detailed breakdown of each entity in the Prisma schema:
+
+- **`User`**
+
+  - **Purpose**: Represents users of the application.
+  - **Key Fields**: `user_id` (Primary Key, CUID, Not Nullable), `monash_email` (Unique, Not Nullable), `username` (Unique, Not Nullable), `password_hash` (Not Nullable), `first_name` (Nullable), `last_name` (Nullable), `profile_picture_url` (Nullable), `bio` (Nullable), `karma_points` (Not Nullable, Default: 0), `year_of_study` (Nullable), `is_verified_student` (Not Nullable, Default: false).
+  - **Relationships**:
+    - Can be associated with a `Campus`, `Faculty`, and `Course`.
+    - Creator of multiple `Community` entities.
+    - Author of multiple `Post` and `Comment` entities.
+    - Can have multiple `Vote` entries.
+    - Associated with multiple `CommunityMembership` records.
+    - Can be a `Moderator` in multiple communities.
+    - Can have multiple `UserUnitEnrollment` records.
+    - Can save multiple `SavedContent` items.
+    - Recipient and sender of `Notification` entities.
+
+- **`Campus`**
+
+  - **Purpose**: Represents physical university campuses.
+  - **Key Fields**: `campus_id` (Primary Key, CUID, Not Nullable), `campus_name` (Unique, Not Nullable), `location_details` (Nullable).
+  - **Relationships**:
+    - Multiple `User` entities can belong to a campus.
+    - Multiple `Community` entities can be related to a campus.
+
+- **`Faculty`**
+
+  - **Purpose**: Represents academic faculties within the university.
+  - **Key Fields**: `faculty_id` (Primary Key, CUID, Not Nullable), `faculty_name` (Unique, Not Nullable), `faculty_abbreviation` (Nullable).
+  - **Relationships**:
+    - Multiple `User` entities can belong to a faculty.
+    - A faculty can have multiple `Course` and `Unit` entities.
+    - Multiple `Community` entities can be related to a faculty.
+
+- **`Course`**
+
+  - **Purpose**: Represents academic courses offered by faculties.
+  - **Key Fields**: `course_id` (Primary Key, CUID, Not Nullable), `course_code` (Unique, Not Nullable), `course_name` (Not Nullable), `course_description` (Nullable).
+  - **Relationships**:
+    - Belongs to one `Faculty`.
+    - Multiple `User` entities can be enrolled in a course.
+    - Multiple `Community` entities can be related to a course.
+
+- **`Unit`**
+
+  - **Purpose**: Represents individual units of study within courses or faculties.
+  - **Key Fields**: `unit_id` (Primary Key, CUID, Not Nullable), `unit_code` (Unique, Not Nullable), `unit_name` (Not Nullable), `unit_description` (Nullable), `semester_offered` (Nullable), `year_level` (Nullable).
+  - **Relationships**:
+    - Optionally belongs to one `Faculty`.
+    - Multiple `Community` entities can be related to a unit.
+    - Associated with multiple `UserUnitEnrollment` records.
+
+- **`Community`**
+
+  - **Purpose**: Represents user-created communities, which can be general or linked to specific academic entities.
+  - **Key Fields**: `community_id` (Primary Key, CUID, Not Nullable), `name` (Unique, Not Nullable), `display_name` (Not Nullable), `description` (Nullable), `community_type` (Enum, Not Nullable, Default: `General`), `is_private` (Not Nullable, Default: false), `rules` (Nullable).
+  - **Relationships**:
+    - Created by one `User`.
+    - Optionally related to one `Campus`, `Faculty`, `Course`, or `Unit`.
+    - Contains multiple `Post` entities.
+    - Has multiple `CommunityMembership` records.
+    - Can have multiple `Moderator` users.
+    - Source of `Notification` entities.
+
+- **`Post`**
+
+  - **Purpose**: Represents posts made by users within communities.
+  - **Key Fields**: `post_id` (Primary Key, CUID, Not Nullable), `title` (Not Nullable), `content_type` (Enum, Not Nullable), `text_content` (Nullable), `media_url` (Nullable), `upvotes` (Not Nullable, Default: 0), `downvotes` (Not Nullable, Default: 0), `score` (Not Nullable, Default: 0), `is_deleted` (Not Nullable, Default: false).
+  - **Relationships**:
+    - Authored by one `User`.
+    - Belongs to one `Community`.
+    - Can have multiple `Comment` entities.
+    - Can receive multiple `Vote` entries.
+    - Can be saved by multiple users via `SavedContent`.
+    - Can trigger `Notification` entities.
+
+- **`Comment`**
+
+  - **Purpose**: Represents comments made by users on posts; supports nested replies.
+  - **Key Fields**: `comment_id` (Primary Key, CUID, Not Nullable), `content` (Not Nullable), `upvotes` (Not Nullable, Default: 0), `downvotes` (Not Nullable, Default: 0), `score` (Not Nullable, Default: 0), `is_deleted` (Not Nullable, Default: false).
+  - **Relationships**:
+    - Belongs to one `Post`.
+    - Authored by one `User`.
+    - Can have a `parent_comment` for threaded replies.
+    - Can receive multiple `Vote` entries.
+    - Can be saved by multiple users via `SavedContent`.
+    - Can trigger `Notification` entities.
+
+- **`Vote`**
+
+  - **Purpose**: Represents upvotes or downvotes on posts or comments.
+  - **Key Fields**: `vote_id` (Primary Key, CUID, Not Nullable), `vote_type` (Enum, Not Nullable).
+  - **Relationships**:
+    - Made by one `User`.
+    - Associated with either one `Post` or one `Comment`.
+  - **Constraints**: A user can vote only once per post (`UserPostVote`) and once per comment (`UserCommentVote`).
+
+- **`CommunityMembership`**
+
+  - **Purpose**: Manages users' membership status and roles within communities.
+  - **Key Fields**: `membership_id` (Primary Key, CUID, Not Nullable), `role` (Enum, Not Nullable, Default: `Member`).
+  - **Relationships**:
+    - Links one `User` to one `Community`.
+  - **Constraints**: A user can have only one membership record per community.
+
+- **`Moderator`**
+
+  - **Purpose**: Defines users who have moderation privileges within specific communities.
+  - **Key Fields**: `moderator_id` (Primary Key, CUID, Not Nullable), `permissions` (JSON, Nullable).
+  - **Relationships**:
+    - Links one `User` (the moderator) to one `Community`.
+  - **Constraints**: A user can have only one moderator record per community.
+
+- **`UserUnitEnrollment`**
+
+  - **Purpose**: Tracks user enrollment in specific units, including academic session details.
+  - **Key Fields**: `enrollment_id` (Primary Key, CUID, Not Nullable), `enrollment_year` (Not Nullable), `enrollment_semester` (Not Nullable), `status` (Enum, Not Nullable, Default: `Enrolled`).
+  - **Relationships**:
+    - Links one `User` to one `Unit`.
+  - **Constraints**: A user can have only one enrollment record per unit, year, and semester.
+
+- **`SavedContent`**
+
+  - **Purpose**: Allows users to save posts or comments for later viewing.
+  - **Key Fields**: `saved_id` (Primary Key, CUID, Not Nullable), `saved_at` (Not Nullable, Default: now()).
+  - **Relationships**:
+    - Belongs to one `User`.
+    - Associated with either one `Post` or one `Comment`.
+  - **Constraints**: A user can save a specific post (`UserSavedPost`) or comment (`UserSavedComment`) only once.
+
+- **`Notification`**
+  - **Purpose**: Stores notifications for users related to various application events.
+  - **Key Fields**: `notification_id` (Primary Key, CUID, Not Nullable), `type` (Enum, Not Nullable), `content_preview` (Nullable), `is_read` (Not Nullable, Default: false).
+  - **Relationships**:
+    - Sent to one `User` (recipient).
+    - Optionally sent by another `User` (sender).
+    - Optionally related to a `Post`, `Comment`, or `Community`.
 
 ## Project setup
 

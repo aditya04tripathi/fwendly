@@ -2621,17 +2621,19 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
+    user_id: number | null
     karma_points: number | null
     year_of_study: number | null
   }
 
   export type UserSumAggregateOutputType = {
+    user_id: number | null
     karma_points: number | null
     year_of_study: number | null
   }
 
   export type UserMinAggregateOutputType = {
-    user_id: string | null
+    user_id: number | null
     monash_email: string | null
     username: string | null
     password_hash: string | null
@@ -2650,7 +2652,7 @@ export namespace Prisma {
   }
 
   export type UserMaxAggregateOutputType = {
-    user_id: string | null
+    user_id: number | null
     monash_email: string | null
     username: string | null
     password_hash: string | null
@@ -2690,11 +2692,13 @@ export namespace Prisma {
 
 
   export type UserAvgAggregateInputType = {
+    user_id?: true
     karma_points?: true
     year_of_study?: true
   }
 
   export type UserSumAggregateInputType = {
+    user_id?: true
     karma_points?: true
     year_of_study?: true
   }
@@ -2844,7 +2848,7 @@ export namespace Prisma {
   }
 
   export type UserGroupByOutputType = {
-    user_id: string
+    user_id: number
     monash_email: string
     username: string
     password_hash: string
@@ -3023,7 +3027,7 @@ export namespace Prisma {
       notifications_sent: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      user_id: string
+      user_id: number
       monash_email: string
       username: string
       password_hash: string
@@ -3475,7 +3479,7 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly user_id: FieldRef<"User", 'String'>
+    readonly user_id: FieldRef<"User", 'Int'>
     readonly monash_email: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly password_hash: FieldRef<"User", 'String'>
@@ -8823,8 +8827,18 @@ export namespace Prisma {
 
   export type AggregateCommunity = {
     _count: CommunityCountAggregateOutputType | null
+    _avg: CommunityAvgAggregateOutputType | null
+    _sum: CommunitySumAggregateOutputType | null
     _min: CommunityMinAggregateOutputType | null
     _max: CommunityMaxAggregateOutputType | null
+  }
+
+  export type CommunityAvgAggregateOutputType = {
+    creator_id: number | null
+  }
+
+  export type CommunitySumAggregateOutputType = {
+    creator_id: number | null
   }
 
   export type CommunityMinAggregateOutputType = {
@@ -8839,7 +8853,7 @@ export namespace Prisma {
     rules: string | null
     created_at: Date | null
     updated_at: Date | null
-    creator_id: string | null
+    creator_id: number | null
     related_campus_id: string | null
     related_faculty_id: string | null
     related_course_id: string | null
@@ -8858,7 +8872,7 @@ export namespace Prisma {
     rules: string | null
     created_at: Date | null
     updated_at: Date | null
-    creator_id: string | null
+    creator_id: number | null
     related_campus_id: string | null
     related_faculty_id: string | null
     related_course_id: string | null
@@ -8885,6 +8899,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type CommunityAvgAggregateInputType = {
+    creator_id?: true
+  }
+
+  export type CommunitySumAggregateInputType = {
+    creator_id?: true
+  }
 
   export type CommunityMinAggregateInputType = {
     community_id?: true
@@ -8982,6 +9004,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: CommunityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CommunitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: CommunityMinAggregateInputType
@@ -9012,6 +9046,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CommunityCountAggregateInputType | true
+    _avg?: CommunityAvgAggregateInputType
+    _sum?: CommunitySumAggregateInputType
     _min?: CommunityMinAggregateInputType
     _max?: CommunityMaxAggregateInputType
   }
@@ -9028,12 +9064,14 @@ export namespace Prisma {
     rules: string | null
     created_at: Date
     updated_at: Date
-    creator_id: string
+    creator_id: number
     related_campus_id: string | null
     related_faculty_id: string | null
     related_course_id: string | null
     related_unit_id: string | null
     _count: CommunityCountAggregateOutputType | null
+    _avg: CommunityAvgAggregateOutputType | null
+    _sum: CommunitySumAggregateOutputType | null
     _min: CommunityMinAggregateOutputType | null
     _max: CommunityMaxAggregateOutputType | null
   }
@@ -9201,7 +9239,7 @@ export namespace Prisma {
       rules: string | null
       created_at: Date
       updated_at: Date
-      creator_id: string
+      creator_id: number
       related_campus_id: string | null
       related_faculty_id: string | null
       related_course_id: string | null
@@ -9649,7 +9687,7 @@ export namespace Prisma {
     readonly rules: FieldRef<"Community", 'String'>
     readonly created_at: FieldRef<"Community", 'DateTime'>
     readonly updated_at: FieldRef<"Community", 'DateTime'>
-    readonly creator_id: FieldRef<"Community", 'String'>
+    readonly creator_id: FieldRef<"Community", 'Int'>
     readonly related_campus_id: FieldRef<"Community", 'String'>
     readonly related_faculty_id: FieldRef<"Community", 'String'>
     readonly related_course_id: FieldRef<"Community", 'String'>
@@ -10256,12 +10294,14 @@ export namespace Prisma {
     upvotes: number | null
     downvotes: number | null
     score: number | null
+    user_id: number | null
   }
 
   export type PostSumAggregateOutputType = {
     upvotes: number | null
     downvotes: number | null
     score: number | null
+    user_id: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -10279,7 +10319,7 @@ export namespace Prisma {
     is_deleted: boolean | null
     created_at: Date | null
     updated_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
@@ -10298,7 +10338,7 @@ export namespace Prisma {
     is_deleted: boolean | null
     created_at: Date | null
     updated_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
@@ -10327,12 +10367,14 @@ export namespace Prisma {
     upvotes?: true
     downvotes?: true
     score?: true
+    user_id?: true
   }
 
   export type PostSumAggregateInputType = {
     upvotes?: true
     downvotes?: true
     score?: true
+    user_id?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -10494,7 +10536,7 @@ export namespace Prisma {
     is_deleted: boolean
     created_at: Date
     updated_at: Date
-    user_id: string
+    user_id: number
     community_id: string
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
@@ -10648,7 +10690,7 @@ export namespace Prisma {
       is_deleted: boolean
       created_at: Date
       updated_at: Date
-      user_id: string
+      user_id: number
       community_id: string
     }, ExtArgs["result"]["post"]>
     composites: {}
@@ -11093,7 +11135,7 @@ export namespace Prisma {
     readonly is_deleted: FieldRef<"Post", 'Boolean'>
     readonly created_at: FieldRef<"Post", 'DateTime'>
     readonly updated_at: FieldRef<"Post", 'DateTime'>
-    readonly user_id: FieldRef<"Post", 'String'>
+    readonly user_id: FieldRef<"Post", 'Int'>
     readonly community_id: FieldRef<"Post", 'String'>
   }
     
@@ -11621,12 +11663,14 @@ export namespace Prisma {
     upvotes: number | null
     downvotes: number | null
     score: number | null
+    user_id: number | null
   }
 
   export type CommentSumAggregateOutputType = {
     upvotes: number | null
     downvotes: number | null
     score: number | null
+    user_id: number | null
   }
 
   export type CommentMinAggregateOutputType = {
@@ -11639,7 +11683,7 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     post_id: string | null
-    user_id: string | null
+    user_id: number | null
     parent_comment_id: string | null
   }
 
@@ -11653,7 +11697,7 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     post_id: string | null
-    user_id: string | null
+    user_id: number | null
     parent_comment_id: string | null
   }
 
@@ -11677,12 +11721,14 @@ export namespace Prisma {
     upvotes?: true
     downvotes?: true
     score?: true
+    user_id?: true
   }
 
   export type CommentSumAggregateInputType = {
     upvotes?: true
     downvotes?: true
     score?: true
+    user_id?: true
   }
 
   export type CommentMinAggregateInputType = {
@@ -11824,7 +11870,7 @@ export namespace Prisma {
     created_at: Date
     updated_at: Date
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id: string | null
     _count: CommentCountAggregateOutputType | null
     _avg: CommentAvgAggregateOutputType | null
@@ -11960,7 +12006,7 @@ export namespace Prisma {
       created_at: Date
       updated_at: Date
       post_id: string
-      user_id: string
+      user_id: number
       parent_comment_id: string | null
     }, ExtArgs["result"]["comment"]>
     composites: {}
@@ -12401,7 +12447,7 @@ export namespace Prisma {
     readonly created_at: FieldRef<"Comment", 'DateTime'>
     readonly updated_at: FieldRef<"Comment", 'DateTime'>
     readonly post_id: FieldRef<"Comment", 'String'>
-    readonly user_id: FieldRef<"Comment", 'String'>
+    readonly user_id: FieldRef<"Comment", 'Int'>
     readonly parent_comment_id: FieldRef<"Comment", 'String'>
   }
     
@@ -12938,15 +12984,25 @@ export namespace Prisma {
 
   export type AggregateVote = {
     _count: VoteCountAggregateOutputType | null
+    _avg: VoteAvgAggregateOutputType | null
+    _sum: VoteSumAggregateOutputType | null
     _min: VoteMinAggregateOutputType | null
     _max: VoteMaxAggregateOutputType | null
+  }
+
+  export type VoteAvgAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type VoteSumAggregateOutputType = {
+    user_id: number | null
   }
 
   export type VoteMinAggregateOutputType = {
     vote_id: string | null
     vote_type: $Enums.VoteType | null
     created_at: Date | null
-    user_id: string | null
+    user_id: number | null
     post_id: string | null
     comment_id: string | null
   }
@@ -12955,7 +13011,7 @@ export namespace Prisma {
     vote_id: string | null
     vote_type: $Enums.VoteType | null
     created_at: Date | null
-    user_id: string | null
+    user_id: number | null
     post_id: string | null
     comment_id: string | null
   }
@@ -12970,6 +13026,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type VoteAvgAggregateInputType = {
+    user_id?: true
+  }
+
+  export type VoteSumAggregateInputType = {
+    user_id?: true
+  }
 
   export type VoteMinAggregateInputType = {
     vote_id?: true
@@ -13037,6 +13101,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: VoteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VoteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: VoteMinAggregateInputType
@@ -13067,6 +13143,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: VoteCountAggregateInputType | true
+    _avg?: VoteAvgAggregateInputType
+    _sum?: VoteSumAggregateInputType
     _min?: VoteMinAggregateInputType
     _max?: VoteMaxAggregateInputType
   }
@@ -13075,10 +13153,12 @@ export namespace Prisma {
     vote_id: string
     vote_type: $Enums.VoteType
     created_at: Date
-    user_id: string
+    user_id: number
     post_id: string | null
     comment_id: string | null
     _count: VoteCountAggregateOutputType | null
+    _avg: VoteAvgAggregateOutputType | null
+    _sum: VoteSumAggregateOutputType | null
     _min: VoteMinAggregateOutputType | null
     _max: VoteMaxAggregateOutputType | null
   }
@@ -13170,7 +13250,7 @@ export namespace Prisma {
       vote_id: string
       vote_type: $Enums.VoteType
       created_at: Date
-      user_id: string
+      user_id: number
       post_id: string | null
       comment_id: string | null
     }, ExtArgs["result"]["vote"]>
@@ -13602,7 +13682,7 @@ export namespace Prisma {
     readonly vote_id: FieldRef<"Vote", 'String'>
     readonly vote_type: FieldRef<"Vote", 'VoteType'>
     readonly created_at: FieldRef<"Vote", 'DateTime'>
-    readonly user_id: FieldRef<"Vote", 'String'>
+    readonly user_id: FieldRef<"Vote", 'Int'>
     readonly post_id: FieldRef<"Vote", 'String'>
     readonly comment_id: FieldRef<"Vote", 'String'>
   }
@@ -14063,15 +14143,25 @@ export namespace Prisma {
 
   export type AggregateCommunityMembership = {
     _count: CommunityMembershipCountAggregateOutputType | null
+    _avg: CommunityMembershipAvgAggregateOutputType | null
+    _sum: CommunityMembershipSumAggregateOutputType | null
     _min: CommunityMembershipMinAggregateOutputType | null
     _max: CommunityMembershipMaxAggregateOutputType | null
+  }
+
+  export type CommunityMembershipAvgAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type CommunityMembershipSumAggregateOutputType = {
+    user_id: number | null
   }
 
   export type CommunityMembershipMinAggregateOutputType = {
     membership_id: string | null
     role: $Enums.MembershipRole | null
     joined_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
@@ -14079,7 +14169,7 @@ export namespace Prisma {
     membership_id: string | null
     role: $Enums.MembershipRole | null
     joined_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
@@ -14092,6 +14182,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type CommunityMembershipAvgAggregateInputType = {
+    user_id?: true
+  }
+
+  export type CommunityMembershipSumAggregateInputType = {
+    user_id?: true
+  }
 
   export type CommunityMembershipMinAggregateInputType = {
     membership_id?: true
@@ -14156,6 +14254,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: CommunityMembershipAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CommunityMembershipSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: CommunityMembershipMinAggregateInputType
@@ -14186,6 +14296,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CommunityMembershipCountAggregateInputType | true
+    _avg?: CommunityMembershipAvgAggregateInputType
+    _sum?: CommunityMembershipSumAggregateInputType
     _min?: CommunityMembershipMinAggregateInputType
     _max?: CommunityMembershipMaxAggregateInputType
   }
@@ -14194,9 +14306,11 @@ export namespace Prisma {
     membership_id: string
     role: $Enums.MembershipRole
     joined_at: Date
-    user_id: string
+    user_id: number
     community_id: string
     _count: CommunityMembershipCountAggregateOutputType | null
+    _avg: CommunityMembershipAvgAggregateOutputType | null
+    _sum: CommunityMembershipSumAggregateOutputType | null
     _min: CommunityMembershipMinAggregateOutputType | null
     _max: CommunityMembershipMaxAggregateOutputType | null
   }
@@ -14277,7 +14391,7 @@ export namespace Prisma {
       membership_id: string
       role: $Enums.MembershipRole
       joined_at: Date
-      user_id: string
+      user_id: number
       community_id: string
     }, ExtArgs["result"]["communityMembership"]>
     composites: {}
@@ -14707,7 +14821,7 @@ export namespace Prisma {
     readonly membership_id: FieldRef<"CommunityMembership", 'String'>
     readonly role: FieldRef<"CommunityMembership", 'MembershipRole'>
     readonly joined_at: FieldRef<"CommunityMembership", 'DateTime'>
-    readonly user_id: FieldRef<"CommunityMembership", 'String'>
+    readonly user_id: FieldRef<"CommunityMembership", 'Int'>
     readonly community_id: FieldRef<"CommunityMembership", 'String'>
   }
     
@@ -15129,21 +15243,31 @@ export namespace Prisma {
 
   export type AggregateModerator = {
     _count: ModeratorCountAggregateOutputType | null
+    _avg: ModeratorAvgAggregateOutputType | null
+    _sum: ModeratorSumAggregateOutputType | null
     _min: ModeratorMinAggregateOutputType | null
     _max: ModeratorMaxAggregateOutputType | null
+  }
+
+  export type ModeratorAvgAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type ModeratorSumAggregateOutputType = {
+    user_id: number | null
   }
 
   export type ModeratorMinAggregateOutputType = {
     moderator_id: string | null
     appointed_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
   export type ModeratorMaxAggregateOutputType = {
     moderator_id: string | null
     appointed_at: Date | null
-    user_id: string | null
+    user_id: number | null
     community_id: string | null
   }
 
@@ -15156,6 +15280,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type ModeratorAvgAggregateInputType = {
+    user_id?: true
+  }
+
+  export type ModeratorSumAggregateInputType = {
+    user_id?: true
+  }
 
   export type ModeratorMinAggregateInputType = {
     moderator_id?: true
@@ -15218,6 +15350,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ModeratorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ModeratorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ModeratorMinAggregateInputType
@@ -15248,6 +15392,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ModeratorCountAggregateInputType | true
+    _avg?: ModeratorAvgAggregateInputType
+    _sum?: ModeratorSumAggregateInputType
     _min?: ModeratorMinAggregateInputType
     _max?: ModeratorMaxAggregateInputType
   }
@@ -15256,9 +15402,11 @@ export namespace Prisma {
     moderator_id: string
     permissions: JsonValue | null
     appointed_at: Date
-    user_id: string
+    user_id: number
     community_id: string
     _count: ModeratorCountAggregateOutputType | null
+    _avg: ModeratorAvgAggregateOutputType | null
+    _sum: ModeratorSumAggregateOutputType | null
     _min: ModeratorMinAggregateOutputType | null
     _max: ModeratorMaxAggregateOutputType | null
   }
@@ -15339,7 +15487,7 @@ export namespace Prisma {
       moderator_id: string
       permissions: Prisma.JsonValue | null
       appointed_at: Date
-      user_id: string
+      user_id: number
       community_id: string
     }, ExtArgs["result"]["moderator"]>
     composites: {}
@@ -15769,7 +15917,7 @@ export namespace Prisma {
     readonly moderator_id: FieldRef<"Moderator", 'String'>
     readonly permissions: FieldRef<"Moderator", 'Json'>
     readonly appointed_at: FieldRef<"Moderator", 'DateTime'>
-    readonly user_id: FieldRef<"Moderator", 'String'>
+    readonly user_id: FieldRef<"Moderator", 'Int'>
     readonly community_id: FieldRef<"Moderator", 'String'>
   }
     
@@ -16199,10 +16347,12 @@ export namespace Prisma {
 
   export type UserUnitEnrollmentAvgAggregateOutputType = {
     enrollment_year: number | null
+    user_id: number | null
   }
 
   export type UserUnitEnrollmentSumAggregateOutputType = {
     enrollment_year: number | null
+    user_id: number | null
   }
 
   export type UserUnitEnrollmentMinAggregateOutputType = {
@@ -16210,7 +16360,7 @@ export namespace Prisma {
     enrollment_year: number | null
     enrollment_semester: string | null
     status: $Enums.EnrollmentStatus | null
-    user_id: string | null
+    user_id: number | null
     unit_id: string | null
   }
 
@@ -16219,7 +16369,7 @@ export namespace Prisma {
     enrollment_year: number | null
     enrollment_semester: string | null
     status: $Enums.EnrollmentStatus | null
-    user_id: string | null
+    user_id: number | null
     unit_id: string | null
   }
 
@@ -16236,10 +16386,12 @@ export namespace Prisma {
 
   export type UserUnitEnrollmentAvgAggregateInputType = {
     enrollment_year?: true
+    user_id?: true
   }
 
   export type UserUnitEnrollmentSumAggregateInputType = {
     enrollment_year?: true
+    user_id?: true
   }
 
   export type UserUnitEnrollmentMinAggregateInputType = {
@@ -16361,7 +16513,7 @@ export namespace Prisma {
     enrollment_year: number
     enrollment_semester: string
     status: $Enums.EnrollmentStatus
-    user_id: string
+    user_id: number
     unit_id: string
     _count: UserUnitEnrollmentCountAggregateOutputType | null
     _avg: UserUnitEnrollmentAvgAggregateOutputType | null
@@ -16451,7 +16603,7 @@ export namespace Prisma {
       enrollment_year: number
       enrollment_semester: string
       status: $Enums.EnrollmentStatus
-      user_id: string
+      user_id: number
       unit_id: string
     }, ExtArgs["result"]["userUnitEnrollment"]>
     composites: {}
@@ -16882,7 +17034,7 @@ export namespace Prisma {
     readonly enrollment_year: FieldRef<"UserUnitEnrollment", 'Int'>
     readonly enrollment_semester: FieldRef<"UserUnitEnrollment", 'String'>
     readonly status: FieldRef<"UserUnitEnrollment", 'EnrollmentStatus'>
-    readonly user_id: FieldRef<"UserUnitEnrollment", 'String'>
+    readonly user_id: FieldRef<"UserUnitEnrollment", 'Int'>
     readonly unit_id: FieldRef<"UserUnitEnrollment", 'String'>
   }
     
@@ -17304,14 +17456,24 @@ export namespace Prisma {
 
   export type AggregateSavedContent = {
     _count: SavedContentCountAggregateOutputType | null
+    _avg: SavedContentAvgAggregateOutputType | null
+    _sum: SavedContentSumAggregateOutputType | null
     _min: SavedContentMinAggregateOutputType | null
     _max: SavedContentMaxAggregateOutputType | null
+  }
+
+  export type SavedContentAvgAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type SavedContentSumAggregateOutputType = {
+    user_id: number | null
   }
 
   export type SavedContentMinAggregateOutputType = {
     saved_id: string | null
     saved_at: Date | null
-    user_id: string | null
+    user_id: number | null
     post_id: string | null
     comment_id: string | null
   }
@@ -17319,7 +17481,7 @@ export namespace Prisma {
   export type SavedContentMaxAggregateOutputType = {
     saved_id: string | null
     saved_at: Date | null
-    user_id: string | null
+    user_id: number | null
     post_id: string | null
     comment_id: string | null
   }
@@ -17333,6 +17495,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type SavedContentAvgAggregateInputType = {
+    user_id?: true
+  }
+
+  export type SavedContentSumAggregateInputType = {
+    user_id?: true
+  }
 
   export type SavedContentMinAggregateInputType = {
     saved_id?: true
@@ -17397,6 +17567,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: SavedContentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SavedContentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: SavedContentMinAggregateInputType
@@ -17427,6 +17609,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: SavedContentCountAggregateInputType | true
+    _avg?: SavedContentAvgAggregateInputType
+    _sum?: SavedContentSumAggregateInputType
     _min?: SavedContentMinAggregateInputType
     _max?: SavedContentMaxAggregateInputType
   }
@@ -17434,10 +17618,12 @@ export namespace Prisma {
   export type SavedContentGroupByOutputType = {
     saved_id: string
     saved_at: Date
-    user_id: string
+    user_id: number
     post_id: string | null
     comment_id: string | null
     _count: SavedContentCountAggregateOutputType | null
+    _avg: SavedContentAvgAggregateOutputType | null
+    _sum: SavedContentSumAggregateOutputType | null
     _min: SavedContentMinAggregateOutputType | null
     _max: SavedContentMaxAggregateOutputType | null
   }
@@ -17524,7 +17710,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       saved_id: string
       saved_at: Date
-      user_id: string
+      user_id: number
       post_id: string | null
       comment_id: string | null
     }, ExtArgs["result"]["savedContent"]>
@@ -17955,7 +18141,7 @@ export namespace Prisma {
   interface SavedContentFieldRefs {
     readonly saved_id: FieldRef<"SavedContent", 'String'>
     readonly saved_at: FieldRef<"SavedContent", 'DateTime'>
-    readonly user_id: FieldRef<"SavedContent", 'String'>
+    readonly user_id: FieldRef<"SavedContent", 'Int'>
     readonly post_id: FieldRef<"SavedContent", 'String'>
     readonly comment_id: FieldRef<"SavedContent", 'String'>
   }
@@ -18416,8 +18602,20 @@ export namespace Prisma {
 
   export type AggregateNotification = {
     _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
     _min: NotificationMinAggregateOutputType | null
     _max: NotificationMaxAggregateOutputType | null
+  }
+
+  export type NotificationAvgAggregateOutputType = {
+    recipient_user_id: number | null
+    sender_user_id: number | null
+  }
+
+  export type NotificationSumAggregateOutputType = {
+    recipient_user_id: number | null
+    sender_user_id: number | null
   }
 
   export type NotificationMinAggregateOutputType = {
@@ -18426,8 +18624,8 @@ export namespace Prisma {
     content_preview: string | null
     is_read: boolean | null
     created_at: Date | null
-    recipient_user_id: string | null
-    sender_user_id: string | null
+    recipient_user_id: number | null
+    sender_user_id: number | null
     related_post_id: string | null
     related_comment_id: string | null
     related_community_id: string | null
@@ -18439,8 +18637,8 @@ export namespace Prisma {
     content_preview: string | null
     is_read: boolean | null
     created_at: Date | null
-    recipient_user_id: string | null
-    sender_user_id: string | null
+    recipient_user_id: number | null
+    sender_user_id: number | null
     related_post_id: string | null
     related_comment_id: string | null
     related_community_id: string | null
@@ -18460,6 +18658,16 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type NotificationAvgAggregateInputType = {
+    recipient_user_id?: true
+    sender_user_id?: true
+  }
+
+  export type NotificationSumAggregateInputType = {
+    recipient_user_id?: true
+    sender_user_id?: true
+  }
 
   export type NotificationMinAggregateInputType = {
     notification_id?: true
@@ -18539,6 +18747,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: NotificationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NotificationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: NotificationMinAggregateInputType
@@ -18569,6 +18789,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: NotificationCountAggregateInputType | true
+    _avg?: NotificationAvgAggregateInputType
+    _sum?: NotificationSumAggregateInputType
     _min?: NotificationMinAggregateInputType
     _max?: NotificationMaxAggregateInputType
   }
@@ -18579,12 +18801,14 @@ export namespace Prisma {
     content_preview: string | null
     is_read: boolean
     created_at: Date
-    recipient_user_id: string
-    sender_user_id: string | null
+    recipient_user_id: number
+    sender_user_id: number | null
     related_post_id: string | null
     related_comment_id: string | null
     related_community_id: string | null
     _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
     _min: NotificationMinAggregateOutputType | null
     _max: NotificationMaxAggregateOutputType | null
   }
@@ -18708,8 +18932,8 @@ export namespace Prisma {
       content_preview: string | null
       is_read: boolean
       created_at: Date
-      recipient_user_id: string
-      sender_user_id: string | null
+      recipient_user_id: number
+      sender_user_id: number | null
       related_post_id: string | null
       related_comment_id: string | null
       related_community_id: string | null
@@ -19146,8 +19370,8 @@ export namespace Prisma {
     readonly content_preview: FieldRef<"Notification", 'String'>
     readonly is_read: FieldRef<"Notification", 'Boolean'>
     readonly created_at: FieldRef<"Notification", 'DateTime'>
-    readonly recipient_user_id: FieldRef<"Notification", 'String'>
-    readonly sender_user_id: FieldRef<"Notification", 'String'>
+    readonly recipient_user_id: FieldRef<"Notification", 'Int'>
+    readonly sender_user_id: FieldRef<"Notification", 'Int'>
     readonly related_post_id: FieldRef<"Notification", 'String'>
     readonly related_comment_id: FieldRef<"Notification", 'String'>
     readonly related_community_id: FieldRef<"Notification", 'String'>
@@ -19908,20 +20132,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'String'
-   */
-  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
-
-  /**
-   * Reference to a field of type 'String[]'
-   */
-  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -19932,6 +20142,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -20075,7 +20299,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    user_id?: StringFilter<"User"> | string
+    user_id?: IntFilter<"User"> | number
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password_hash?: StringFilter<"User"> | string
@@ -20139,7 +20363,7 @@ export namespace Prisma {
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    user_id?: string
+    user_id?: number
     monash_email?: string
     username?: string
     AND?: UserWhereInput | UserWhereInput[]
@@ -20201,7 +20425,7 @@ export namespace Prisma {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    user_id?: StringWithAggregatesFilter<"User"> | string
+    user_id?: IntWithAggregatesFilter<"User"> | number
     monash_email?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
     password_hash?: StringWithAggregatesFilter<"User"> | string
@@ -20510,7 +20734,7 @@ export namespace Prisma {
     rules?: StringNullableFilter<"Community"> | string | null
     created_at?: DateTimeFilter<"Community"> | Date | string
     updated_at?: DateTimeFilter<"Community"> | Date | string
-    creator_id?: StringFilter<"Community"> | string
+    creator_id?: IntFilter<"Community"> | number
     related_campus_id?: StringNullableFilter<"Community"> | string | null
     related_faculty_id?: StringNullableFilter<"Community"> | string | null
     related_course_id?: StringNullableFilter<"Community"> | string | null
@@ -20569,7 +20793,7 @@ export namespace Prisma {
     rules?: StringNullableFilter<"Community"> | string | null
     created_at?: DateTimeFilter<"Community"> | Date | string
     updated_at?: DateTimeFilter<"Community"> | Date | string
-    creator_id?: StringFilter<"Community"> | string
+    creator_id?: IntFilter<"Community"> | number
     related_campus_id?: StringNullableFilter<"Community"> | string | null
     related_faculty_id?: StringNullableFilter<"Community"> | string | null
     related_course_id?: StringNullableFilter<"Community"> | string | null
@@ -20603,8 +20827,10 @@ export namespace Prisma {
     related_course_id?: SortOrderInput | SortOrder
     related_unit_id?: SortOrderInput | SortOrder
     _count?: CommunityCountOrderByAggregateInput
+    _avg?: CommunityAvgOrderByAggregateInput
     _max?: CommunityMaxOrderByAggregateInput
     _min?: CommunityMinOrderByAggregateInput
+    _sum?: CommunitySumOrderByAggregateInput
   }
 
   export type CommunityScalarWhereWithAggregatesInput = {
@@ -20622,7 +20848,7 @@ export namespace Prisma {
     rules?: StringNullableWithAggregatesFilter<"Community"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Community"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Community"> | Date | string
-    creator_id?: StringWithAggregatesFilter<"Community"> | string
+    creator_id?: IntWithAggregatesFilter<"Community"> | number
     related_campus_id?: StringNullableWithAggregatesFilter<"Community"> | string | null
     related_faculty_id?: StringNullableWithAggregatesFilter<"Community"> | string | null
     related_course_id?: StringNullableWithAggregatesFilter<"Community"> | string | null
@@ -20647,7 +20873,7 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"Post"> | boolean
     created_at?: DateTimeFilter<"Post"> | Date | string
     updated_at?: DateTimeFilter<"Post"> | Date | string
-    user_id?: StringFilter<"Post"> | string
+    user_id?: IntFilter<"Post"> | number
     community_id?: StringFilter<"Post"> | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -20700,7 +20926,7 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"Post"> | boolean
     created_at?: DateTimeFilter<"Post"> | Date | string
     updated_at?: DateTimeFilter<"Post"> | Date | string
-    user_id?: StringFilter<"Post"> | string
+    user_id?: IntFilter<"Post"> | number
     community_id?: StringFilter<"Post"> | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -20752,7 +20978,7 @@ export namespace Prisma {
     is_deleted?: BoolWithAggregatesFilter<"Post"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Post"> | Date | string
-    user_id?: StringWithAggregatesFilter<"Post"> | string
+    user_id?: IntWithAggregatesFilter<"Post"> | number
     community_id?: StringWithAggregatesFilter<"Post"> | string
   }
 
@@ -20769,7 +20995,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Comment"> | Date | string
     updated_at?: DateTimeFilter<"Comment"> | Date | string
     post_id?: StringFilter<"Comment"> | string
-    user_id?: StringFilter<"Comment"> | string
+    user_id?: IntFilter<"Comment"> | number
     parent_comment_id?: StringNullableFilter<"Comment"> | string | null
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20814,7 +21040,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Comment"> | Date | string
     updated_at?: DateTimeFilter<"Comment"> | Date | string
     post_id?: StringFilter<"Comment"> | string
-    user_id?: StringFilter<"Comment"> | string
+    user_id?: IntFilter<"Comment"> | number
     parent_comment_id?: StringNullableFilter<"Comment"> | string | null
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20857,7 +21083,7 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
     post_id?: StringWithAggregatesFilter<"Comment"> | string
-    user_id?: StringWithAggregatesFilter<"Comment"> | string
+    user_id?: IntWithAggregatesFilter<"Comment"> | number
     parent_comment_id?: StringNullableWithAggregatesFilter<"Comment"> | string | null
   }
 
@@ -20868,7 +21094,7 @@ export namespace Prisma {
     vote_id?: StringFilter<"Vote"> | string
     vote_type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
     created_at?: DateTimeFilter<"Vote"> | Date | string
-    user_id?: StringFilter<"Vote"> | string
+    user_id?: IntFilter<"Vote"> | number
     post_id?: StringNullableFilter<"Vote"> | string | null
     comment_id?: StringNullableFilter<"Vote"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20897,7 +21123,7 @@ export namespace Prisma {
     NOT?: VoteWhereInput | VoteWhereInput[]
     vote_type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
     created_at?: DateTimeFilter<"Vote"> | Date | string
-    user_id?: StringFilter<"Vote"> | string
+    user_id?: IntFilter<"Vote"> | number
     post_id?: StringNullableFilter<"Vote"> | string | null
     comment_id?: StringNullableFilter<"Vote"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20913,8 +21139,10 @@ export namespace Prisma {
     post_id?: SortOrderInput | SortOrder
     comment_id?: SortOrderInput | SortOrder
     _count?: VoteCountOrderByAggregateInput
+    _avg?: VoteAvgOrderByAggregateInput
     _max?: VoteMaxOrderByAggregateInput
     _min?: VoteMinOrderByAggregateInput
+    _sum?: VoteSumOrderByAggregateInput
   }
 
   export type VoteScalarWhereWithAggregatesInput = {
@@ -20924,7 +21152,7 @@ export namespace Prisma {
     vote_id?: StringWithAggregatesFilter<"Vote"> | string
     vote_type?: EnumVoteTypeWithAggregatesFilter<"Vote"> | $Enums.VoteType
     created_at?: DateTimeWithAggregatesFilter<"Vote"> | Date | string
-    user_id?: StringWithAggregatesFilter<"Vote"> | string
+    user_id?: IntWithAggregatesFilter<"Vote"> | number
     post_id?: StringNullableWithAggregatesFilter<"Vote"> | string | null
     comment_id?: StringNullableWithAggregatesFilter<"Vote"> | string | null
   }
@@ -20936,7 +21164,7 @@ export namespace Prisma {
     membership_id?: StringFilter<"CommunityMembership"> | string
     role?: EnumMembershipRoleFilter<"CommunityMembership"> | $Enums.MembershipRole
     joined_at?: DateTimeFilter<"CommunityMembership"> | Date | string
-    user_id?: StringFilter<"CommunityMembership"> | string
+    user_id?: IntFilter<"CommunityMembership"> | number
     community_id?: StringFilter<"CommunityMembership"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -20960,7 +21188,7 @@ export namespace Prisma {
     NOT?: CommunityMembershipWhereInput | CommunityMembershipWhereInput[]
     role?: EnumMembershipRoleFilter<"CommunityMembership"> | $Enums.MembershipRole
     joined_at?: DateTimeFilter<"CommunityMembership"> | Date | string
-    user_id?: StringFilter<"CommunityMembership"> | string
+    user_id?: IntFilter<"CommunityMembership"> | number
     community_id?: StringFilter<"CommunityMembership"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -20973,8 +21201,10 @@ export namespace Prisma {
     user_id?: SortOrder
     community_id?: SortOrder
     _count?: CommunityMembershipCountOrderByAggregateInput
+    _avg?: CommunityMembershipAvgOrderByAggregateInput
     _max?: CommunityMembershipMaxOrderByAggregateInput
     _min?: CommunityMembershipMinOrderByAggregateInput
+    _sum?: CommunityMembershipSumOrderByAggregateInput
   }
 
   export type CommunityMembershipScalarWhereWithAggregatesInput = {
@@ -20984,7 +21214,7 @@ export namespace Prisma {
     membership_id?: StringWithAggregatesFilter<"CommunityMembership"> | string
     role?: EnumMembershipRoleWithAggregatesFilter<"CommunityMembership"> | $Enums.MembershipRole
     joined_at?: DateTimeWithAggregatesFilter<"CommunityMembership"> | Date | string
-    user_id?: StringWithAggregatesFilter<"CommunityMembership"> | string
+    user_id?: IntWithAggregatesFilter<"CommunityMembership"> | number
     community_id?: StringWithAggregatesFilter<"CommunityMembership"> | string
   }
 
@@ -20995,7 +21225,7 @@ export namespace Prisma {
     moderator_id?: StringFilter<"Moderator"> | string
     permissions?: JsonNullableFilter<"Moderator">
     appointed_at?: DateTimeFilter<"Moderator"> | Date | string
-    user_id?: StringFilter<"Moderator"> | string
+    user_id?: IntFilter<"Moderator"> | number
     community_id?: StringFilter<"Moderator"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -21019,7 +21249,7 @@ export namespace Prisma {
     NOT?: ModeratorWhereInput | ModeratorWhereInput[]
     permissions?: JsonNullableFilter<"Moderator">
     appointed_at?: DateTimeFilter<"Moderator"> | Date | string
-    user_id?: StringFilter<"Moderator"> | string
+    user_id?: IntFilter<"Moderator"> | number
     community_id?: StringFilter<"Moderator"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     community?: XOR<CommunityScalarRelationFilter, CommunityWhereInput>
@@ -21032,8 +21262,10 @@ export namespace Prisma {
     user_id?: SortOrder
     community_id?: SortOrder
     _count?: ModeratorCountOrderByAggregateInput
+    _avg?: ModeratorAvgOrderByAggregateInput
     _max?: ModeratorMaxOrderByAggregateInput
     _min?: ModeratorMinOrderByAggregateInput
+    _sum?: ModeratorSumOrderByAggregateInput
   }
 
   export type ModeratorScalarWhereWithAggregatesInput = {
@@ -21043,7 +21275,7 @@ export namespace Prisma {
     moderator_id?: StringWithAggregatesFilter<"Moderator"> | string
     permissions?: JsonNullableWithAggregatesFilter<"Moderator">
     appointed_at?: DateTimeWithAggregatesFilter<"Moderator"> | Date | string
-    user_id?: StringWithAggregatesFilter<"Moderator"> | string
+    user_id?: IntWithAggregatesFilter<"Moderator"> | number
     community_id?: StringWithAggregatesFilter<"Moderator"> | string
   }
 
@@ -21055,7 +21287,7 @@ export namespace Prisma {
     enrollment_year?: IntFilter<"UserUnitEnrollment"> | number
     enrollment_semester?: StringFilter<"UserUnitEnrollment"> | string
     status?: EnumEnrollmentStatusFilter<"UserUnitEnrollment"> | $Enums.EnrollmentStatus
-    user_id?: StringFilter<"UserUnitEnrollment"> | string
+    user_id?: IntFilter<"UserUnitEnrollment"> | number
     unit_id?: StringFilter<"UserUnitEnrollment"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
@@ -21081,7 +21313,7 @@ export namespace Prisma {
     enrollment_year?: IntFilter<"UserUnitEnrollment"> | number
     enrollment_semester?: StringFilter<"UserUnitEnrollment"> | string
     status?: EnumEnrollmentStatusFilter<"UserUnitEnrollment"> | $Enums.EnrollmentStatus
-    user_id?: StringFilter<"UserUnitEnrollment"> | string
+    user_id?: IntFilter<"UserUnitEnrollment"> | number
     unit_id?: StringFilter<"UserUnitEnrollment"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
@@ -21109,7 +21341,7 @@ export namespace Prisma {
     enrollment_year?: IntWithAggregatesFilter<"UserUnitEnrollment"> | number
     enrollment_semester?: StringWithAggregatesFilter<"UserUnitEnrollment"> | string
     status?: EnumEnrollmentStatusWithAggregatesFilter<"UserUnitEnrollment"> | $Enums.EnrollmentStatus
-    user_id?: StringWithAggregatesFilter<"UserUnitEnrollment"> | string
+    user_id?: IntWithAggregatesFilter<"UserUnitEnrollment"> | number
     unit_id?: StringWithAggregatesFilter<"UserUnitEnrollment"> | string
   }
 
@@ -21119,7 +21351,7 @@ export namespace Prisma {
     NOT?: SavedContentWhereInput | SavedContentWhereInput[]
     saved_id?: StringFilter<"SavedContent"> | string
     saved_at?: DateTimeFilter<"SavedContent"> | Date | string
-    user_id?: StringFilter<"SavedContent"> | string
+    user_id?: IntFilter<"SavedContent"> | number
     post_id?: StringNullableFilter<"SavedContent"> | string | null
     comment_id?: StringNullableFilter<"SavedContent"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -21146,7 +21378,7 @@ export namespace Prisma {
     OR?: SavedContentWhereInput[]
     NOT?: SavedContentWhereInput | SavedContentWhereInput[]
     saved_at?: DateTimeFilter<"SavedContent"> | Date | string
-    user_id?: StringFilter<"SavedContent"> | string
+    user_id?: IntFilter<"SavedContent"> | number
     post_id?: StringNullableFilter<"SavedContent"> | string | null
     comment_id?: StringNullableFilter<"SavedContent"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -21161,8 +21393,10 @@ export namespace Prisma {
     post_id?: SortOrderInput | SortOrder
     comment_id?: SortOrderInput | SortOrder
     _count?: SavedContentCountOrderByAggregateInput
+    _avg?: SavedContentAvgOrderByAggregateInput
     _max?: SavedContentMaxOrderByAggregateInput
     _min?: SavedContentMinOrderByAggregateInput
+    _sum?: SavedContentSumOrderByAggregateInput
   }
 
   export type SavedContentScalarWhereWithAggregatesInput = {
@@ -21171,7 +21405,7 @@ export namespace Prisma {
     NOT?: SavedContentScalarWhereWithAggregatesInput | SavedContentScalarWhereWithAggregatesInput[]
     saved_id?: StringWithAggregatesFilter<"SavedContent"> | string
     saved_at?: DateTimeWithAggregatesFilter<"SavedContent"> | Date | string
-    user_id?: StringWithAggregatesFilter<"SavedContent"> | string
+    user_id?: IntWithAggregatesFilter<"SavedContent"> | number
     post_id?: StringNullableWithAggregatesFilter<"SavedContent"> | string | null
     comment_id?: StringNullableWithAggregatesFilter<"SavedContent"> | string | null
   }
@@ -21185,8 +21419,8 @@ export namespace Prisma {
     content_preview?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
     created_at?: DateTimeFilter<"Notification"> | Date | string
-    recipient_user_id?: StringFilter<"Notification"> | string
-    sender_user_id?: StringNullableFilter<"Notification"> | string | null
+    recipient_user_id?: IntFilter<"Notification"> | number
+    sender_user_id?: IntNullableFilter<"Notification"> | number | null
     related_post_id?: StringNullableFilter<"Notification"> | string | null
     related_comment_id?: StringNullableFilter<"Notification"> | string | null
     related_community_id?: StringNullableFilter<"Notification"> | string | null
@@ -21224,8 +21458,8 @@ export namespace Prisma {
     content_preview?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
     created_at?: DateTimeFilter<"Notification"> | Date | string
-    recipient_user_id?: StringFilter<"Notification"> | string
-    sender_user_id?: StringNullableFilter<"Notification"> | string | null
+    recipient_user_id?: IntFilter<"Notification"> | number
+    sender_user_id?: IntNullableFilter<"Notification"> | number | null
     related_post_id?: StringNullableFilter<"Notification"> | string | null
     related_comment_id?: StringNullableFilter<"Notification"> | string | null
     related_community_id?: StringNullableFilter<"Notification"> | string | null
@@ -21248,8 +21482,10 @@ export namespace Prisma {
     related_comment_id?: SortOrderInput | SortOrder
     related_community_id?: SortOrderInput | SortOrder
     _count?: NotificationCountOrderByAggregateInput
+    _avg?: NotificationAvgOrderByAggregateInput
     _max?: NotificationMaxOrderByAggregateInput
     _min?: NotificationMinOrderByAggregateInput
+    _sum?: NotificationSumOrderByAggregateInput
   }
 
   export type NotificationScalarWhereWithAggregatesInput = {
@@ -21261,15 +21497,15 @@ export namespace Prisma {
     content_preview?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     is_read?: BoolWithAggregatesFilter<"Notification"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
-    recipient_user_id?: StringWithAggregatesFilter<"Notification"> | string
-    sender_user_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    recipient_user_id?: IntWithAggregatesFilter<"Notification"> | number
+    sender_user_id?: IntNullableWithAggregatesFilter<"Notification"> | number | null
     related_post_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     related_comment_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     related_community_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
   }
 
   export type UserCreateInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -21298,7 +21534,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -21327,7 +21563,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -21356,7 +21592,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -21385,7 +21621,7 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -21404,7 +21640,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -21420,7 +21656,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -21777,7 +22013,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -21823,7 +22059,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21846,7 +22082,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -21879,7 +22115,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21924,7 +22160,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     votes?: VoteUncheckedCreateNestedManyWithoutPostInput
@@ -21970,7 +22206,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     votes?: VoteUncheckedUpdateManyWithoutPostNestedInput
@@ -21993,7 +22229,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -22029,7 +22265,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22061,7 +22297,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
@@ -22097,7 +22333,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
@@ -22115,7 +22351,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
   }
 
@@ -22140,7 +22376,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -22157,7 +22393,7 @@ export namespace Prisma {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
     comment_id?: string | null
   }
@@ -22175,7 +22411,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22184,7 +22420,7 @@ export namespace Prisma {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
     comment_id?: string | null
   }
@@ -22199,7 +22435,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22216,7 +22452,7 @@ export namespace Prisma {
     membership_id?: string
     role?: $Enums.MembershipRole
     joined_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -22232,7 +22468,7 @@ export namespace Prisma {
     membership_id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     joined_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22240,7 +22476,7 @@ export namespace Prisma {
     membership_id?: string
     role?: $Enums.MembershipRole
     joined_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -22254,7 +22490,7 @@ export namespace Prisma {
     membership_id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     joined_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22270,7 +22506,7 @@ export namespace Prisma {
     moderator_id?: string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -22286,7 +22522,7 @@ export namespace Prisma {
     moderator_id?: StringFieldUpdateOperationsInput | string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22294,7 +22530,7 @@ export namespace Prisma {
     moderator_id?: string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -22308,7 +22544,7 @@ export namespace Prisma {
     moderator_id?: StringFieldUpdateOperationsInput | string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22326,7 +22562,7 @@ export namespace Prisma {
     enrollment_year: number
     enrollment_semester: string
     status?: $Enums.EnrollmentStatus
-    user_id: string
+    user_id: number
     unit_id: string
   }
 
@@ -22344,7 +22580,7 @@ export namespace Prisma {
     enrollment_year?: IntFieldUpdateOperationsInput | number
     enrollment_semester?: StringFieldUpdateOperationsInput | string
     status?: EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     unit_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22353,7 +22589,7 @@ export namespace Prisma {
     enrollment_year: number
     enrollment_semester: string
     status?: $Enums.EnrollmentStatus
-    user_id: string
+    user_id: number
     unit_id: string
   }
 
@@ -22369,7 +22605,7 @@ export namespace Prisma {
     enrollment_year?: IntFieldUpdateOperationsInput | number
     enrollment_semester?: StringFieldUpdateOperationsInput | string
     status?: EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     unit_id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22384,7 +22620,7 @@ export namespace Prisma {
   export type SavedContentUncheckedCreateInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
     comment_id?: string | null
   }
@@ -22400,7 +22636,7 @@ export namespace Prisma {
   export type SavedContentUncheckedUpdateInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22408,7 +22644,7 @@ export namespace Prisma {
   export type SavedContentCreateManyInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
     comment_id?: string | null
   }
@@ -22421,7 +22657,7 @@ export namespace Prisma {
   export type SavedContentUncheckedUpdateManyInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22445,8 +22681,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -22471,8 +22707,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22484,8 +22720,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -22505,11 +22741,22 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -22540,17 +22787,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -22710,6 +22946,7 @@ export namespace Prisma {
   }
 
   export type UserAvgOrderByAggregateInput = {
+    user_id?: SortOrder
     karma_points?: SortOrder
     year_of_study?: SortOrder
   }
@@ -22753,8 +22990,25 @@ export namespace Prisma {
   }
 
   export type UserSumOrderByAggregateInput = {
+    user_id?: SortOrder
     karma_points?: SortOrder
     year_of_study?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -22791,22 +23045,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23040,6 +23278,10 @@ export namespace Prisma {
     related_unit_id?: SortOrder
   }
 
+  export type CommunityAvgOrderByAggregateInput = {
+    creator_id?: SortOrder
+  }
+
   export type CommunityMaxOrderByAggregateInput = {
     community_id?: SortOrder
     name?: SortOrder
@@ -23076,6 +23318,10 @@ export namespace Prisma {
     related_faculty_id?: SortOrder
     related_course_id?: SortOrder
     related_unit_id?: SortOrder
+  }
+
+  export type CommunitySumOrderByAggregateInput = {
+    creator_id?: SortOrder
   }
 
   export type EnumCommunityTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23123,6 +23369,7 @@ export namespace Prisma {
     upvotes?: SortOrder
     downvotes?: SortOrder
     score?: SortOrder
+    user_id?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -23167,6 +23414,7 @@ export namespace Prisma {
     upvotes?: SortOrder
     downvotes?: SortOrder
     score?: SortOrder
+    user_id?: SortOrder
   }
 
   export type EnumPostContentTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23207,6 +23455,7 @@ export namespace Prisma {
     upvotes?: SortOrder
     downvotes?: SortOrder
     score?: SortOrder
+    user_id?: SortOrder
   }
 
   export type CommentMaxOrderByAggregateInput = {
@@ -23241,6 +23490,7 @@ export namespace Prisma {
     upvotes?: SortOrder
     downvotes?: SortOrder
     score?: SortOrder
+    user_id?: SortOrder
   }
 
   export type EnumVoteTypeFilter<$PrismaModel = never> = {
@@ -23256,12 +23506,12 @@ export namespace Prisma {
   }
 
   export type VoteUserPostVoteCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     post_id: string
   }
 
   export type VoteUserCommentVoteCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     comment_id: string
   }
 
@@ -23272,6 +23522,10 @@ export namespace Prisma {
     user_id?: SortOrder
     post_id?: SortOrder
     comment_id?: SortOrder
+  }
+
+  export type VoteAvgOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type VoteMaxOrderByAggregateInput = {
@@ -23292,6 +23546,10 @@ export namespace Prisma {
     comment_id?: SortOrder
   }
 
+  export type VoteSumOrderByAggregateInput = {
+    user_id?: SortOrder
+  }
+
   export type EnumVoteTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.VoteType | EnumVoteTypeFieldRefInput<$PrismaModel>
     in?: $Enums.VoteType[] | ListEnumVoteTypeFieldRefInput<$PrismaModel>
@@ -23310,7 +23568,7 @@ export namespace Prisma {
   }
 
   export type CommunityMembershipUser_idCommunity_idCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -23320,6 +23578,10 @@ export namespace Prisma {
     joined_at?: SortOrder
     user_id?: SortOrder
     community_id?: SortOrder
+  }
+
+  export type CommunityMembershipAvgOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type CommunityMembershipMaxOrderByAggregateInput = {
@@ -23336,6 +23598,10 @@ export namespace Prisma {
     joined_at?: SortOrder
     user_id?: SortOrder
     community_id?: SortOrder
+  }
+
+  export type CommunityMembershipSumOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type EnumMembershipRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -23372,7 +23638,7 @@ export namespace Prisma {
   }
 
   export type ModeratorUser_idCommunity_idCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     community_id: string
   }
 
@@ -23382,6 +23648,10 @@ export namespace Prisma {
     appointed_at?: SortOrder
     user_id?: SortOrder
     community_id?: SortOrder
+  }
+
+  export type ModeratorAvgOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type ModeratorMaxOrderByAggregateInput = {
@@ -23396,6 +23666,10 @@ export namespace Prisma {
     appointed_at?: SortOrder
     user_id?: SortOrder
     community_id?: SortOrder
+  }
+
+  export type ModeratorSumOrderByAggregateInput = {
+    user_id?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -23437,7 +23711,7 @@ export namespace Prisma {
   }
 
   export type UserUnitEnrollmentUser_idUnit_idEnrollment_yearEnrollment_semesterCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     unit_id: string
     enrollment_year: number
     enrollment_semester: string
@@ -23454,6 +23728,7 @@ export namespace Prisma {
 
   export type UserUnitEnrollmentAvgOrderByAggregateInput = {
     enrollment_year?: SortOrder
+    user_id?: SortOrder
   }
 
   export type UserUnitEnrollmentMaxOrderByAggregateInput = {
@@ -23476,6 +23751,7 @@ export namespace Prisma {
 
   export type UserUnitEnrollmentSumOrderByAggregateInput = {
     enrollment_year?: SortOrder
+    user_id?: SortOrder
   }
 
   export type EnumEnrollmentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -23489,12 +23765,12 @@ export namespace Prisma {
   }
 
   export type SavedContentUserSavedPostCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     post_id: string
   }
 
   export type SavedContentUserSavedCommentCompoundUniqueInput = {
-    user_id: string
+    user_id: number
     comment_id: string
   }
 
@@ -23504,6 +23780,10 @@ export namespace Prisma {
     user_id?: SortOrder
     post_id?: SortOrder
     comment_id?: SortOrder
+  }
+
+  export type SavedContentAvgOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type SavedContentMaxOrderByAggregateInput = {
@@ -23520,6 +23800,10 @@ export namespace Prisma {
     user_id?: SortOrder
     post_id?: SortOrder
     comment_id?: SortOrder
+  }
+
+  export type SavedContentSumOrderByAggregateInput = {
+    user_id?: SortOrder
   }
 
   export type EnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -23552,6 +23836,11 @@ export namespace Prisma {
     related_community_id?: SortOrder
   }
 
+  export type NotificationAvgOrderByAggregateInput = {
+    recipient_user_id?: SortOrder
+    sender_user_id?: SortOrder
+  }
+
   export type NotificationMaxOrderByAggregateInput = {
     notification_id?: SortOrder
     type?: SortOrder
@@ -23576,6 +23865,11 @@ export namespace Prisma {
     related_post_id?: SortOrder
     related_comment_id?: SortOrder
     related_community_id?: SortOrder
+  }
+
+  export type NotificationSumOrderByAggregateInput = {
+    recipient_user_id?: SortOrder
+    sender_user_id?: SortOrder
   }
 
   export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23746,20 +24040,20 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -25470,6 +25764,17 @@ export namespace Prisma {
     update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutNotificationsInput, CommunityUpdateWithoutNotificationsInput>, CommunityUncheckedUpdateWithoutNotificationsInput>
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -25498,17 +25803,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -25534,6 +25828,33 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -25568,33 +25889,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -26142,7 +26436,7 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    sender_user_id?: string | null
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -26176,7 +26470,7 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
+    recipient_user_id: number
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -26318,7 +26612,7 @@ export namespace Prisma {
     rules?: StringNullableFilter<"Community"> | string | null
     created_at?: DateTimeFilter<"Community"> | Date | string
     updated_at?: DateTimeFilter<"Community"> | Date | string
-    creator_id?: StringFilter<"Community"> | string
+    creator_id?: IntFilter<"Community"> | number
     related_campus_id?: StringNullableFilter<"Community"> | string | null
     related_faculty_id?: StringNullableFilter<"Community"> | string | null
     related_course_id?: StringNullableFilter<"Community"> | string | null
@@ -26359,7 +26653,7 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"Post"> | boolean
     created_at?: DateTimeFilter<"Post"> | Date | string
     updated_at?: DateTimeFilter<"Post"> | Date | string
-    user_id?: StringFilter<"Post"> | string
+    user_id?: IntFilter<"Post"> | number
     community_id?: StringFilter<"Post"> | string
   }
 
@@ -26392,7 +26686,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Comment"> | Date | string
     updated_at?: DateTimeFilter<"Comment"> | Date | string
     post_id?: StringFilter<"Comment"> | string
-    user_id?: StringFilter<"Comment"> | string
+    user_id?: IntFilter<"Comment"> | number
     parent_comment_id?: StringNullableFilter<"Comment"> | string | null
   }
 
@@ -26419,7 +26713,7 @@ export namespace Prisma {
     vote_id?: StringFilter<"Vote"> | string
     vote_type?: EnumVoteTypeFilter<"Vote"> | $Enums.VoteType
     created_at?: DateTimeFilter<"Vote"> | Date | string
-    user_id?: StringFilter<"Vote"> | string
+    user_id?: IntFilter<"Vote"> | number
     post_id?: StringNullableFilter<"Vote"> | string | null
     comment_id?: StringNullableFilter<"Vote"> | string | null
   }
@@ -26447,7 +26741,7 @@ export namespace Prisma {
     membership_id?: StringFilter<"CommunityMembership"> | string
     role?: EnumMembershipRoleFilter<"CommunityMembership"> | $Enums.MembershipRole
     joined_at?: DateTimeFilter<"CommunityMembership"> | Date | string
-    user_id?: StringFilter<"CommunityMembership"> | string
+    user_id?: IntFilter<"CommunityMembership"> | number
     community_id?: StringFilter<"CommunityMembership"> | string
   }
 
@@ -26474,7 +26768,7 @@ export namespace Prisma {
     moderator_id?: StringFilter<"Moderator"> | string
     permissions?: JsonNullableFilter<"Moderator">
     appointed_at?: DateTimeFilter<"Moderator"> | Date | string
-    user_id?: StringFilter<"Moderator"> | string
+    user_id?: IntFilter<"Moderator"> | number
     community_id?: StringFilter<"Moderator"> | string
   }
 
@@ -26502,7 +26796,7 @@ export namespace Prisma {
     enrollment_year?: IntFilter<"UserUnitEnrollment"> | number
     enrollment_semester?: StringFilter<"UserUnitEnrollment"> | string
     status?: EnumEnrollmentStatusFilter<"UserUnitEnrollment"> | $Enums.EnrollmentStatus
-    user_id?: StringFilter<"UserUnitEnrollment"> | string
+    user_id?: IntFilter<"UserUnitEnrollment"> | number
     unit_id?: StringFilter<"UserUnitEnrollment"> | string
   }
 
@@ -26528,7 +26822,7 @@ export namespace Prisma {
     NOT?: SavedContentScalarWhereInput | SavedContentScalarWhereInput[]
     saved_id?: StringFilter<"SavedContent"> | string
     saved_at?: DateTimeFilter<"SavedContent"> | Date | string
-    user_id?: StringFilter<"SavedContent"> | string
+    user_id?: IntFilter<"SavedContent"> | number
     post_id?: StringNullableFilter<"SavedContent"> | string | null
     comment_id?: StringNullableFilter<"SavedContent"> | string | null
   }
@@ -26558,8 +26852,8 @@ export namespace Prisma {
     content_preview?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
     created_at?: DateTimeFilter<"Notification"> | Date | string
-    recipient_user_id?: StringFilter<"Notification"> | string
-    sender_user_id?: StringNullableFilter<"Notification"> | string | null
+    recipient_user_id?: IntFilter<"Notification"> | number
+    sender_user_id?: IntNullableFilter<"Notification"> | number | null
     related_post_id?: StringNullableFilter<"Notification"> | string | null
     related_comment_id?: StringNullableFilter<"Notification"> | string | null
     related_community_id?: StringNullableFilter<"Notification"> | string | null
@@ -26582,7 +26876,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCampusInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -26610,7 +26904,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCampusInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -26681,7 +26975,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_faculty_id?: string | null
     related_course_id?: string | null
     related_unit_id?: string | null
@@ -26721,7 +27015,7 @@ export namespace Prisma {
     AND?: UserScalarWhereInput | UserScalarWhereInput[]
     OR?: UserScalarWhereInput[]
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    user_id?: StringFilter<"User"> | string
+    user_id?: IntFilter<"User"> | number
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password_hash?: StringFilter<"User"> | string
@@ -26756,7 +27050,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutFacultyInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -26784,7 +27078,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutFacultyInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -26923,7 +27217,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_course_id?: string | null
     related_unit_id?: string | null
@@ -27063,7 +27357,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCourseInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -27091,7 +27385,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCourseInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -27162,7 +27456,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_unit_id?: string | null
@@ -27308,7 +27602,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -27341,7 +27635,7 @@ export namespace Prisma {
     enrollment_year: number
     enrollment_semester: string
     status?: $Enums.EnrollmentStatus
-    user_id: string
+    user_id: number
   }
 
   export type UserUnitEnrollmentCreateOrConnectWithoutUnitInput = {
@@ -27420,7 +27714,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCreated_communitiesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -27448,7 +27742,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCreated_communitiesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -27625,7 +27919,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     votes?: VoteUncheckedCreateNestedManyWithoutPostInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutPostInput
@@ -27653,7 +27947,7 @@ export namespace Prisma {
     membership_id?: string
     role?: $Enums.MembershipRole
     joined_at?: Date | string
-    user_id: string
+    user_id: number
   }
 
   export type CommunityMembershipCreateOrConnectWithoutCommunityInput = {
@@ -27677,7 +27971,7 @@ export namespace Prisma {
     moderator_id?: string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: Date | string
-    user_id: string
+    user_id: number
   }
 
   export type ModeratorCreateOrConnectWithoutCommunityInput = {
@@ -27708,8 +28002,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
   }
@@ -27736,7 +28030,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCreated_communitiesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -27764,7 +28058,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCreated_communitiesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -27988,7 +28282,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutPostsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -28016,7 +28310,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -28082,7 +28376,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -28123,7 +28417,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
@@ -28153,7 +28447,7 @@ export namespace Prisma {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     comment_id?: string | null
   }
 
@@ -28177,7 +28471,7 @@ export namespace Prisma {
   export type SavedContentUncheckedCreateWithoutPostInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     comment_id?: string | null
   }
 
@@ -28209,8 +28503,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_comment_id?: string | null
     related_community_id?: string | null
   }
@@ -28237,7 +28531,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutPostsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -28265,7 +28559,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -28337,7 +28631,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28448,7 +28742,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
     votes?: VoteUncheckedCreateNestedManyWithoutPostInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutPostInput
@@ -28461,7 +28755,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCommentsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -28489,7 +28783,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -28548,7 +28842,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutCommentInput
@@ -28587,7 +28881,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutCommentInput
@@ -28616,7 +28910,7 @@ export namespace Prisma {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
   }
 
@@ -28640,7 +28934,7 @@ export namespace Prisma {
   export type SavedContentUncheckedCreateWithoutCommentInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
   }
 
@@ -28672,8 +28966,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_community_id?: string | null
   }
@@ -28736,7 +29030,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
     votes?: VoteUncheckedUpdateManyWithoutPostNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutPostNestedInput
@@ -28755,7 +29049,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCommentsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -28783,7 +29077,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -28848,7 +29142,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutCommentNestedInput
@@ -28920,7 +29214,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutVotesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -28948,7 +29242,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutVotesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29017,7 +29311,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutPostInput
@@ -29056,7 +29350,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     saved_by_users?: SavedContentUncheckedCreateNestedManyWithoutCommentInput
@@ -29080,7 +29374,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutVotesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29108,7 +29402,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutVotesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29183,7 +29477,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutPostNestedInput
@@ -29228,7 +29522,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutCommentNestedInput
@@ -29236,7 +29530,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutMembershipsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29264,7 +29558,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29330,7 +29624,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -29357,7 +29651,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutMembershipsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29385,7 +29679,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29457,7 +29751,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29468,7 +29762,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutModerated_communitiesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29496,7 +29790,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutModerated_communitiesInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29562,7 +29856,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -29589,7 +29883,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutModerated_communitiesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29617,7 +29911,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutModerated_communitiesInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29689,7 +29983,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29700,7 +29994,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutUnit_enrollmentsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29728,7 +30022,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutUnit_enrollmentsInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29803,7 +30097,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutUnit_enrollmentsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29831,7 +30125,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutUnit_enrollmentsInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -29896,7 +30190,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutSaved_contentInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29924,7 +30218,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutSaved_contentInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -29993,7 +30287,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     votes?: VoteUncheckedCreateNestedManyWithoutPostInput
@@ -30032,7 +30326,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
@@ -30056,7 +30350,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutSaved_contentInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30084,7 +30378,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutSaved_contentInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30159,7 +30453,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     votes?: VoteUncheckedUpdateManyWithoutPostNestedInput
@@ -30204,7 +30498,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
@@ -30212,7 +30506,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutNotifications_receivedInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -30240,7 +30534,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutNotifications_receivedInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -30273,7 +30567,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutNotifications_sentInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -30301,7 +30595,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutNotifications_sentInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -30370,7 +30664,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     community_id: string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     votes?: VoteUncheckedCreateNestedManyWithoutPostInput
@@ -30409,7 +30703,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
     replies?: CommentUncheckedCreateNestedManyWithoutParent_commentInput
     votes?: VoteUncheckedCreateNestedManyWithoutCommentInput
@@ -30455,7 +30749,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -30482,7 +30776,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutNotifications_receivedInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30510,7 +30804,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutNotifications_receivedInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30549,7 +30843,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutNotifications_sentInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30577,7 +30871,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutNotifications_sentInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -30652,7 +30946,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     community_id?: StringFieldUpdateOperationsInput | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     votes?: VoteUncheckedUpdateManyWithoutPostNestedInput
@@ -30697,7 +30991,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
@@ -30749,7 +31043,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30851,7 +31145,7 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    sender_user_id?: string | null
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -30863,7 +31157,7 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
+    recipient_user_id: number
     related_post_id?: string | null
     related_comment_id?: string | null
     related_community_id?: string | null
@@ -31169,7 +31463,7 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31181,7 +31475,7 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31205,7 +31499,7 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31217,14 +31511,14 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyCampusInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -31253,14 +31547,14 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_faculty_id?: string | null
     related_course_id?: string | null
     related_unit_id?: string | null
   }
 
   export type UserUpdateWithoutCampusInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31288,7 +31582,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCampusInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31316,7 +31610,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyWithoutCampusInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31367,7 +31661,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31389,14 +31683,14 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyFacultyInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -31445,14 +31739,14 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_course_id?: string | null
     related_unit_id?: string | null
   }
 
   export type UserUpdateWithoutFacultyInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31480,7 +31774,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutFacultyInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31508,7 +31802,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyWithoutFacultyInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31627,7 +31921,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31649,14 +31943,14 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyCourseInput = {
-    user_id?: string
+    user_id?: number
     monash_email: string
     username: string
     password_hash: string
@@ -31685,14 +31979,14 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_unit_id?: string | null
   }
 
   export type UserUpdateWithoutCourseInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31720,7 +32014,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCourseInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31748,7 +32042,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyWithoutCourseInput = {
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
@@ -31799,7 +32093,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31821,7 +32115,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_unit_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31839,7 +32133,7 @@ export namespace Prisma {
     rules?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    creator_id: string
+    creator_id: number
     related_campus_id?: string | null
     related_faculty_id?: string | null
     related_course_id?: string | null
@@ -31850,7 +32144,7 @@ export namespace Prisma {
     enrollment_year: number
     enrollment_semester: string
     status?: $Enums.EnrollmentStatus
-    user_id: string
+    user_id: number
   }
 
   export type CommunityUpdateWithoutRelated_unitInput = {
@@ -31887,7 +32181,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31909,7 +32203,7 @@ export namespace Prisma {
     rules?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    creator_id?: StringFieldUpdateOperationsInput | string
+    creator_id?: IntFieldUpdateOperationsInput | number
     related_campus_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_faculty_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_course_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31928,7 +32222,7 @@ export namespace Prisma {
     enrollment_year?: IntFieldUpdateOperationsInput | number
     enrollment_semester?: StringFieldUpdateOperationsInput | string
     status?: EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUnitEnrollmentUncheckedUpdateManyWithoutUnitInput = {
@@ -31936,7 +32230,7 @@ export namespace Prisma {
     enrollment_year?: IntFieldUpdateOperationsInput | number
     enrollment_semester?: StringFieldUpdateOperationsInput | string
     status?: EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type PostCreateManyCommunityInput = {
@@ -31954,21 +32248,21 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
   }
 
   export type CommunityMembershipCreateManyCommunityInput = {
     membership_id?: string
     role?: $Enums.MembershipRole
     joined_at?: Date | string
-    user_id: string
+    user_id: number
   }
 
   export type ModeratorCreateManyCommunityInput = {
     moderator_id?: string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: Date | string
-    user_id: string
+    user_id: number
   }
 
   export type NotificationCreateManyRelated_communityInput = {
@@ -31977,8 +32271,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_comment_id?: string | null
   }
@@ -32020,7 +32314,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     votes?: VoteUncheckedUpdateManyWithoutPostNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutPostNestedInput
@@ -32042,7 +32336,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommunityMembershipUpdateWithoutCommunityInput = {
@@ -32056,14 +32350,14 @@ export namespace Prisma {
     membership_id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     joined_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommunityMembershipUncheckedUpdateManyWithoutCommunityInput = {
     membership_id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     joined_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type ModeratorUpdateWithoutCommunityInput = {
@@ -32077,14 +32371,14 @@ export namespace Prisma {
     moderator_id?: StringFieldUpdateOperationsInput | string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type ModeratorUncheckedUpdateManyWithoutCommunityInput = {
     moderator_id?: StringFieldUpdateOperationsInput | string
     permissions?: NullableJsonNullValueInput | InputJsonValue
     appointed_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type NotificationUpdateWithoutRelated_communityInput = {
@@ -32105,8 +32399,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -32117,8 +32411,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -32132,7 +32426,7 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    user_id: string
+    user_id: number
     parent_comment_id?: string | null
   }
 
@@ -32140,14 +32434,14 @@ export namespace Prisma {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     comment_id?: string | null
   }
 
   export type SavedContentCreateManyPostInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     comment_id?: string | null
   }
 
@@ -32157,8 +32451,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_comment_id?: string | null
     related_community_id?: string | null
   }
@@ -32189,7 +32483,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
@@ -32206,7 +32500,7 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     parent_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32222,7 +32516,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32230,7 +32524,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32244,14 +32538,14 @@ export namespace Prisma {
   export type SavedContentUncheckedUpdateWithoutPostInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SavedContentUncheckedUpdateManyWithoutPostInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32273,8 +32567,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -32285,8 +32579,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -32301,21 +32595,21 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     post_id: string
-    user_id: string
+    user_id: number
   }
 
   export type VoteCreateManyCommentInput = {
     vote_id?: string
     vote_type: $Enums.VoteType
     created_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
   }
 
   export type SavedContentCreateManyCommentInput = {
     saved_id?: string
     saved_at?: Date | string
-    user_id: string
+    user_id: number
     post_id?: string | null
   }
 
@@ -32325,8 +32619,8 @@ export namespace Prisma {
     content_preview?: string | null
     is_read?: boolean
     created_at?: Date | string
-    recipient_user_id: string
-    sender_user_id?: string | null
+    recipient_user_id: number
+    sender_user_id?: number | null
     related_post_id?: string | null
     related_community_id?: string | null
   }
@@ -32358,7 +32652,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     replies?: CommentUncheckedUpdateManyWithoutParent_commentNestedInput
     votes?: VoteUncheckedUpdateManyWithoutCommentNestedInput
     saved_by_users?: SavedContentUncheckedUpdateManyWithoutCommentNestedInput
@@ -32375,7 +32669,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post_id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type VoteUpdateWithoutCommentInput = {
@@ -32390,7 +32684,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32398,7 +32692,7 @@ export namespace Prisma {
     vote_id?: StringFieldUpdateOperationsInput | string
     vote_type?: EnumVoteTypeFieldUpdateOperationsInput | $Enums.VoteType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32412,14 +32706,14 @@ export namespace Prisma {
   export type SavedContentUncheckedUpdateWithoutCommentInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SavedContentUncheckedUpdateManyWithoutCommentInput = {
     saved_id?: StringFieldUpdateOperationsInput | string
     saved_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_id?: StringFieldUpdateOperationsInput | string
+    user_id?: IntFieldUpdateOperationsInput | number
     post_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32441,8 +32735,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -32453,8 +32747,8 @@ export namespace Prisma {
     content_preview?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient_user_id?: StringFieldUpdateOperationsInput | string
-    sender_user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient_user_id?: IntFieldUpdateOperationsInput | number
+    sender_user_id?: NullableIntFieldUpdateOperationsInput | number | null
     related_post_id?: NullableStringFieldUpdateOperationsInput | string | null
     related_community_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
