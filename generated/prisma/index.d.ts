@@ -2852,12 +2852,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name: string | null
-    last_name: string | null
+    first_name: string
+    last_name: string
     profile_picture_url: string | null
     bio: string | null
     karma_points: number
-    year_of_study: number | null
+    year_of_study: number
     is_verified_student: boolean
     created_at: Date
     updated_at: Date
@@ -3031,12 +3031,12 @@ export namespace Prisma {
       monash_email: string
       username: string
       password_hash: string
-      first_name: string | null
-      last_name: string | null
+      first_name: string
+      last_name: string
       profile_picture_url: string | null
       bio: string | null
       karma_points: number
-      year_of_study: number | null
+      year_of_study: number
       is_verified_student: boolean
       created_at: Date
       updated_at: Date
@@ -6469,7 +6469,6 @@ export namespace Prisma {
   }
 
   export type CourseMinAggregateOutputType = {
-    course_id: string | null
     course_code: string | null
     course_name: string | null
     course_description: string | null
@@ -6479,7 +6478,6 @@ export namespace Prisma {
   }
 
   export type CourseMaxAggregateOutputType = {
-    course_id: string | null
     course_code: string | null
     course_name: string | null
     course_description: string | null
@@ -6489,7 +6487,6 @@ export namespace Prisma {
   }
 
   export type CourseCountAggregateOutputType = {
-    course_id: number
     course_code: number
     course_name: number
     course_description: number
@@ -6501,7 +6498,6 @@ export namespace Prisma {
 
 
   export type CourseMinAggregateInputType = {
-    course_id?: true
     course_code?: true
     course_name?: true
     course_description?: true
@@ -6511,7 +6507,6 @@ export namespace Prisma {
   }
 
   export type CourseMaxAggregateInputType = {
-    course_id?: true
     course_code?: true
     course_name?: true
     course_description?: true
@@ -6521,7 +6516,6 @@ export namespace Prisma {
   }
 
   export type CourseCountAggregateInputType = {
-    course_id?: true
     course_code?: true
     course_name?: true
     course_description?: true
@@ -6604,7 +6598,6 @@ export namespace Prisma {
   }
 
   export type CourseGroupByOutputType = {
-    course_id: string
     course_code: string
     course_name: string
     course_description: string | null
@@ -6631,7 +6624,6 @@ export namespace Prisma {
 
 
   export type CourseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    course_id?: boolean
     course_code?: boolean
     course_name?: boolean
     course_description?: boolean
@@ -6645,7 +6637,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    course_id?: boolean
     course_code?: boolean
     course_name?: boolean
     course_description?: boolean
@@ -6656,7 +6647,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    course_id?: boolean
     course_code?: boolean
     course_name?: boolean
     course_description?: boolean
@@ -6667,7 +6657,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectScalar = {
-    course_id?: boolean
     course_code?: boolean
     course_name?: boolean
     course_description?: boolean
@@ -6676,7 +6665,7 @@ export namespace Prisma {
     faculty_id?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"course_id" | "course_code" | "course_name" | "course_description" | "created_at" | "updated_at" | "faculty_id", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"course_code" | "course_name" | "course_description" | "created_at" | "updated_at" | "faculty_id", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     faculty?: boolean | FacultyDefaultArgs<ExtArgs>
     users?: boolean | Course$usersArgs<ExtArgs>
@@ -6698,7 +6687,6 @@ export namespace Prisma {
       communities: Prisma.$CommunityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      course_id: string
       course_code: string
       course_name: string
       course_description: string | null
@@ -6788,8 +6776,8 @@ export namespace Prisma {
      * // Get first 10 Courses
      * const courses = await prisma.course.findMany({ take: 10 })
      * 
-     * // Only select the `course_id`
-     * const courseWithCourse_idOnly = await prisma.course.findMany({ select: { course_id: true } })
+     * // Only select the `course_code`
+     * const courseWithCourse_codeOnly = await prisma.course.findMany({ select: { course_code: true } })
      * 
      */
     findMany<T extends CourseFindManyArgs>(args?: SelectSubset<T, CourseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -6833,9 +6821,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Courses and only return the `course_id`
-     * const courseWithCourse_idOnly = await prisma.course.createManyAndReturn({
-     *   select: { course_id: true },
+     * // Create many Courses and only return the `course_code`
+     * const courseWithCourse_codeOnly = await prisma.course.createManyAndReturn({
+     *   select: { course_code: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -6924,9 +6912,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Courses and only return the `course_id`
-     * const courseWithCourse_idOnly = await prisma.course.updateManyAndReturn({
-     *   select: { course_id: true },
+     * // Update zero or more Courses and only return the `course_code`
+     * const courseWithCourse_codeOnly = await prisma.course.updateManyAndReturn({
+     *   select: { course_code: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7131,7 +7119,6 @@ export namespace Prisma {
    * Fields of the Course model
    */
   interface CourseFieldRefs {
-    readonly course_id: FieldRef<"Course", 'String'>
     readonly course_code: FieldRef<"Course", 'String'>
     readonly course_name: FieldRef<"Course", 'String'>
     readonly course_description: FieldRef<"Course", 'String'>
@@ -7621,11 +7608,9 @@ export namespace Prisma {
   }
 
   export type UnitMinAggregateOutputType = {
-    unit_id: string | null
     unit_code: string | null
     unit_name: string | null
     unit_description: string | null
-    semester_offered: string | null
     year_level: number | null
     created_at: Date | null
     updated_at: Date | null
@@ -7633,11 +7618,9 @@ export namespace Prisma {
   }
 
   export type UnitMaxAggregateOutputType = {
-    unit_id: string | null
     unit_code: string | null
     unit_name: string | null
     unit_description: string | null
-    semester_offered: string | null
     year_level: number | null
     created_at: Date | null
     updated_at: Date | null
@@ -7645,7 +7628,6 @@ export namespace Prisma {
   }
 
   export type UnitCountAggregateOutputType = {
-    unit_id: number
     unit_code: number
     unit_name: number
     unit_description: number
@@ -7667,11 +7649,9 @@ export namespace Prisma {
   }
 
   export type UnitMinAggregateInputType = {
-    unit_id?: true
     unit_code?: true
     unit_name?: true
     unit_description?: true
-    semester_offered?: true
     year_level?: true
     created_at?: true
     updated_at?: true
@@ -7679,11 +7659,9 @@ export namespace Prisma {
   }
 
   export type UnitMaxAggregateInputType = {
-    unit_id?: true
     unit_code?: true
     unit_name?: true
     unit_description?: true
-    semester_offered?: true
     year_level?: true
     created_at?: true
     updated_at?: true
@@ -7691,7 +7669,6 @@ export namespace Prisma {
   }
 
   export type UnitCountAggregateInputType = {
-    unit_id?: true
     unit_code?: true
     unit_name?: true
     unit_description?: true
@@ -7790,11 +7767,10 @@ export namespace Prisma {
   }
 
   export type UnitGroupByOutputType = {
-    unit_id: string
     unit_code: string
     unit_name: string
     unit_description: string | null
-    semester_offered: string | null
+    semester_offered: JsonValue | null
     year_level: number | null
     created_at: Date
     updated_at: Date
@@ -7821,7 +7797,6 @@ export namespace Prisma {
 
 
   export type UnitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    unit_id?: boolean
     unit_code?: boolean
     unit_name?: boolean
     unit_description?: boolean
@@ -7837,7 +7812,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["unit"]>
 
   export type UnitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    unit_id?: boolean
     unit_code?: boolean
     unit_name?: boolean
     unit_description?: boolean
@@ -7850,7 +7824,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["unit"]>
 
   export type UnitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    unit_id?: boolean
     unit_code?: boolean
     unit_name?: boolean
     unit_description?: boolean
@@ -7863,7 +7836,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["unit"]>
 
   export type UnitSelectScalar = {
-    unit_id?: boolean
     unit_code?: boolean
     unit_name?: boolean
     unit_description?: boolean
@@ -7874,7 +7846,7 @@ export namespace Prisma {
     faculty_id?: boolean
   }
 
-  export type UnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"unit_id" | "unit_code" | "unit_name" | "unit_description" | "semester_offered" | "year_level" | "created_at" | "updated_at" | "faculty_id", ExtArgs["result"]["unit"]>
+  export type UnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"unit_code" | "unit_name" | "unit_description" | "semester_offered" | "year_level" | "created_at" | "updated_at" | "faculty_id", ExtArgs["result"]["unit"]>
   export type UnitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     faculty?: boolean | Unit$facultyArgs<ExtArgs>
     communities?: boolean | Unit$communitiesArgs<ExtArgs>
@@ -7896,11 +7868,10 @@ export namespace Prisma {
       user_enrollments: Prisma.$UserUnitEnrollmentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      unit_id: string
       unit_code: string
       unit_name: string
       unit_description: string | null
-      semester_offered: string | null
+      semester_offered: Prisma.JsonValue | null
       year_level: number | null
       created_at: Date
       updated_at: Date
@@ -7988,8 +7959,8 @@ export namespace Prisma {
      * // Get first 10 Units
      * const units = await prisma.unit.findMany({ take: 10 })
      * 
-     * // Only select the `unit_id`
-     * const unitWithUnit_idOnly = await prisma.unit.findMany({ select: { unit_id: true } })
+     * // Only select the `unit_code`
+     * const unitWithUnit_codeOnly = await prisma.unit.findMany({ select: { unit_code: true } })
      * 
      */
     findMany<T extends UnitFindManyArgs>(args?: SelectSubset<T, UnitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -8033,9 +8004,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Units and only return the `unit_id`
-     * const unitWithUnit_idOnly = await prisma.unit.createManyAndReturn({
-     *   select: { unit_id: true },
+     * // Create many Units and only return the `unit_code`
+     * const unitWithUnit_codeOnly = await prisma.unit.createManyAndReturn({
+     *   select: { unit_code: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -8124,9 +8095,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Units and only return the `unit_id`
-     * const unitWithUnit_idOnly = await prisma.unit.updateManyAndReturn({
-     *   select: { unit_id: true },
+     * // Update zero or more Units and only return the `unit_code`
+     * const unitWithUnit_codeOnly = await prisma.unit.updateManyAndReturn({
+     *   select: { unit_code: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8331,11 +8302,10 @@ export namespace Prisma {
    * Fields of the Unit model
    */
   interface UnitFieldRefs {
-    readonly unit_id: FieldRef<"Unit", 'String'>
     readonly unit_code: FieldRef<"Unit", 'String'>
     readonly unit_name: FieldRef<"Unit", 'String'>
     readonly unit_description: FieldRef<"Unit", 'String'>
-    readonly semester_offered: FieldRef<"Unit", 'String'>
+    readonly semester_offered: FieldRef<"Unit", 'Json'>
     readonly year_level: FieldRef<"Unit", 'Int'>
     readonly created_at: FieldRef<"Unit", 'DateTime'>
     readonly updated_at: FieldRef<"Unit", 'DateTime'>
@@ -19924,7 +19894,6 @@ export namespace Prisma {
 
 
   export const CourseScalarFieldEnum: {
-    course_id: 'course_id',
     course_code: 'course_code',
     course_name: 'course_name',
     course_description: 'course_description',
@@ -19937,7 +19906,6 @@ export namespace Prisma {
 
 
   export const UnitScalarFieldEnum: {
-    unit_id: 'unit_id',
     unit_code: 'unit_code',
     unit_name: 'unit_name',
     unit_description: 'unit_description',
@@ -20181,6 +20149,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'CommunityType'
    */
   export type EnumCommunityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommunityType'>
@@ -20237,20 +20219,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-  /**
    * Reference to a field of type 'EnrollmentStatus'
    */
   export type EnumEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnrollmentStatus'>
@@ -20303,12 +20271,12 @@ export namespace Prisma {
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password_hash?: StringFilter<"User"> | string
-    first_name?: StringNullableFilter<"User"> | string | null
-    last_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     karma_points?: IntFilter<"User"> | number
-    year_of_study?: IntNullableFilter<"User"> | number | null
+    year_of_study?: IntFilter<"User"> | number
     is_verified_student?: BoolFilter<"User"> | boolean
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
@@ -20335,12 +20303,12 @@ export namespace Prisma {
     monash_email?: SortOrder
     username?: SortOrder
     password_hash?: SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     profile_picture_url?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     karma_points?: SortOrder
-    year_of_study?: SortOrderInput | SortOrder
+    year_of_study?: SortOrder
     is_verified_student?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -20370,12 +20338,12 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password_hash?: StringFilter<"User"> | string
-    first_name?: StringNullableFilter<"User"> | string | null
-    last_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     karma_points?: IntFilter<"User"> | number
-    year_of_study?: IntNullableFilter<"User"> | number | null
+    year_of_study?: IntFilter<"User"> | number
     is_verified_student?: BoolFilter<"User"> | boolean
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
@@ -20402,12 +20370,12 @@ export namespace Prisma {
     monash_email?: SortOrder
     username?: SortOrder
     password_hash?: SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     profile_picture_url?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     karma_points?: SortOrder
-    year_of_study?: SortOrderInput | SortOrder
+    year_of_study?: SortOrder
     is_verified_student?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -20429,12 +20397,12 @@ export namespace Prisma {
     monash_email?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
     password_hash?: StringWithAggregatesFilter<"User"> | string
-    first_name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    last_name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    first_name?: StringWithAggregatesFilter<"User"> | string
+    last_name?: StringWithAggregatesFilter<"User"> | string
     profile_picture_url?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     karma_points?: IntWithAggregatesFilter<"User"> | number
-    year_of_study?: IntNullableWithAggregatesFilter<"User"> | number | null
+    year_of_study?: IntWithAggregatesFilter<"User"> | number
     is_verified_student?: BoolWithAggregatesFilter<"User"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -20569,7 +20537,6 @@ export namespace Prisma {
     AND?: CourseWhereInput | CourseWhereInput[]
     OR?: CourseWhereInput[]
     NOT?: CourseWhereInput | CourseWhereInput[]
-    course_id?: StringFilter<"Course"> | string
     course_code?: StringFilter<"Course"> | string
     course_name?: StringFilter<"Course"> | string
     course_description?: StringNullableFilter<"Course"> | string | null
@@ -20582,7 +20549,6 @@ export namespace Prisma {
   }
 
   export type CourseOrderByWithRelationInput = {
-    course_id?: SortOrder
     course_code?: SortOrder
     course_name?: SortOrder
     course_description?: SortOrderInput | SortOrder
@@ -20595,7 +20561,6 @@ export namespace Prisma {
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
-    course_id?: string
     course_code?: string
     AND?: CourseWhereInput | CourseWhereInput[]
     OR?: CourseWhereInput[]
@@ -20608,10 +20573,9 @@ export namespace Prisma {
     faculty?: XOR<FacultyScalarRelationFilter, FacultyWhereInput>
     users?: UserListRelationFilter
     communities?: CommunityListRelationFilter
-  }, "course_id" | "course_code">
+  }, "course_code" | "course_code">
 
   export type CourseOrderByWithAggregationInput = {
-    course_id?: SortOrder
     course_code?: SortOrder
     course_name?: SortOrder
     course_description?: SortOrderInput | SortOrder
@@ -20627,7 +20591,6 @@ export namespace Prisma {
     AND?: CourseScalarWhereWithAggregatesInput | CourseScalarWhereWithAggregatesInput[]
     OR?: CourseScalarWhereWithAggregatesInput[]
     NOT?: CourseScalarWhereWithAggregatesInput | CourseScalarWhereWithAggregatesInput[]
-    course_id?: StringWithAggregatesFilter<"Course"> | string
     course_code?: StringWithAggregatesFilter<"Course"> | string
     course_name?: StringWithAggregatesFilter<"Course"> | string
     course_description?: StringNullableWithAggregatesFilter<"Course"> | string | null
@@ -20640,11 +20603,10 @@ export namespace Prisma {
     AND?: UnitWhereInput | UnitWhereInput[]
     OR?: UnitWhereInput[]
     NOT?: UnitWhereInput | UnitWhereInput[]
-    unit_id?: StringFilter<"Unit"> | string
     unit_code?: StringFilter<"Unit"> | string
     unit_name?: StringFilter<"Unit"> | string
     unit_description?: StringNullableFilter<"Unit"> | string | null
-    semester_offered?: StringNullableFilter<"Unit"> | string | null
+    semester_offered?: JsonNullableFilter<"Unit">
     year_level?: IntNullableFilter<"Unit"> | number | null
     created_at?: DateTimeFilter<"Unit"> | Date | string
     updated_at?: DateTimeFilter<"Unit"> | Date | string
@@ -20655,7 +20617,6 @@ export namespace Prisma {
   }
 
   export type UnitOrderByWithRelationInput = {
-    unit_id?: SortOrder
     unit_code?: SortOrder
     unit_name?: SortOrder
     unit_description?: SortOrderInput | SortOrder
@@ -20670,14 +20631,13 @@ export namespace Prisma {
   }
 
   export type UnitWhereUniqueInput = Prisma.AtLeast<{
-    unit_id?: string
     unit_code?: string
     AND?: UnitWhereInput | UnitWhereInput[]
     OR?: UnitWhereInput[]
     NOT?: UnitWhereInput | UnitWhereInput[]
     unit_name?: StringFilter<"Unit"> | string
     unit_description?: StringNullableFilter<"Unit"> | string | null
-    semester_offered?: StringNullableFilter<"Unit"> | string | null
+    semester_offered?: JsonNullableFilter<"Unit">
     year_level?: IntNullableFilter<"Unit"> | number | null
     created_at?: DateTimeFilter<"Unit"> | Date | string
     updated_at?: DateTimeFilter<"Unit"> | Date | string
@@ -20685,10 +20645,9 @@ export namespace Prisma {
     faculty?: XOR<FacultyNullableScalarRelationFilter, FacultyWhereInput> | null
     communities?: CommunityListRelationFilter
     user_enrollments?: UserUnitEnrollmentListRelationFilter
-  }, "unit_id" | "unit_code">
+  }, "unit_code" | "unit_code">
 
   export type UnitOrderByWithAggregationInput = {
-    unit_id?: SortOrder
     unit_code?: SortOrder
     unit_name?: SortOrder
     unit_description?: SortOrderInput | SortOrder
@@ -20708,11 +20667,10 @@ export namespace Prisma {
     AND?: UnitScalarWhereWithAggregatesInput | UnitScalarWhereWithAggregatesInput[]
     OR?: UnitScalarWhereWithAggregatesInput[]
     NOT?: UnitScalarWhereWithAggregatesInput | UnitScalarWhereWithAggregatesInput[]
-    unit_id?: StringWithAggregatesFilter<"Unit"> | string
     unit_code?: StringWithAggregatesFilter<"Unit"> | string
     unit_name?: StringWithAggregatesFilter<"Unit"> | string
     unit_description?: StringNullableWithAggregatesFilter<"Unit"> | string | null
-    semester_offered?: StringNullableWithAggregatesFilter<"Unit"> | string | null
+    semester_offered?: JsonNullableWithAggregatesFilter<"Unit">
     year_level?: IntNullableWithAggregatesFilter<"Unit"> | number | null
     created_at?: DateTimeWithAggregatesFilter<"Unit"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Unit"> | Date | string
@@ -21509,12 +21467,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21538,12 +21496,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21567,12 +21525,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21596,12 +21554,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21625,12 +21583,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21644,12 +21602,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21660,12 +21618,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21811,7 +21769,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -21823,7 +21780,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedCreateInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -21835,7 +21791,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21847,7 +21802,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21859,7 +21813,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateManyInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -21869,7 +21822,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateManyMutationInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21878,7 +21830,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateManyInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21888,11 +21839,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -21902,11 +21852,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedCreateInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -21916,11 +21865,10 @@ export namespace Prisma {
   }
 
   export type UnitUpdateInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21930,11 +21878,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedUpdateInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21944,11 +21891,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateManyInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -21956,22 +21902,20 @@ export namespace Prisma {
   }
 
   export type UnitUpdateManyMutationInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UnitUncheckedUpdateManyInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22789,17 +22733,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -23047,22 +22980,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -23169,7 +23086,6 @@ export namespace Prisma {
   }
 
   export type CourseCountOrderByAggregateInput = {
-    course_id?: SortOrder
     course_code?: SortOrder
     course_name?: SortOrder
     course_description?: SortOrder
@@ -23179,7 +23095,6 @@ export namespace Prisma {
   }
 
   export type CourseMaxOrderByAggregateInput = {
-    course_id?: SortOrder
     course_code?: SortOrder
     course_name?: SortOrder
     course_description?: SortOrder
@@ -23189,7 +23104,6 @@ export namespace Prisma {
   }
 
   export type CourseMinOrderByAggregateInput = {
-    course_id?: SortOrder
     course_code?: SortOrder
     course_name?: SortOrder
     course_description?: SortOrder
@@ -23197,9 +23111,42 @@ export namespace Prisma {
     updated_at?: SortOrder
     faculty_id?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
 
   export type UnitCountOrderByAggregateInput = {
-    unit_id?: SortOrder
     unit_code?: SortOrder
     unit_name?: SortOrder
     unit_description?: SortOrder
@@ -23215,11 +23162,9 @@ export namespace Prisma {
   }
 
   export type UnitMaxOrderByAggregateInput = {
-    unit_id?: SortOrder
     unit_code?: SortOrder
     unit_name?: SortOrder
     unit_description?: SortOrder
-    semester_offered?: SortOrder
     year_level?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -23227,11 +23172,9 @@ export namespace Prisma {
   }
 
   export type UnitMinOrderByAggregateInput = {
-    unit_id?: SortOrder
     unit_code?: SortOrder
     unit_name?: SortOrder
     unit_description?: SortOrder
-    semester_offered?: SortOrder
     year_level?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -23240,6 +23183,48 @@ export namespace Prisma {
 
   export type UnitSumOrderByAggregateInput = {
     year_level?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumCommunityTypeFilter<$PrismaModel = never> = {
@@ -23613,29 +23598,6 @@ export namespace Prisma {
     _min?: NestedEnumMembershipRoleFilter<$PrismaModel>
     _max?: NestedEnumMembershipRoleFilter<$PrismaModel>
   }
-  export type JsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type ModeratorUser_idCommunity_idCompoundUniqueInput = {
     user_id: number
@@ -23670,32 +23632,6 @@ export namespace Prisma {
 
   export type ModeratorSumOrderByAggregateInput = {
     user_id?: SortOrder
-  }
-  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedJsonNullableFilter<$PrismaModel>
-    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type EnumEnrollmentStatusFilter<$PrismaModel = never> = {
@@ -24054,14 +23990,6 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -24764,6 +24692,14 @@ export namespace Prisma {
     connectOrCreate?: UserUnitEnrollmentCreateOrConnectWithoutUnitInput | UserUnitEnrollmentCreateOrConnectWithoutUnitInput[]
     createMany?: UserUnitEnrollmentCreateManyUnitInputEnvelope
     connect?: UserUnitEnrollmentWhereUniqueInput | UserUnitEnrollmentWhereUniqueInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type FacultyUpdateOneWithoutUnitsNestedInput = {
@@ -25803,17 +25739,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -25891,6 +25816,62 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -25916,28 +25897,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedEnumCommunityTypeFilter<$PrismaModel = never> = {
@@ -26006,29 +25965,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMembershipRoleFilter<$PrismaModel>
     _max?: NestedEnumMembershipRoleFilter<$PrismaModel>
-  }
-  export type NestedJsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumEnrollmentStatusFilter<$PrismaModel = never> = {
@@ -26116,7 +26052,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutUsersInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -26127,7 +26062,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedCreateWithoutUsersInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -26560,7 +26494,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutUsersInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26571,7 +26504,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateWithoutUsersInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26880,12 +26812,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26908,12 +26840,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27019,12 +26951,12 @@ export namespace Prisma {
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password_hash?: StringFilter<"User"> | string
-    first_name?: StringNullableFilter<"User"> | string | null
-    last_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     karma_points?: IntFilter<"User"> | number
-    year_of_study?: IntNullableFilter<"User"> | number | null
+    year_of_study?: IntFilter<"User"> | number
     is_verified_student?: BoolFilter<"User"> | boolean
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
@@ -27054,12 +26986,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27082,12 +27014,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27116,7 +27048,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutFacultyInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -27127,7 +27058,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedCreateWithoutFacultyInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -27148,11 +27078,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateWithoutFacultyInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -27161,11 +27090,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedCreateWithoutFacultyInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -27273,7 +27201,6 @@ export namespace Prisma {
     AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
     OR?: CourseScalarWhereInput[]
     NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
-    course_id?: StringFilter<"Course"> | string
     course_code?: StringFilter<"Course"> | string
     course_name?: StringFilter<"Course"> | string
     course_description?: StringNullableFilter<"Course"> | string | null
@@ -27302,11 +27229,10 @@ export namespace Prisma {
     AND?: UnitScalarWhereInput | UnitScalarWhereInput[]
     OR?: UnitScalarWhereInput[]
     NOT?: UnitScalarWhereInput | UnitScalarWhereInput[]
-    unit_id?: StringFilter<"Unit"> | string
     unit_code?: StringFilter<"Unit"> | string
     unit_name?: StringFilter<"Unit"> | string
     unit_description?: StringNullableFilter<"Unit"> | string | null
-    semester_offered?: StringNullableFilter<"Unit"> | string | null
+    semester_offered?: JsonNullableFilter<"Unit">
     year_level?: IntNullableFilter<"Unit"> | number | null
     created_at?: DateTimeFilter<"Unit"> | Date | string
     updated_at?: DateTimeFilter<"Unit"> | Date | string
@@ -27361,12 +27287,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27389,12 +27315,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27718,12 +27644,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27746,12 +27672,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27825,7 +27751,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutCommunitiesInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -27836,7 +27761,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedCreateWithoutCommunitiesInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -27852,11 +27776,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateWithoutCommunitiesInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -27865,11 +27788,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedCreateWithoutCommunitiesInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -28034,12 +27956,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28062,12 +27984,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28159,7 +28081,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutCommunitiesInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28170,7 +28091,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateWithoutCommunitiesInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28192,11 +28112,10 @@ export namespace Prisma {
   }
 
   export type UnitUpdateWithoutCommunitiesInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28205,11 +28124,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedUpdateWithoutCommunitiesInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28286,12 +28204,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -28314,12 +28232,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -28535,12 +28453,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28563,12 +28481,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28759,12 +28677,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -28787,12 +28705,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29053,12 +28971,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29081,12 +28999,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29218,12 +29136,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29246,12 +29164,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29378,12 +29296,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29406,12 +29324,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29534,12 +29452,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29562,12 +29480,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29655,12 +29573,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29683,12 +29601,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29766,12 +29684,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29794,12 +29712,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -29887,12 +29805,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29915,12 +29833,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29998,12 +29916,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30026,12 +29944,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30055,11 +29973,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateWithoutUser_enrollmentsInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -30068,11 +29985,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedCreateWithoutUser_enrollmentsInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -30101,12 +30017,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30129,12 +30045,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30164,11 +30080,10 @@ export namespace Prisma {
   }
 
   export type UnitUpdateWithoutUser_enrollmentsInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30177,11 +30092,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedUpdateWithoutUser_enrollmentsInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30194,12 +30108,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30222,12 +30136,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30354,12 +30268,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30382,12 +30296,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30510,12 +30424,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30538,12 +30452,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30571,12 +30485,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30599,12 +30513,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30780,12 +30694,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30808,12 +30722,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30847,12 +30761,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30875,12 +30789,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31522,12 +31436,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -31558,12 +31472,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31586,12 +31500,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31614,12 +31528,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31694,12 +31608,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -31708,7 +31622,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateManyFacultyInput = {
-    course_id?: string
     course_code: string
     course_name: string
     course_description?: string | null
@@ -31717,11 +31630,10 @@ export namespace Prisma {
   }
 
   export type UnitCreateManyFacultyInput = {
-    unit_id?: string
     unit_code: string
     unit_name: string
     unit_description?: string | null
-    semester_offered?: string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: number | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -31750,12 +31662,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31778,12 +31690,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31806,12 +31718,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31820,7 +31732,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutFacultyInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31831,7 +31742,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateWithoutFacultyInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31842,7 +31752,6 @@ export namespace Prisma {
   }
 
   export type CourseUncheckedUpdateManyWithoutFacultyInput = {
-    course_id?: StringFieldUpdateOperationsInput | string
     course_code?: StringFieldUpdateOperationsInput | string
     course_name?: StringFieldUpdateOperationsInput | string
     course_description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31851,11 +31760,10 @@ export namespace Prisma {
   }
 
   export type UnitUpdateWithoutFacultyInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31864,11 +31772,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedUpdateWithoutFacultyInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31877,11 +31784,10 @@ export namespace Prisma {
   }
 
   export type UnitUncheckedUpdateManyWithoutFacultyInput = {
-    unit_id?: StringFieldUpdateOperationsInput | string
     unit_code?: StringFieldUpdateOperationsInput | string
     unit_name?: StringFieldUpdateOperationsInput | string
     unit_description?: NullableStringFieldUpdateOperationsInput | string | null
-    semester_offered?: NullableStringFieldUpdateOperationsInput | string | null
+    semester_offered?: NullableJsonNullValueInput | InputJsonValue
     year_level?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31954,12 +31860,12 @@ export namespace Prisma {
     monash_email: string
     username: string
     password_hash: string
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     profile_picture_url?: string | null
     bio?: string | null
     karma_points?: number
-    year_of_study?: number | null
+    year_of_study: number
     is_verified_student?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -31990,12 +31896,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32018,12 +31924,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32046,12 +31952,12 @@ export namespace Prisma {
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     karma_points?: IntFieldUpdateOperationsInput | number
-    year_of_study?: NullableIntFieldUpdateOperationsInput | number | null
+    year_of_study?: IntFieldUpdateOperationsInput | number
     is_verified_student?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string

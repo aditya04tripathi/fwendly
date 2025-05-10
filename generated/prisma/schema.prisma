@@ -59,12 +59,12 @@ model User {
   monash_email        String   @unique
   username            String   @unique
   password_hash       String
-  first_name          String?
-  last_name           String?
+  first_name          String
+  last_name           String
   profile_picture_url String?
   bio                 String?
   karma_points        Int      @default(0)
-  year_of_study       Int?
+  year_of_study       Int
   is_verified_student Boolean  @default(false)
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
@@ -74,7 +74,7 @@ model User {
   faculty_id String?
   faculty    Faculty? @relation(fields: [faculty_id], references: [faculty_id])
   course_id  String?
-  course     Course?  @relation(fields: [course_id], references: [course_id])
+  course     Course?  @relation(fields: [course_id], references: [course_code])
 
   created_communities    Community[]           @relation("CommunityCreator")
   posts                  Post[]
@@ -125,8 +125,7 @@ model Faculty {
 }
 
 model Course {
-  course_id          String   @id @default(cuid())
-  course_code        String   @unique
+  course_code        String   @id @unique
   course_name        String
   course_description String?
   created_at         DateTime @default(now())
@@ -143,11 +142,10 @@ model Course {
 }
 
 model Unit {
-  unit_id          String   @id @default(cuid())
-  unit_code        String   @unique
+  unit_code        String   @id @unique
   unit_name        String
   unit_description String?
-  semester_offered String?
+  semester_offered Json?
   year_level       Int?
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
@@ -186,10 +184,10 @@ model Community {
   related_faculty    Faculty? @relation("FacultyCommunities", fields: [related_faculty_id], references: [faculty_id])
 
   related_course_id String?
-  related_course    Course? @relation("CourseCommunities", fields: [related_course_id], references: [course_id])
+  related_course    Course? @relation("CourseCommunities", fields: [related_course_id], references: [course_code])
 
   related_unit_id String?
-  related_unit    Unit?   @relation("UnitCommunities", fields: [related_unit_id], references: [unit_id])
+  related_unit    Unit?   @relation("UnitCommunities", fields: [related_unit_id], references: [unit_code])
 
   posts         Post[]
   members       CommunityMembership[]
@@ -339,7 +337,7 @@ model UserUnitEnrollment {
   user    User @relation(fields: [user_id], references: [user_id])
 
   unit_id String
-  unit    Unit   @relation(fields: [unit_id], references: [unit_id])
+  unit    Unit   @relation(fields: [unit_id], references: [unit_code])
 
   @@unique([user_id, unit_id, enrollment_year, enrollment_semester])
   @@index([user_id])

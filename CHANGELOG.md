@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-05-10
+
+### Changed
+
+- **Database Schema (Prisma Migrations)**:
+  - Modified the primary key for the `courses` table from a CUID (`course_id`) to the existing `course_code` field, making `course_code` the unique identifier.
+  - Modified the primary key for the `units` table from a CUID (`unit_id`) to the existing `unit_code` field, making `unit_code` the unique identifier.
+  - Updated `User` model: The `first_name`, `last_name`, and `year_of_study` fields were made non-nullable, enforcing data presence.
+  - Altered `Unit` model: The `semester_offered` field type was changed from `String?` to `Json?` (mapped to `JSONB` in PostgreSQL) to allow for more structured and flexible semester availability data.
+
 ## [0.1.0] - 2025-05-09
 
 ### Added
@@ -18,8 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Established relationships between entities using foreign keys.
   - Mapped Prisma models to PostgreSQL table names (e.g., `User` to `users`).
   - Added database indexes on foreign keys, frequently filtered fields, and timestamps to optimize query performance.
+  - Implemented compound unique constraints on models such as `Vote` (user/post, user/comment), `CommunityMembership` (user/community), `Moderator` (user/community), `UserUnitEnrollment` (user/unit/year/semester), and `SavedContent` (user/post, user/comment) to enforce specific data integrity rules.
+  - Specified referential actions (e.g., `onDelete: NoAction, onUpdate: NoAction` for the `Comment.parent_comment` self-relation) for certain relationships to precisely control behavior on related data modifications or deletions.
 - **Authentication**: Implemented JWT (JSON Web Token) authentication.
 - **Authentication**: Added forgot password functionality.
+- **Authentication**: Implemented account deletion functionality (via `DELETE /auth/delete-account` endpoint).
 - **JWT**: Created a dedicated JWT module and service for token generation and validation.
 - **API**: Integrated Swagger for API documentation.
 

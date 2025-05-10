@@ -156,7 +156,6 @@ exports.Prisma.FacultyScalarFieldEnum = {
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
-  course_id: 'course_id',
   course_code: 'course_code',
   course_name: 'course_name',
   course_description: 'course_description',
@@ -166,7 +165,6 @@ exports.Prisma.CourseScalarFieldEnum = {
 };
 
 exports.Prisma.UnitScalarFieldEnum = {
-  unit_id: 'unit_id',
   unit_code: 'unit_code',
   unit_name: 'unit_name',
   unit_description: 'unit_description',

@@ -7,6 +7,7 @@ import {
   Patch,
   HttpException,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto, SignInDto, ForgotPasswordDto } from './dto';

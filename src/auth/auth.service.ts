@@ -4,6 +4,8 @@ import { ForgotPasswordDto, SignInDto, SignUpDto } from './dto';
 import * as argon from 'argon2';
 import { JwtService } from 'src/jwt/jwt.service';
 
+import { units } from './units/index';
+
 @Injectable()
 export class AuthService {
   constructor(
