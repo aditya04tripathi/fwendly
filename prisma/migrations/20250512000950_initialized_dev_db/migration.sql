@@ -1,10 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Bookmark` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "CommunityType" AS ENUM ('General', 'Campus', 'Faculty', 'Course', 'Unit', 'Interest_Group', 'Club_Society');
 
@@ -23,24 +16,18 @@ CREATE TYPE "EnrollmentStatus" AS ENUM ('Enrolled', 'Completed', 'Withdrawn');
 -- CreateEnum
 CREATE TYPE "NotificationType" AS ENUM ('New_Comment_Reply', 'Post_Reply', 'Mention_In_Post', 'Mention_In_Comment', 'New_Post_In_Community', 'Upvote_Post', 'Upvote_Comment', 'Community_Invite', 'Moderator_Action');
 
--- DropTable
-DROP TABLE "Bookmark";
-
--- DropTable
-DROP TABLE "User";
-
 -- CreateTable
 CREATE TABLE "users" (
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL DEFAULT 0,
     "monash_email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "password_hash" TEXT NOT NULL,
-    "first_name" TEXT,
-    "last_name" TEXT,
+    "password_hash" TEXT,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
     "profile_picture_url" TEXT,
     "bio" TEXT,
     "karma_points" INTEGER NOT NULL DEFAULT 0,
-    "year_of_study" INTEGER,
+    "year_of_study" INTEGER NOT NULL,
     "is_verified_student" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -75,7 +62,6 @@ CREATE TABLE "faculties" (
 
 -- CreateTable
 CREATE TABLE "courses" (
-    "course_id" TEXT NOT NULL,
     "course_code" TEXT NOT NULL,
     "course_name" TEXT NOT NULL,
     "course_description" TEXT,
@@ -83,22 +69,21 @@ CREATE TABLE "courses" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "faculty_id" TEXT NOT NULL,
 
-    CONSTRAINT "courses_pkey" PRIMARY KEY ("course_id")
+    CONSTRAINT "courses_pkey" PRIMARY KEY ("course_code")
 );
 
 -- CreateTable
 CREATE TABLE "units" (
-    "unit_id" TEXT NOT NULL,
     "unit_code" TEXT NOT NULL,
     "unit_name" TEXT NOT NULL,
     "unit_description" TEXT,
-    "semester_offered" TEXT,
+    "semester_offered" JSONB,
     "year_level" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "faculty_id" TEXT,
 
-    CONSTRAINT "units_pkey" PRIMARY KEY ("unit_id")
+    CONSTRAINT "units_pkey" PRIMARY KEY ("unit_code")
 );
 
 -- CreateTable
@@ -114,7 +99,7 @@ CREATE TABLE "communities" (
     "rules" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "creator_id" TEXT NOT NULL,
+    "creator_id" INTEGER NOT NULL,
     "related_campus_id" TEXT,
     "related_faculty_id" TEXT,
     "related_course_id" TEXT,
@@ -139,7 +124,7 @@ CREATE TABLE "posts" (
     "is_deleted" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "community_id" TEXT NOT NULL,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("post_id")
@@ -156,7 +141,7 @@ CREATE TABLE "comments" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "post_id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "parent_comment_id" TEXT,
 
     CONSTRAINT "comments_pkey" PRIMARY KEY ("comment_id")
@@ -167,7 +152,7 @@ CREATE TABLE "votes" (
     "vote_id" TEXT NOT NULL,
     "vote_type" "VoteType" NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "post_id" TEXT,
     "comment_id" TEXT,
 
@@ -179,7 +164,7 @@ CREATE TABLE "community_memberships" (
     "membership_id" TEXT NOT NULL,
     "role" "MembershipRole" NOT NULL DEFAULT 'Member',
     "joined_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "community_id" TEXT NOT NULL,
 
     CONSTRAINT "community_memberships_pkey" PRIMARY KEY ("membership_id")
@@ -190,7 +175,7 @@ CREATE TABLE "moderators" (
     "moderator_id" TEXT NOT NULL,
     "permissions" JSONB,
     "appointed_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "community_id" TEXT NOT NULL,
 
     CONSTRAINT "moderators_pkey" PRIMARY KEY ("moderator_id")
@@ -202,7 +187,7 @@ CREATE TABLE "user_unit_enrollments" (
     "enrollment_year" INTEGER NOT NULL,
     "enrollment_semester" TEXT NOT NULL,
     "status" "EnrollmentStatus" NOT NULL DEFAULT 'Enrolled',
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "unit_id" TEXT NOT NULL,
 
     CONSTRAINT "user_unit_enrollments_pkey" PRIMARY KEY ("enrollment_id")
@@ -212,7 +197,7 @@ CREATE TABLE "user_unit_enrollments" (
 CREATE TABLE "saved_content" (
     "saved_id" TEXT NOT NULL,
     "saved_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" TEXT NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "post_id" TEXT,
     "comment_id" TEXT,
 
@@ -226,8 +211,8 @@ CREATE TABLE "notifications" (
     "content_preview" TEXT,
     "is_read" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "recipient_user_id" TEXT NOT NULL,
-    "sender_user_id" TEXT,
+    "recipient_user_id" INTEGER NOT NULL,
+    "sender_user_id" INTEGER,
     "related_post_id" TEXT,
     "related_comment_id" TEXT,
     "related_community_id" TEXT,
@@ -428,7 +413,7 @@ ALTER TABLE "users" ADD CONSTRAINT "users_campus_id_fkey" FOREIGN KEY ("campus_i
 ALTER TABLE "users" ADD CONSTRAINT "users_faculty_id_fkey" FOREIGN KEY ("faculty_id") REFERENCES "faculties"("faculty_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_course_id_fkey" FOREIGN KEY ("course_id") REFERENCES "courses"("course_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "users" ADD CONSTRAINT "users_course_id_fkey" FOREIGN KEY ("course_id") REFERENCES "courses"("course_code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "courses" ADD CONSTRAINT "courses_faculty_id_fkey" FOREIGN KEY ("faculty_id") REFERENCES "faculties"("faculty_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -446,10 +431,10 @@ ALTER TABLE "communities" ADD CONSTRAINT "communities_related_campus_id_fkey" FO
 ALTER TABLE "communities" ADD CONSTRAINT "communities_related_faculty_id_fkey" FOREIGN KEY ("related_faculty_id") REFERENCES "faculties"("faculty_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "communities" ADD CONSTRAINT "communities_related_course_id_fkey" FOREIGN KEY ("related_course_id") REFERENCES "courses"("course_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "communities" ADD CONSTRAINT "communities_related_course_id_fkey" FOREIGN KEY ("related_course_id") REFERENCES "courses"("course_code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "communities" ADD CONSTRAINT "communities_related_unit_id_fkey" FOREIGN KEY ("related_unit_id") REFERENCES "units"("unit_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "communities" ADD CONSTRAINT "communities_related_unit_id_fkey" FOREIGN KEY ("related_unit_id") REFERENCES "units"("unit_code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -491,7 +476,7 @@ ALTER TABLE "moderators" ADD CONSTRAINT "moderators_community_id_fkey" FOREIGN K
 ALTER TABLE "user_unit_enrollments" ADD CONSTRAINT "user_unit_enrollments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user_unit_enrollments" ADD CONSTRAINT "user_unit_enrollments_unit_id_fkey" FOREIGN KEY ("unit_id") REFERENCES "units"("unit_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "user_unit_enrollments" ADD CONSTRAINT "user_unit_enrollments_unit_id_fkey" FOREIGN KEY ("unit_id") REFERENCES "units"("unit_code") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "saved_content" ADD CONSTRAINT "saved_content_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;

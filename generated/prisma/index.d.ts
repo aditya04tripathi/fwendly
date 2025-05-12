@@ -2851,7 +2851,7 @@ export namespace Prisma {
     user_id: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash: string | null
     first_name: string
     last_name: string
     profile_picture_url: string | null
@@ -3030,7 +3030,7 @@ export namespace Prisma {
       user_id: number
       monash_email: string
       username: string
-      password_hash: string
+      password_hash: string | null
       first_name: string
       last_name: string
       profile_picture_url: string | null
@@ -20270,7 +20270,7 @@ export namespace Prisma {
     user_id?: IntFilter<"User"> | number
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
-    password_hash?: StringFilter<"User"> | string
+    password_hash?: StringNullableFilter<"User"> | string | null
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
@@ -20302,7 +20302,7 @@ export namespace Prisma {
     user_id?: SortOrder
     monash_email?: SortOrder
     username?: SortOrder
-    password_hash?: SortOrder
+    password_hash?: SortOrderInput | SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
     profile_picture_url?: SortOrderInput | SortOrder
@@ -20337,7 +20337,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    password_hash?: StringFilter<"User"> | string
+    password_hash?: StringNullableFilter<"User"> | string | null
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
@@ -20369,7 +20369,7 @@ export namespace Prisma {
     user_id?: SortOrder
     monash_email?: SortOrder
     username?: SortOrder
-    password_hash?: SortOrder
+    password_hash?: SortOrderInput | SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
     profile_picture_url?: SortOrderInput | SortOrder
@@ -20396,7 +20396,7 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"User"> | number
     monash_email?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
-    password_hash?: StringWithAggregatesFilter<"User"> | string
+    password_hash?: StringNullableWithAggregatesFilter<"User"> | string | null
     first_name?: StringWithAggregatesFilter<"User"> | string
     last_name?: StringWithAggregatesFilter<"User"> | string
     profile_picture_url?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -21466,7 +21466,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -21495,7 +21495,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -21524,7 +21524,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21553,7 +21553,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21582,7 +21582,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -21601,7 +21601,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21617,7 +21617,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26811,7 +26811,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -26839,7 +26839,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -26950,7 +26950,7 @@ export namespace Prisma {
     user_id?: IntFilter<"User"> | number
     monash_email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
-    password_hash?: StringFilter<"User"> | string
+    password_hash?: StringNullableFilter<"User"> | string | null
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
     profile_picture_url?: StringNullableFilter<"User"> | string | null
@@ -26985,7 +26985,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27013,7 +27013,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27286,7 +27286,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27314,7 +27314,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27643,7 +27643,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27671,7 +27671,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -27955,7 +27955,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27983,7 +27983,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28203,7 +28203,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -28231,7 +28231,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -28452,7 +28452,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28480,7 +28480,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28676,7 +28676,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -28704,7 +28704,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -28970,7 +28970,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28998,7 +28998,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29135,7 +29135,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29163,7 +29163,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29295,7 +29295,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29323,7 +29323,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29451,7 +29451,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29479,7 +29479,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29572,7 +29572,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29600,7 +29600,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29683,7 +29683,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29711,7 +29711,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29804,7 +29804,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29832,7 +29832,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29915,7 +29915,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -29943,7 +29943,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30016,7 +30016,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30044,7 +30044,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30107,7 +30107,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30135,7 +30135,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30267,7 +30267,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30295,7 +30295,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30423,7 +30423,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30451,7 +30451,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30484,7 +30484,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30512,7 +30512,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -30693,7 +30693,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30721,7 +30721,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30760,7 +30760,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30788,7 +30788,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31435,7 +31435,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -31471,7 +31471,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31499,7 +31499,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31527,7 +31527,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31607,7 +31607,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -31661,7 +31661,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31689,7 +31689,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31717,7 +31717,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31859,7 +31859,7 @@ export namespace Prisma {
     user_id?: number
     monash_email: string
     username: string
-    password_hash: string
+    password_hash?: string | null
     first_name: string
     last_name: string
     profile_picture_url?: string | null
@@ -31895,7 +31895,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31923,7 +31923,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31951,7 +31951,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     monash_email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password_hash?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null

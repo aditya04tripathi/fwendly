@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Implemented JWT strategy and guard for secure user authentication.
+- Added user service for handling user-related operations, including password reset and account deletion.
+- Introduced decorators for retrieving user information from requests.
+- Created user module and controller for managing user-related endpoints.
+- Established database migrations for initializing the development database schema.
+
+### Changed
+
+- Refactored authentication module:
+  - Removed unused JWT service and module, integrating JWT functionality directly into the auth module.
+  - Simplified auth controller by removing forgot password and delete account endpoints, delegating functionality to the user service.
+- Updated user DTOs to reflect changes in password handling.
+- Modified Prisma service to utilize environment variables for database connection.
+- Enhanced user model with additional fields and constraints.
+
 ## [0.2.0] - 2025-05-10
 
 ### Changed
